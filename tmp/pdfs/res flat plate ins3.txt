@@ -1,0 +1,1102 @@
+                                                      Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+                                                                      Contents lists available at ScienceDirect
+
+
+                                     Journal of Radiation Research and Applied Sciences
+                             journal homepage: www.journals.elsevier.com/journal-of-radiation-research-and-applied-sciences
+
+
+
+
+Unsteady Darcy Brinkman flow over a semi-infinite flat plate in the
+presence of thermo diffusion, radiation, and heat source/sink: RSM analysis
+Raju B T a , Suhana Nijamuddeen Mujawar a , Khalil Ur Rehman b,* , Wasfi Shatanawi b ,
+S.V.K. Varma a
+a
+    Department of Mathematics, REVA Research Centre, REVA University, 560064, Karnataka, India
+b
+    Department of Mathematics and Sciences, College of Science and Humanities , Prince Sultan University, Riyadh, 11586, Saudi Arabia
+
+
+
+
+A R T I C L E I N F O                                        A B S T R A C T
+
+Keywords:                                                    This study investigates an unsteady convective flow of a ternary nanofluid (MgO–TiO2–CoFe2O4/H2O) over an
+Ternary nanofluid                                            infinite vertical plate through Darcy-Brinkman porous medium under the influences of a uniform transverse
+Darcy-Brinkman flow                                          magnetic field, thermal radiation, Soret effect with different heat source/sinks. The novel contribution of this
+Soret effect
+                                                             study lies in examining the effects of suspending ternary nanoparticles on heat and mass transfer in fluid flow.
+Thermal radiation
+                                                             The governing coupled non-linear partial differential equations of the flow model are transformed into ordinary
+Permeable medium
+Heat source/sink                                             differential equations and solved using perturbation technique. Results reveal that ternary nanoparticles enhance
+                                                             the skin friction coefficient from 0.38% to 0.54%, while the Nusselt number decreases from 0.18% to 0.73%, and
+                                                             the Sherwood number increases significantly from 0.53% to 1.94%. The Soret effect significantly enhances
+                                                             species diffusion, with higher Schmidt numbers reducing molecular diffusion rates. RSM-based predictive models
+                                                             demonstrate excellent accuracy with R2 values of 97.49% for skin friction, 99.94% for heat transfer, and 96.57%
+                                                             for mass transfer, validated through ANOVA.
+
+
+
+
+1. Introduction                                                                                   nanofluids, formed by suspending diverse nanoparticles in a base fluid,
+                                                                                                  display novel thermophysical attributes that arise from the complex
+    Conventional heat transfer fluids like water, ethylene glycol, and                            interplay of their constituent components. Investigating such systems
+mineral oil have relatively low thermal performance compared to most                              enables researchers to explore new possibilities for optimizing heat
+solid materials. Fluids are often used as a heat carrier in heat transfer                         transfer in industrial and technological applications.
+equipment. Nanofluids, a cutting-edge class of engineered colloids,                                   Mythreye et al. (Mythreye et al., 2015) studied unsteady magneto-
+comprise a base fluid infused with nanoparticles (1-100 nm), typically                            hydrodynamic (MHD) convective heat and mass transfer, which has
+metals or metal oxides, dramatically enhancing thermal conductivity                               been conducted by various researchers. The effects of chemical reaction
+and convective heat transfer, highlighting nanoscale dimensions                                   on convective flows have been investigated. However, the combined
+through comparative analysis with millimeter and micrometer scales.                               influence of heat absorption, permeability, and moving plate on un-
+Accurate thermal conductivity measurement requires homogeneous,                                   steady MHD convective flows with chemical reaction remains relatively
+stable suspension and equilibrium conditions. These fluids are widely                             unexplored. The study by Samad and Mansur-Rahman (Samad et al.,
+used in various engineering applications, including cooling systems,                              2006) investigates the impact of thermal radiation on unsteady MHD
+biomedical treatments, and energy harvesting, and have demonstrated                               flow over a vertical porous plate embedded in a porous medium and
+remarkable thermal and electrical properties, making them suitable for                            analyzes heat and mass transfer characteristics under various physical
+complex heat transfer applications. In convective heat transfer studies,                          parameters, revealing that increasing thermal radiation enhances heat
+the Darcy-Brinkman model plays a crucial role in understanding the                                transfer, while being subjected to a magnetic field suppresses fluid ve-
+behaviour of nanofluids in porous media. This model incorporates both                             locity. Singh et al. (Singh et al., 2017) explore the effects of Hall and
+Darcy resistance and viscous effects, offering a more comprehensive                               ion-slip currents on unsteady MHD free convective flow of a rotating
+approach to analysing fluid flow and thermal interactions. Ternary                                fluid over an oscillating vertical plate, and analyze the combined effects
+
+
+
+    * Corresponding author.
+      E-mail address: kurrehman@psu.edu.sa (Khalil Ur Rehman).
+
+https://doi.org/10.1016/j.jrras.2026.102266
+Received 18 August 2025; Received in revised form 12 January 2026; Accepted 25 February 2026
+Available online 5 March 2026
+1687-8507/© 2026 The Authors. Published by Elsevier B.V. on behalf of The Egyptian Society of Radiation Sciences and Applications. This is an open access article
+under the CC BY-NC-ND license (http://creativecommons.org/licenses/by-nc-nd/4.0/).
+R. B T et al.                                                                                          Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+
+
+                                                     Fig. 1. Schematic sketch of the physical configuration.
+
+
+
+of magnetic fields, rotation, and oscillatory motion on velocity and                 et al., 2015) investigated the effects of chemical reaction and radiation
+temperature distributions. Their findings indicate that Hall and ion-slip            absorption on nanofluid flow, heat, and mass transfer within a rotating
+parameters significantly alter the fluid dynamics, impacting the heat                framework. Jakeer et al. (Jakeer et al., 2023) explored the influence of
+transfer rate and flow stability. Seddeek and Salama (Seddeek et al.,                induced magnetic fields and double-diffusive convection on Carreau
+2007) analysed that variable suction and temperature-dependent                       nanofluid flows in various geometries, utilizing a comparative numeri-
+properties significantly impact the flow and heat transfer characteris-              cal and artificial neural network analysis. Bilal et al. (Bilal et al., 2022)
+tics. The results showed that temperature-dependent viscosity and                    numerically investigated the dynamics of thermal enhancement mech-
+thermal conductivity enhance heat transfer rates. Kim et al. (Kim, 2000)             anisms in ternary MHD hybrid nanofluid flows over various surfaces,
+analysed the impact of suction velocity, magnetic field, and plate ve-               such as plane sheets, cones, and wedges. They found that the ternary
+locity on flow and heat transfer. The results revealed that variable suc-            hybrid nanofluid exhibited significant thermal enhancement compared
+tion significantly influences the flow and heat transfer characteristics.            to conventional fluids. The addition of multiple nanoparticles in a base
+Mabood et al. (Mabood et al., 2015) investigate that increasing the                  fluid was found to enhance the thermal conductivity and viscosity of the
+magnetic field strength suppresses fluid velocity, while enhancing                   fluid, leading to improved heat transfer performance. Jakati et al.
+thermal conductivity improves heat transfer. Gurivireddy et al.                      (Jakati et al.) studied MHD boundary layer flow of nanofluid over a
+(Gurivireddy et al., 2016) analysed the significant influence of thermal             moving surface in the presence of thermal radiation, employing the
+diffusion on the flow field and heat transfer rates. This research has               Homotopy Analysis Method showed that nanoparticles enhance thermal
+implications for various engineering applications, including chemical                conductivity, while magnetic fields slow down the flow. Thermal radi-
+reactors and heat exchangers. Ravikumar et al. (Ravikumar et al., 2014)              ation significantly impacts temperature profiles. The study provides
+investigated the simultaneous effect of heat absorption and velocity, and            insights into flow and heat transfer characteristics. Vajravelu et al.
+temperature profiles were significantly affected by the magnetic field               (Vajravelu et al., 2014) analysed MHD flow and heat transfer of an
+and heat absorption. Provided insights into the behavior of                          Ostwald-de Waele fluid over an unsteady stretching surface, found that
+non-Newtonian fluids subjected to magnetic fields and heat transfer.                 magnetic field and unsteadiness significantly impact flow and heat
+Goud et al. (Goud et al., 2019) examine thermal radiation significantly              transfer showed that velocity and temperature increase with Ostwald-de
+enhances heat transfer, while the porous medium increases flow resis-                Waele parameter. Mishra et al. (Mishra et al., 2021) explore that heat
+tance. This research contributes to the understanding of MHD flow in                 generation enhances thermal boundary layer thickness, while increasing
+engineering applications, with subsequent studies incorporating nano-                the magnetic field suppresses fluid velocity. Abel and Mahesha (Abel
+fluids, chemical reactions, and variable viscosity for more advanced                 et al., 2008) investigate that increasing the magnetic field strength
+models. Er-Raki et al. (Er-Raki et al., 2006) explore the influence of the           suppresses the fluid velocity, while variable thermal conductivity and
+Soret effect on boundary layer flow within a porous enclosure with                   heat sources significantly impact thermal boundary layer thickness.
+imposed horizontal heat and mass fluxes and analyze how thermal and                  Seshaiah et al. (Seshaiah et al., 2013) examine the effects of chemical
+solutal gradients affect flow behavior and mass transfer using numerical             reactions and radiation on unsteady MHD free convective fluid flow
+simulations. Their results reveal that the Soret effect has a profound               within a porous medium, accounting for time-dependent suction and a
+impact on concentration profile and flow stability. Ahmed et al. (Ahmed,             temperature gradient heat source, and analyze the way of these factors
+2010) investigated the influences of Soret and Dufour effects on flow and            influence velocity, temperature, and concentration profiles, revealing
+heat transfer characteristics. The results also showed that the magnetic             that increasing radiation enhances heat transfer, while chemical re-
+field and porosity impact the flow behavior. Wang and Tan (Wang et al.,              actions significantly affect concentration distributions. Dharmaiah et al.
+2011) investigate the stability of double-diffusive convection induced by            (Dharmaiah et al., 2020) investigate how thermophoretic forces
+Soret effects in a Maxwell fluid within a porous structure and reveal that           enhance mass transfer, while Hall currents significantly impact the flow
+the Soret effect significantly influences the onset of convection, while             behavior (Farooq et al., 2025a, 2025b; Noreen et al., 2025b, 2025c). aim
+fluid elasticity alters the stability characteristics. Ibrahim et al. (Ibrahim       to study the develop the combined influence of thermal radiation,
+et al., 2008) analysed that the chemical reaction and radiation absorp-              nanoparticle transport, bioconvection due to microorganisms, and
+tion significantly altered the flow patterns and heat transfer mecha-                chemical reaction activation energy on heat and mass transfer
+nisms. Singh and Singh (Singh et al., 2012) examined how the magnetic                characteristics.
+field exerted a profound influence on the flow behavior. Dharmaiah                       In light of the aforementioned discussions, the present study aims to
+et al. (Dharmaiah et al., 2018) analysed the radiation absorption and                investigate the Soret, radiation, and magnetic field effects on convective
+heat source significantly influenced the flow and heat transfer charac-              Darcy-Brinkman ternary nanofluid flow over an infinite plate. The
+teristics. The diffusion thermo effect was essential to the flow behavior.           analysis will account for the presence of different heat sources and sinks,
+Reddy et al. (Reddy, 2017) investigated significant influences of                    providing a comprehensive understanding of the underlying transport
+chemical reactions and radiation absorption substantially impact flow                phenomena. Results of this study contribute to the development of more
+and heat transfer behavior, while viscous dissipation significantly boosts           efficient thermal management systems.
+heat transfer rates. Venkateswaralu and Satyanarayana (Venkateswarlu
+
+
+                                                                                 2
+R. B T et al.                                                                                             Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+1.1. Research motivation                                                            By addressing these objectives, this research can gain valuable in-
+                                                                                 sights into the performance, stability, and potential applications of
+    Despite considerable progress in the study of MHD flows, heat and            multi-hybrid nanofluids in various heat transfer systems.
+mass transfer, and nanofluid dynamics in porous media, the compre-
+hensive understanding of ternary nanofluid systems under complex                 2. Formulation of the problem
+physical effects remains limited. Most existing studies have focused on
+mono or hybrid nanofluids, often neglecting the synergistic thermal                   A theoretical analysis is conducted to investigate the unsteady nat-
+advantages offered by ternary nanoparticle suspensions. Furthermore,             ural convection flow of a ternary nanofluid over a vertical, permeable,
+the simultaneous consideration of heat generation and absorption                 semi-infinite moving plate, incorporating the effects of an internal heat
+mechanisms such as constant, temperature-dependent, and                          source. As illustrated in Fig. 1, the flow is oriented along the x-axis,
+temperature-gradient-dependent sources/sinks alongside thermo-                   parallel to the plate, with the y-axis perpendicular to it. An external
+diffusion (Soret effect), thermal radiation, and electromagnetic forces          magnetic field of strength B0 is applied transversely to the flow direc-
+within the Darcy-Brinkman porous framework is rarely addressed. The              tion, generating Lorentz forces that modulate fluid motion. Under the
+interplay between these phenomena significantly alters the transport             low magnetic Reynolds number approximation, the induced magnetic
+behavior, yet remains underexplored in current literature. Moreover,             field and external electric field due to charge polarization are assumed to
+while numerical and analytical techniques are commonly employed, the             be negligible. Initially, at t = 0, the plate and the nanofluid are in
+application of RSM for statistically modeling and optimizing such                thermal and solutal equilibrium at the temperature T0 and concentration
+multifactorial systems has received insufficient attention. This creates a       C0 . For t > 0 The plate temperature and species concentration oscillate
+notable gap in developing predictive, validated models for advanced              sinusoidally about a steady-state mean.
+thermal management and heat transfer enhancement using ternary                        The working medium is a water-based ternary nanofluid consisting
+nanofluids in porous, radiative, and magnetized environments.                    of MgO, TiO2, and CoFe2O4 nanoparticles, which are assumed to be
+                                                                                 monodispersed and spherically symmetric. The nanoparticle-fluid sus-
+1.2. Application                                                                 pension is modeled under the continuum hypothesis, assuming a ho-
+                                                                                 mogeneous mixture where Brownian motion and thermophoresis effects
+    In present study explored the multifaceted applications of nanofluids        are negligible. The fluid phase and nanoparticles are considered to be in
+incorporating Magnesium Oxide (MgO), Titanium Oxide (TiO2), and                  local thermal equilibrium, and the effective thermophysical properties
+Carbonate Ferrite (CoFe2O4), each offering distinct advantages across            of the nanofluid are evaluated using established mixing models. The
+thermal, environmental, and biomedical domains. These nanoparticles,             governing equations incorporate the effects of porous drag, MHD in-
+when dispersed in base fluids, significantly enhance heat transfer ca-           teractions, thermal radiation, and the Soret effect, which induces species
+pabilities, making them ideal for cooling systems in electronics, auto-          diffusion in response to temperature gradients. The Darcy-Brinkman
+motive engines, and industrial heat exchangers. MgO and TiO2                     model is employed to account for momentum transport through the
+nanofluids, with their superior thermal conductivity, are particularly           porous medium, incorporating viscous and permeability effects. Due to
+effective in solar thermal systems, improving heat absorption and                the semi-infinite nature of the plate, all field variables are assumed to be
+boosting the efficiency of solar collectors. TiO2 also exhibits strong           functions of the transverse coordinate y and time t only. The problem
+photocatalytic activity under UV light, enabling its use in environmental        formulation includes continuity, momentum, energy, and species
+cleanup applications such as wastewater treatment, where it degrades             transport equations, subject to appropriate boundary conditions at the
+harmful pollutants. Meanwhile, CoFe2O4 nanofluids, due to their mag-             plate and at infinity. The dimensionless form of these equations is solved
+netic properties, are employed in MHD power generation systems,                  numerically to analyze the influence of key governing parameters on
+where magnetic fields control fluid flow to optimize energy conversion.          velocity, thermal distribution, and species concentration.
+These magnetic characteristics also make cobalt ferrite nanoparticles                 Assumptions of the model:
+suitable for targeted drug delivery, allowing precise control in thera-
+peutic applications. In enhanced oil recovery (EOR), MgO and TiO2                    ⁃ The plate is long enough in x-direction, so that all the physical
+nanofluids improve fluid mobility by reducing viscosity and increasing                 quantities are independent of x except pressure.
+thermal conductivity, facilitating more efficient extraction processes.              ⁃ The flow is driven by thermal buoyancy forces.
+Research on ternary nanofluids (MgO–TiO2–CoFe2O4) offers practical                   ⁃ Induced magnetic field and applied electrical field are neglected.
+applications in microelectronics and renewable energy. In microelec-                 ⁃ Viscous, Darcy, and Homic Dissipation effects are ignored.
+tronics, their enhanced thermal conductivity and magnetic field control
+via CoFe2O4 enable advanced cooling for high-power chips and GPUs. In                Utilizing the boundary layer approximations, the nanofluid flow is
+renewable energy, superior heat absorption and photocatalytic proper-            mathematically described by the following governing equations (Prasad
+ties boost solar thermal collectors and water purification, while MHD            et al. (Prasad et al., 2018), Seshaiah et al. (Seshaiah et al., 2013))
+traits aid power generation and geothermal extraction. The study de-
+                                                                                 ∂vʹ
+livers an optimized framework for efficient thermal systems in elec-                 =0                                                                                  (1)
+                                                                                 ∂yʹ
+tronics, solar, and heat exchangers.
+                                                                                        ( ʹ        ʹ)       2 ʹ
+                                                                                         ∂u     ʹ∂u = μ ∂ u + (ρβ) g ( Tʹ − Tʹ ) − μtnf uʹ − σ B2 uʹ
+1.3. Objective of the work                                                       ρtnf        + v       tnf                                    tnf 0                      (2)
+                                                                                         ∂tʹ     ∂yʹ       ∂yʹ2   tnf        ∞
+                                                                                                                                    Kʹ
+   This research is aimed at providing comprehensive solutions to                              (                 )
+                                                                                 (       )         ∂Tʹ ʹ∂Tʹ        ∂2 Tʹ ∂qr                (         )
+address the following questions.                                                     ρCp tnf           + v ʹ = Ktnf ʹ2 −     + a1 q1 + a2 q2 Tʹ − Tʹ∞
+                                                                                                   ∂tʹ    ∂y       ∂y    ∂yʹ
+                                                                                                   (         )
+ • The influence of ternary nanoparticles on flow, heat and mass                                ∂ Tʹ − Tʹ∞
+                                                                                      + a3 q3                                                                            (3)
+   transfer in presence of magnetic field with porous medium.                                       ∂yʹ
+ • The impacts of thermal radiation, temperature dependent and tem-
+   perature gradient-dependent heat source/sink in presence of nano-             ∂Cʹ ʹ∂Cʹ      ∂2 Cʹ   (        ) Dm KT ∂2 Tʹ
+                                                                                     + v ʹ = DB ʹ2 − K1 Cʹ − Cʹ∞ +                                                       (4)
+   particle suspension on the temperature field.                                 ∂tʹ    ∂y     ∂y                  Tm ∂yʹ2
+ • How do concentration profiles vary due to the variations of first
+                                                                                        The velocity components along the x and y axes are denoted by uʹ and
+   order chemical reaction, Schmidt number, and Soret effect?
+
+                                                                             3
+R. B T et al.                                                                                    Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+Table 1
+Thermophysical properties of ternary nanofluid (Madkhali et al., 2023).
+                                          [             (                   )     ]
+  Density               ρtnf = (1 − ϕ3 ) (1 − ϕ2 ) (1 − ϕ1 )ρbf + ϕ1 ρ1 + ϕ2 ρ2 + ϕ3 ρ3
+                                   [                 (          )]
+  Thermal                         K3 + 2Kbf − 2ϕ3 Kbf − K3
+                        Knf = Kf                   (           )
+    conductivity                    K3 + 2Kbf + ϕ3 Kbf − K3
+                                   [                     (        )]
+                                     K2 + 2Knf − 2ϕ2 Knf − K2
+                        Khnf = Knf                     (         )
+                                      K2 + 2Knf + ϕ2 Knf − K2
+                                    [                        (      )]
+                                     K1 + 2Khnf − 2ϕ1 Khnf − K2
+                        Ktnf = Khnf                        (       )
+                                      K1 + 2Khnf + ϕ1 Khnf − K2
+  Viscosity                                       μbf
+                        μtnf =
+                                (1 − ϕ1 )2.5 (1 − ϕ2 )2.5 (1 − ϕ3 )2.5
+                                    [                                 ]
+  Electrical                          σ3 (1 + 2ϕ3 ) + 2σbf (1 − ϕ3 )
+                        σnf = σbf
+    conductivity                       σ3 (1 − ϕ3 ) + σbf (2 + ϕ3 )
+                                     [                                 ]
+                                       σ2 (1 + 2ϕ2 ) + 2σnf (1 − ϕ2 )
+                        σhnf = σnf
+                                         σ2 (1 − ϕ2 ) + σnf (2 + ϕ2 )
+                                      [                                  ]
+                                        σ1 (1 + 2ϕ1 ) + 2σhnf (1 − ϕ1 )
+                        σtnf = σhnf
+                                         σ1 (1 − ϕ1 ) + σhnf (2 + ϕ1 )
+                                                  [          (                      ) )
+  Heat Capacitance      (    )                                          (  )   (
+                          ρCp tnf = (1 − ϕ1 ) (1 − ϕ2 ) (1 − ϕ3 ) ρCp bf + ϕ3 ρCp 3 +
+                           (     ) ]         (     )
+                        ϕ2 ρCp 2 + ϕ1 ρCp 1
+                                                [          (                      )
+  Thermal               (ρβ)tnf = (1 − ϕ1 ) (1 − ϕ2 ) (1 − ϕ3 )(ρβ)bf + ϕ3 (ρβ)3 +
+    Expansion                     ]                                                                    Fig. 3. Velocity profile for M
+                        ϕ2 (ρβ)2 + ϕ1 (ρβ)1
+                                                 [          (                       )
+  Solutal Expansion     (ρβʹ)tnf = (1 − ϕ1 ) (1 − ϕ2 ) (1 − ϕ3 )(ρβʹ)bf + ϕ3 (ρβʹ)3 +
+                                  ]
+                        ϕ2 (ρβʹ)2 + ϕ1 (ρβʹ)1
+
+
+
+
+Table 2
+Thermophysical values of TiO2, CoFe2O4, MgO nanofluids with base fluid (Bilal
+et al., 2022).
+  Base fluid and nano     ρ (kg/        k(W/                Cp(j/    σ (S/m)    β (1/k)
+  particles               m3)           mK)                 kgK)
+
+  Distilled water          997.1          0.613             4179     0.05        21 × 105
+    (H2O)
+  Magnesium Oxide         4907            3.7                700     5.51 ×     1.26 × 105
+    (MgO)                                                            109
+  Titanium Oxide          4250            8.9538             686.2   2.38 ×      0.9 × 105
+    (TiO2)                                                           106
+  Cobalt Ferrite          3560          45                   955     1.42 ×      3.9 × 106
+    (CoFe2O4)                                                        10− 3
+
+
+
+
+                                                                                                       Fig. 4. Velocity profile for K
+
+
+
+
+                            Fig. 2. Velocity profile for S
+
+
+vʹ respectively. The nanofluid's thermophysical properties include βtnf ,
+the coefficient of thermal expansion; σtnf , the electrical conductivity; ρtnf ,
+                                  (   )
+the density; μtnf , the viscosity; ρCp tnf , the heat capacitance; αtnf , the
+thermal diffusivity; and Ktnf , the thermal conductivity. αtnf The thermal                             Fig. 5. Velocity profile for Gr
+                                       Ktnf
+diffusivity is given as αthf = ρC . In the energy equation (3), the third,
+                              ( p )tnf
+
+                                                                                             4
+R. B T et al.                                                                                        Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+
+
+                                                                                                           Fig. 9. Temperature profile for S
+
+
+
+
+                       Fig. 6. Velocity profile for R
+
+
+
+
+                                                                                                          Fig. 10. Temperature profile for R
+
+
+
+
+                      Fig. 7. Velocity profile for Q2
+
+
+
+
+                       Fig. 8. Velocity profile for t
+                                                                                                          Fig. 11. Temperature profile for Q2
+
+fourth and fifth term of RHS represents q1 is constant heat source (a1 = 1,       boundary conditions governing the problem are as follows:
+a2 = 0,a3 = 0), q2 is temperature-dependent heat source (a1 = 0,a2 = 1,
+a3 = 0), and q3 is the temperature gradient heat source                                tʹ < 0, uʹ(yʹ, tʹ) = 0, Tʹ = Tʹ∞ , Cʹ = Cʹ∞
+                                                                                                                        (       ) ʹʹ
+(a1 = 0, a2 = 0, a3 = 1). Additionally, ϕ represents the solid volume             tʹ ≥ 0, uʹ(yʹ, tʹ) = U0 , Tʹ = Tʹw + Tʹw − Tʹ∞ εeiw t ,
+fraction of nanoparticles. The physical properties of the base fluid                                 (          )                                                   (5)
+                                                                                       Cʹ= Cʹ + Cʹ − Cʹ εeiw t at y’ = 0
+                                                                                                                     ʹʹ
+                                                                                              w       w
+(distilled water) and the nanoparticles (MgO, TiO2, and CoFe2O4) used                                        ∞
+                                                                                       uʹ(yʹ, tʹ) = 0, Tʹ = Tʹ∞ , Cʹ = Cʹ∞ as yʹ→∞
+for validation purposes are summarized in Table 1 and Table 2. The
+
+                                                                              5
+R. B T et al.                                                                       Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+
+
+                    Fig. 12. Temperature profile for Q3
+
+
+
+
+                                                                                      Fig. 15. Concentration profile for Kr
+
+
+
+
+                     Fig. 13. Temperature profile for t
+
+
+
+
+                                                                                      Fig. 16. Concentration profile for Sc
+
+
+
+
+                    Fig. 14. Concentration profile for S
+
+
+    In this study, the boundary conditions are defined to simulate
+oscillatory thermal and solutal effects at the wall. Initially, for (tʹ < 0),
+the fluid remains stationary with uniform ambient temperature and
+concentration. At (tʹ ≥ 0), the wall velocity is set to (U0 ), while tem-
+                                                                                      Fig. 17. Concentration profile for Sr
+perature and concentration fluctuate sinusoidally around their respec-
+tive wall values. Far from the wall (yʹ →∞) The fluid returns to its
+
+
+                                                                                6
+R. B T et al.                                                                                                   Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+
+
+                                                                 Fig. 18. Concentration profile for t.
+
+
+
+Table 3
+Numerical values of skin-friction coefficient (cf ) with Sc = 0.60; w = 0.1; Pr = 7; Kr = 0.5
+  Gr            t           M             K            S               R           Q2                 Q3             − fʹʹ (0)
+
+                                                                                                                     MgO/H2O                TiO2/H2O              CoFe2O4/H2O
+
+  1             0           1             4            0.1             1           2                  2              0.65201                0.67671               0.67809
+  2             ​           ​             ​            ​               ​           ​                  ​              1.46790                1.51870               1.52030
+  3             ​           ​             ​            ​               ​           ​                  ​              1.13430                1.18960               1.19200
+  4             ​           ​             ​            ​               ​           ​                  ​              0.80066                0.86061               0.86360
+  ​             1           ​             ​            ​               ​           ​                  ​              0.65202                0.67672               0.67809
+  ​             2           ​             ​            ​               ​           ​                  ​              0.65212                0.67682               0.67800
+  ​             3           ​             ​            ​               ​           ​                  ​              0.65232                0.67702               0.67840
+  ​             ​           2             ​            ​               ​           ​                  ​              1.10450                1.13910               1.14030
+  ​             ​           3             ​            ​               ​           ​                  ​              1.44770                1.48960               1.49060
+  ​             ​           4             ​            ​               ​           ​                  ​              1.73360                1.78140               1.78240
+  ​             ​           ​             5            ​               ​           ​                  ​              0.62321                0.64853               0.64992
+  ​             ​           ​             6            ​               ​           ​                  ​              0.60359                0.62935               0.63075
+  ​             ​           ​             7            ​               ​           ​                  ​              0.58935                0.61544               0.61685
+  ​             ​           ​             ​            0.3             ​           ​                  ​              0.75872                0.78384               0.78593
+  ​             ​           ​             ​            0.5             ​           ​                  ​              0.87991                0.90529               0.90825
+  ​             ​           ​             ​            0.7             ​           ​                  ​              1.01560                1.04110               1.04500
+  ​             ​           ​             ​            ​               2           ​                  ​              0.64023                0.66519               0.66656
+  ​             ​           ​             ​            ​               3           ​                  ​              0.62992                0.65510               0.65647
+  ​             ​           ​             ​            ​               4           ​                  ​              0.62075                0.64613               0.64749
+  ​             ​           ​             ​            ​               ​           3                  ​              0.73490                0.75805               0.75936
+  ​             ​           ​             ​            ​               ​           4                  ​              0.79015                0.81243               0.81368
+  ​             ​           ​             ​            ​               ​           5                  ​              0.82991                0.85163               0.85284
+  ​             ​           ​             ​            ​               ​           ​                  3              0.57107                0.59757               0.59897
+  ​             ​           ​             ​            ​               ​           ​                  4              0.51356                0.54147               0.54290
+  ​             ​           ​             ​            ​               ​           ​                  5              0.47137                0.50037               0.50184
+
+
+
+ambient state, ensuring a stable far-field environment. Where T’ is the                                   v
+                                                                                           Here, Pr = αff is the Prandtl number, S is the suction (S > 0) or injection
+local temperature.
+    At the plate, the velocity component vʹ = − V0 , V0 is a constant                      (S < 0) parameter, M is the Magnetic parameter, Kr is the chemical re-
+representing the normal velocity; V0 > 0 signifies suction, V0 < 0 sig-                    action parameter, Sc is the Schmidt number, Gr is the Grashof number, K
+nifies blowing injection.                                                                  is the permeability parameter.
+    Let us define the following dimensionless variables:                                      In the governing energy equation (3), the term ∂∂qyʹr represents the
+                                           ( ʹ      )                                      radiative heat flux contribution. To model this effect accurately, the
+       uʹ      U0 yʹ    U2 tʹ    vf wʹ      T − Tʹ∞        V
+  u = ,y =          ,t = 0 ,w = 2 ,θ = ( ʹ           ), S = 0                              Rosseland approximation is often employed, which assumes that the
+       U0       vf        vf      U0        Tw − Tʹ∞       U0
+                                                                                           medium is optically thick. Under this approximation, the radiative heat
+         Kf vf         vf        vf       Kρf U02        σ B 2 vf                          flux qr is expressed as:
+       Kr =    , Sc = , Pr = , Kʹ =               ,M = 0 2                   (6)
+         U0 2
+                       DB        αf          vf
+                                              2
+                                                         ρf U0                                      4σ * ∂T 4
+   ( ʹ       )               ( ʹ       )                 ( ʹ       )                       qr = −                                                                              (7)
+    C − C∞ʹ            Dm KT Tw − T∞ʹ           (ρβ)f gvf Tw − Tʹ∞                                  3kρ ∂yʹ
+ψ= ʹ
+  (           ) , Sr =     (          ) , Gr =
+    Cw − Cʹ∞           vTm Cʹw − Cʹ∞                    ρf U03
+
+
+                                                                                       7
+R. B T et al.                                                                                                          Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+Table 4                                                                                            (             )                           (                             )
+                                                                                                       ∂θ     ∂θ  1        ∂2 θ 1                          ∂θ
+Numerical values of Nusselt number (Nu) with Sc = 0.60; w = 0.1.                              L1          − S    = (L2 + R) 2 +    a1 Q1 + a2 Q2 θ + a3 Q3                          (12)
+                                                                                                       ∂t     ∂y  Pr       ∂y   Pr                         ∂y
+  S           t   Q2       Pr     Q3       R   − θʹ (0)
+
+                                               MgO/H2O    TiO2/H2O   CoFe2O4/H2O              ∂ψ     ∂ψ 1 ∂2 ψ             ∂2 θ
+                                                                                                 − S   =        − Kr ψ + Sr 2                                                       (13)
+  0.1         0   1        7      2        1   1.1755     1.1751     1.1757                   ∂t     ∂y Sc ∂y 2            ∂y
+  0.3         ​   ​        ​      ​        ​   1.2916     1.2923     1.2933
+  0.5         ​   ​        ​      ​        ​   1.4340     1.4330     1.4345                   With boundary conditions
+  0.7         ​   ​        ​      ​        ​   1.6043     1.6041     1.6064
+  ​           1   ​        ​      ​        ​   1.1725     1.1723     1.1729                        t < 0 : u = 0, θ = 0, ψ = 0
+  ​           2   ​        ​      ​        ​   1.1670     1.1675     1.1682                   t ≥ 0 : u = 1, θ = 1 + εeiwt at y = 0                                                 (14)
+  ​           3   ​        ​      ​        ​   1.1614     1.1609     1.1616                       u = 0, θ = 0, ψ = 0 as y→∞
+  ​           ​   2        ​      ​        ​   2.3138     2.2137     2.2157
+  ​           ​   3        ​      ​        ​   3.2482     3.1547     3.1583
+  ​           ​   4        ​      ​        ​   4.1100     4.0213     4.0268                   3. Solution of the problem
+  ​           ​   ​        6.2    ​        ​   1.6658     1.1654     1.1661
+  ​           ​   ​        0.71   ​        ​   0.8324     0.8302     0.8319                      Various solutions techniques (Asghar et al., 2025; Noreen et al.,
+  ​           ​   ​        8      ​        ​   1.1858     1.1848     1.1854                   2025a; Shahzad et al., 2025) are used in fluid flow equations. For pre-
+                                  3            0.8011     0.8007     0.8009
+                                                                                              sent study equations (11)–(13) constitute a set of coupled non-linear
+  ​           ​   ​        ​               ​
+  ​           ​   ​        ​      4        ​   0.6042     0.6040     0.6041
+  ​           ​   ​        ​      5        ​   0.4841     0.4839     0.4840                   partial differential equations, whose closed-form solutions are chal-
+  ​           ​   ​        ​      ​        3   2.2169     2.2160     2.2171                   lenging to derive. To facilitate the solution process, these equations are
+  ​           ​   ​        ​      ​        5   3.2517     3.1603     3.1617                   transformed into ordinary differential equations by superimposing the
+                                           7   4.1159     4.0308     4.0323
+  ​           ​   ​        ​      ​
+                                                                                              unsteady flow on the mean steady flow. Enabling the representation of
+                                                                                              velocity, temperature, and concentration in the neighborhood of the
+Where Stefan-Boltzmann constant is represented by σ * and kρ is the                           plate as;
+mean absorption coefficient. For the small temperature difference                             u(y, t) = u0 + εu1 eiwt
+within the flow are sufficiently small, by Taylor series expansion can be                     θ(y, t) = θ0 + εu1 eiwt                                                               (15)
+employed to T4 approximate, resulting in a linearized expression of the                       ψ (y, t) = ψ 0 + εψ 1 eiwt
+form (Pantokratoras et al., 2014)
+                                                                                              Where ε(≪1) is a parameter.
+T 4 ≈ 4T∞
+        3
+          − 3T∞
+              4
+                                                                                (8)                Equations (11)–(13) are reduced to
+          By using (7) and (8)                                                                                    (
+                                                                                                                    L4
+                                                                                                                             )
+                                                                                              L4 uʹʹ0 + SL3 uʹ0 −      + L6 M u0 = − L6 Gr θ0                                       (16)
+∂qr    16σ * T∞
+              3
+                ∂2 T                                                                                                K
+    =−                                                                         (10)
+∂y       3kρ ∂y2                                                                                                     [          (         )]
+                                                                                                                                 L4
+                                                                                              L4 uʹʹ1 + SL3 uʹ1 −     L3 (iw) +     + L6 M u1 = − L5 Gr θ1                          (17)
+In view of equations (6) to (10), equations (2)–(4) reduce to the                                                                 K
+following dimensionless form:
+                                                                                              (L2 + R)θʹʹ0 + (Pr L1 S − a3 Q3 )θʹ0 − a2 Q2 θ0 = 0                                   (18)
+   (           )                     (          )
+    ∂u      ∂u       ∂2 u              L4
+L3      − S      = L4 2 + L5 G r θ −      + L6 M u           (11)
+     ∂t     ∂y       ∂y                K                                                      (L2 + R)θʹʹ1 + (SPr L1 − a3 Q3 )θʹ1 − (a2 Q2 + Pr L1 (iw))θ1 = 0                      (19)
+
+
+Table 5
+Numerical values of Sherwood Number (Sh) with = 0.1; Pr = 7
+  Sr                   t              Kr          Sc          S          R                Q2                 Q3               − ψʹ (0)
+
+                                                                                                                              MgO/H2O               TiO2/H2O               CO2Fe4/H2O
+
+      0.2              0              4           0.60        1          0.5              2                  2                2.0790                2.0816                 2.0789
+      0.3              ​              ​           ​           ​          ​                ​                  ​                2.1511                2.1549                 2.1509
+      0.4              ​              ​           ​           ​          ​                ​                  ​                2.2231                2.2283                 2.2230
+      0.5              ​              ​           ​           ​          ​                ​                  ​                2.2952                2.3017                 2.2950
+      ​                1              ​           ​           ​          ​                ​                  ​                1.8285                1.8290                 1.8285
+      ​                2              ​           ​           ​          ​                ​                  ​                1.8280                1.8285                 1.8280
+      ​                3              ​           ​           ​          ​                ​                  ​                1.8271                1.8276                 1.8271
+      ​                ​              5           ​           ​          ​                ​                  ​                2.3260                2.3291                 2.3259
+      ​                ​              6           ​           ​          ​                ​                  ​                2.5505                2.5540                 2.5503
+      ​                ​              7           ​           ​          ​                ​                  ​                2.7576                2.7615                 2.7574
+      ​                ​              ​           0.22        ​          ​                ​                  ​                1.0595                1.0598                 1.0594
+      ​                ​              ​           0.30        ​          ​                ​                  ​                1.2719                1.2723                 1.2719
+      ​                ​              ​           0.78        ​          ​                ​                  ​                3.0953                3.1203                 2.5999
+      ​                ​              ​           ​           3          ​                ​                  ​                2.1133                2.1221                 2.1130
+      ​                ​              ​           ​           5          ​                ​                  ​                1.8364                1.8598                 1.8358
+      ​                ​              ​           ​           7          ​                ​                  ​                1.4458                1.4857                 1.4447
+      ​                ​              ​           ​           ​          1.5              ​                  ​                2.2414                2.2463                 2.2413
+      ​                ​              ​           ​           ​          2.5              ​                  ​                2.4750                2.6422                 2.6263
+      ​                ​              ​           ​           ​          3.5              ​                  ​                6.2303                6.7117                 6.2150
+      ​                ​              ​           ​           ​          ​                3                  ​                1.8470                1.8536                 1.8469
+      ​                ​              ​           ​           ​          ​                4                  ​                1.7509                1.7517                 1.7509
+      ​                ​              ​           ​           ​          ​                5                  ​                1.7042                1.7051                 1.7042
+      ​                ​              ​           ​           ​          ​                ​                  3                1.8890                1.8891                 1.8890
+      ​                ​              ​           ​           ​          ​                ​                  4                1.9087                1.9088                 1.9087
+      ​                ​              ​           ​           ​          ​                ​                  5                1.9182                1.9182                 1.9182
+
+
+                                                                                      8
+R. B T et al.                                                                                                       Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+Table 6                                                                                           with ternary nanoparticles, incorporating mass transport and thermal
+Numerical values of skin friction, Nusselt number, and Sherwood number with                       conductivity. Solution plots for various parameters are illustrated
+Gr = 1, M = 4, K = 4, R = 3.5, S = 1, Q2 = 5; Q3 = 3, Sc = 0.60, Sr =                             through graphs. Results exhibit major features of flow, heat, and mass
+0.5 and Kr = 7.                                                                                   transfer characteristics in terms of using nanoparticles. The inclusion of
+  ϕ1              ϕ2              ϕ3           − fʹʹ (0)         − θʹ (0)          − ψʹ (0)       nanoparticles influences temperature, velocity, and concentration dis-
+  0               0               0            2.3084            3.9660            1.5454
+                                                                                                  tributions along with skin friction, heat transfer, and mass transfer co-
+  0.01            0.01            0.01         2.3171            3.9371            1.5754         efficients. Suction preserves a constant distribution of MgO, TiO2, and
+  0.02            0.02            0.02         2.3165            3.9066            1.6040         CoFe2O4 nanoparticles.
+  0.03            0.03            0.03         2.3092            3.8752            1.6312
+  0.04            0.04            0.04         2.2946            3.8429            1.6572         Range of parameters : 0 ≤ t ≤ 5, 1 ≤ Sc ≤ 4, 0.5 ≤ Kr ≤ 5, − 4 ≤ S
+  0.01            0.01            0            2.2960            3.9449            1.5677
+                                                                                                                         ≤ 4, 1 ≤ M ≤ 4,
+  0.02            0.02            0            2.2803            3.9226            1.5892
+  0.03            0.03            0            2.2616            3.8999            1.6101
+  0.04            0.04            0            2.2402            3.8766            1.6302         − 20 ≤ Gr ≤ 20, 1 ≤ R ≤ 8, 1 ≤ Q2 ≤ 8, − 0.7 ≤ Sr ≤ 0.7, 1 ≤ Q3 ≤ 4,
+  0.01            0               0.01         2.3004            3.9512            1.5615
+  0.02            0               0.02         2.2888            3.9356            1.5771             Figs. 2–18 illustrate that velocity, temperature, and concentration
+  0.03            0               0.03         2.2738            3.9199            1.5922
+                                                                                                  profiles are significantly influenced by key physical parameters gov-
+  0.04            0               0.04         2.2556            3.9040            1.6069
+  0               0.01            0.01         2.3493            3.9450            1.5675         erning fluid flow and heat and mass transfer. Fig. 2 demonstrates that
+  0               0.02            0.02         2.3849            3.9229            1.5888         suction reduces boundary layer thickness, stabilizing the flow, whereas
+  0               0.03            0.03         2.4154            3.9003            1.6094         injection enhances velocity and mass transport. Fig. 3 shows that the
+  0               0.04            0.04         2.4412            3.8772            1.6293         presence of a magnetic field introduces a Lorentz force, which resists
+  0.01            0               0            2.2781            3.9589            1.5536
+  0.02            0               0            2.2478            3.9512            1.5616
+                                                                                                  fluid motion, leading to a reduction in velocity. Figs. 4 and 5 show that
+  0.03            0               0            2.2175            3.9435            1.5694         increased permeability facilitates smoother flow, while a higher Grashof
+  0.04            0               0            2.1871            3.9359            1.5771         number strengthens buoyancy-driven convection, accelerating fluid
+  0               0.01            0            2.3272            3.9528            1.5596         motion. Figs. 6 and 7 direct radiation alter thermal gradients, contrib-
+  0               0.02            0            2.3445            3.9387            1.5737
+                                                                                                  uting to velocity reduction, while temperature-dependent heat sources
+  0               0.03            0            2.3603            3.9243            1.5874
+  0               0.04            0            2.3748            3.9097            1.6009         reduce viscosity, enhancing velocity. Fig. 8 shows an initial rise in ve-
+  0               0               0.01         2.3316            3.9590            1.5534         locity profile followed by a slow decline, eventually stabilizing over
+  0               0               0.02         2.3533            3.9513            1.5613         time.
+  0               0               0.03         2.3732            3.9436            1.5691             Temperature profiles exhibit notable variations with different
+  0               0               0.04         2.3916            3.9359            1.5768
+                                                                                                  influencing factors. Fig. 9 observes that suction leads to a thinner ther-
+                                                                                                  mal boundary layer, lowering fluid temperature, while injection retains
+                                                                                                  heat, increasing temperature levels. Figss. 10–12 direct radiation en-
+ψ ʹʹ0 + SSc ψʹ0 − Kr Sc ψ 0 = − Sr Sc θʹʹ0                                             (20)
+                                                                                                  hances thermal energy transfer, leading to temperature rise, whereas
+                                                                                                  temperature-dependent and gradient heat sources intensify localized
+ψ ʹʹ1 + SSc ψʹ1 − (Kr Sc + Sc (iw))ψ 1 = − Sc Sr θʹʹ1                                  (21)
+                                                                                                  heating, promoting stronger convection and heat diffusion. In Fig. 13,
+      The boundary conditions (14) become                                                         the temperature profile converges towards zero as time progresses due
+                                                                                                  to the effect of heat sources.
+u0 = 1, u1 = 0, θ0 = 1, θ1 = 1, ψ 0 = 1, ψ 1 = 1 at y = 0
+                                                                                       (22)           Similarly, concentration profiles are affected by fluid motion and
+u0 = 0, u1 = 0, θ0 = 0, θ1 = 0, ψ 0 = 0, ψ 1 = 0 as y→∞
+                                                                                                  thermal effects. Suction decreases mass diffusion, while injection en-
+      Using the boundary conditions (22), solve equations (16)–(21), we                           hances species transport within the boundary layer observed in Fig. 14.
+get                                                                                               Fig. 15 illustrates that chemical reactions play a vital role in modifying
+                                                                                                  concentration by either consuming or generating species, thereby
+u(y, t) = (1 − b3 )e− m5 y + b3 e− m1 y + ε(b4 (e− m2 y − e− m6 y ))eiwt               (23)
+                                                                                                  affecting mass transfer rates. Fig. 16 exemplifies higher Schmidt number
+                                                                                                  reduces molecular diffusion, restricting species transport. Fig. 17 in-
+θ(y, t) = e− m1 y + ϵ(e− m2 y )eiwt                                                    (24)
+                                                                                                  dicates that the Soret effect facilitates concentration gradients due to
+                                                                                                  temperature differences, promoting species diffusion. Fig. 18 shows that
+ψ (y, t) = (1 − b1 )e− m3 y + b1 e− m1 y + ϵ((1 − b2 )e− m4 y + b2 e− m2 y )eiwt       (25)
+                                                                                                  the concentration profile follows a similar trend due to diffusion effects
+   Skin friction, Rate of Heat transfer, and Mass transfer:                                       over time.
+   The dimensional expression for the Skin friction/shearing stress at                                These interdependent effects have significant implications in indus-
+the plate is                                                                                      trial and engineering applications, particularly in heat exchangers,
+        ( )                                                                                       chemical processing, and energy systems. The findings of the study have
+         ∂u
+Cf = −           = (1 − b3 )m5 + b3 m1 + εb4 (m2 − m6 )eiwt      (26)                             relevance for numerous engineering fields, such as heat exchangers,
+          ∂t y=0                                                                                  chemical reactors, and electronic devices. The findings can be utilized
+   Similarly, the Nusselt number/rate of heat transfer at the plate is                            for optimization of the system design and operation in order to increase
+given by                                                                                          efficiency and performance.
+               ( )                                                                                    From Table 3, detailed analysis shows that increasing the suction
+Nu = − (1 + R)
+                ∂θ              (
+                       = (1 + R) m1 + ε m2 eiwt
+                                                )
+                                                                 (27)                             parameter enhances flow stability, as reflected in higher − f ʹʹ (0) values
+                ∂t y=0                                                                            across different nanofluids. Additionally, parameters such as thermal
+                                                                                                  radiation, heat sources, and magnetic field effects influence the
+   The Sherwood number/rate of mass transfer at the plate is given by
+                                                                                                  boundary layer characteristics. From Table 4, based on the numerical
+       ( )
+        ∂ψ                                                                                        data for − θʹ (0), the study highlights the effects of various parameters on
+Sh = −         = m3 + b1 (m1 − m3 ) + ε (m4 + b2 (m2 − m4 ))eiwt (28)
+        ∂t y=0                                                                                    the thermal boundary layer in the presence of different nanofluids. As S
+                                                                                                  increases, − θʹ (0) also increases, indicating enhanced heat transfer rates
+4. Result and discussion                                                                          due to stronger suction. Additionally, higher values of Q2 , Q3 and R
+                                                                                                  further intensify the thermal gradient near the surface. Among the
+      The current research examines micropolar fluid boundary layer flow                          nanofluids, CoFe2O4/H2O consistently shows slightly higher heat
+
+                                                                                              9
+R. B T et al.                                                                                       Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+
+
+                                            Fig. 19. 3-D graphs for skin friction, rate of heat and mass transfer.
+
+
+transfer rates, making it thermally more effective under the given con-           4.1. Physical significance
+ditions. From Table 5, the analysis of − ψʹ (0) demonstrates that
+increasing suction and radiation parameters significantly enhance mass                The observed results provide the following insights:
+transfer rates, indicated by higher − ψʹ (0) values. Among the nanofluids,            Flow Control: Suction, injection, and magnetic fields can effectively
+TiO2/H2O consistently exhibits slightly better mass transfer perfor-              regulate boundary layer thickness and velocity, enabling precise control
+mance, though the difference is marginal. Overall, higher thermo                  in industrial and microfluidic applications. Interplay of suction, mag-
+diffusion and reaction rates further contribute to intensified nano-              netic effects, heat sources, and nanoparticle types enables the optimi-
+particle transport near the surface. From Table 6, the updated obser-             zation of skin friction, heat, and mass transfer to improve efficiency and
+vation in the presence and absence of nanoparticles shows that skin               performance.
+friction varies between 0.38% and 0.54%, indicating a minimal impact                  Thermal Management: Ternary nanofluids allow tunable heat
+on fluid resistance. The Nusselt number decreases from 0.18% to 0.73%,            transfer, beneficial for electronics cooling, solar collectors, and chemical
+confirming a slight reduction in heat transfer, while the Sherwood                reactors.
+number increases from 0.53% to 1.94%, highlighting improved diffu-                    Enhanced Mass Transport: Nanoparticles and thermo-diffusion
+sion with ternary nanoparticles. In the presence of hybrid nanoparticles,         mechanisms promote species transport, critical for catalytic processes
+skin friction varies from 0.54% to 0.18%, Nusselt number consistently             and reactive flows.
+drops between 0.53% and 0.73%, and Sherwood number improves from                      Fig. 19(a) illustrates the skin friction coefficient Cf (M, K) increases
+1.45% to 1.94%. For single nanoparticles, MgO shows reduced skin                  with both the M and K. The upward trend indicates that higher
+friction due to enhanced cooling, whereas TiO2 and CoFe2O4 exhibit                permeability and magnetic effects lead to an increase in frictional
+slight increases. Overall, heat transfer decreases from 0.15% to 0.73%,           resistance within the boundary layer due to the Lorentz force generated
+while mass transfer rises from 0.53% to 1.94%, confirming the superior            by the applied magnetic field, which enhances resistance to fluid mo-
+performance of ternary nanofluids. The velocity, temperature, and                 tion. The increase in skin friction also suggests that the fluid experiences
+concentration profiles we used w = 0.1; t = 0.01; Pr = 7; M = 0.5; ε =            greater shear stress as both parameters increase, making these effects
+0.02; Sc = 0.60; S = 0.1; K = 4; R = 5; Kr = 0.1; Q1 = 0; Q2 = 2; Q3 = 0;         crucial for flow stability analysis. Fig. 19(b) shows the 3D plot of the
+a1 = 0; a2 = 1; a3 = 0; ϕ1 = 0.01; ϕ2 = 0.02; and ϕ3 = 0.03.                      Nusselt number Nu(R, Q3 ) shows the rate of heat transfer. A significant
+
+
+                                                                             10
+R. B T et al.                                                                                            Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+
+
+                                                              Fig. 20. Residual vs. Observation for Cf
+
+
+
+
+          Fig. 21. Contour plots (a)-(c) depict the heat transfer characteristics of nanofluid/distilled water mixtures under various parameter interactions.
+
+
+variation is observed where the heat transfer rate is high at lower R and              dissipation mechanism. Fig. 19(c) indicates the Sherwood number
+Q3 values, but drops sharply for increasing values. The decreasing trend               Sh(Kr , Sr ) which represents the rate of mass transfer, exhibits a declining
+in heat transfer suggests that beyond a certain threshold, the thermal                 trend with increasing values of Kr , and Sr . Initially, the mass transfer rate
+boundary layer thickens, reducing the rate of conductive and convective                is relatively high, but as these parameters increase, a downward slope is
+heat exchange. This phenomenon can be attributed to the competing                      observed. The negative values in the Sherwood number suggest mass
+effects of buoyancy forces and fluid viscosity, which alter the heat                   diffusion effects influenced by external conditions such as chemical
+
+                                                                                  11
+R. B T et al.                                                                                             Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+
+
+                                                              Fig. 22. Residual vs. observation for Nu.
+
+
+
+
+          Fig. 23. Contour plots (a)-(c) depict the heat transfer characteristics of nanofluid/distilled water mixtures under various parameter interactions.
+
+
+reaction rates or concentration gradients. This decline may be due to a                Choudhury and Ahmed (Choudhury et al., 2018). Table 7 demonstrates
+decrease in mass flux caused by increased resistance in the concentra-                 excellent agreement between the present work and the reference data
+tion boundary layer (see Fig. 20-25).                                                  for various values of Q2 , Pr and t, in the absence of S = 0, M = 0, R = 0,
+    To validate the accuracy of the present numerical model, a                         Kr = 0, Q3 = 0,
+comparative analysis was conducted with the results reported by
+
+                                                                                  12
+R. B T et al.                                                                                             Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+
+
+                                                              Fig. 24. Residual vs. observation for Sh.
+
+
+
+
+          Fig. 25. Contour plots (a)-(c) depict the heat transfer characteristics of nanofluid/distilled water mixtures under various parameter interactions.
+
+
+5. Response surface methodology                                                        investigate the influence of key input parameters, namely M, K, and S on
+                                                                                       skin friction, Q2 , Q3 , and R on the Nusselt number, and Kr , Sr , and Sc on
+   The RSM is a valuable tool for identifying empirical correlations                   the Sherwood number. The input parameters were varied within speci-
+between multiple variables. It is particularly useful for studying complex             fied ranges and at three levels, as presented in Tables 8, 11 and 14.
+processes with numerous input factors, enabling the examination of                     Tables 9, 12 and 15 demonstrate that, following the selection of input
+their individual and interactive effects. In this study, RSM is employed to            parameters, a statistical model was developed and executed 20 times. A
+
+
+                                                                                  13
+R. B T et al.                                                                                                                  Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+Table 7                                                                                                     Table 11
+Comparison table of Nusselt number for different values of Q2 , Pr and t                                    Impact of varying parameter values.
+  Q2       Pr       t         − θʹʹ                                                                          Parameter                    Symbol                        Level
+
+                              Choudhury and Ahmed. (Choudhury et al.,                 Present                ​                            ​                             − 1                   0              1
+                              2018)                                                   result                 2≤ Q2 ≤4                     J1                              2                   3              4
+                                                                                                             1≤ Q3 ≤ 2                    J2                              1                   1.5            2
+      1    0.71     0.5        1.5791                                                  1.5787
+                                                                                                             0.1≤ R ≤0.7                    J3                            0.1                 0.4            0.7
+      2    0.71     0.5        1.9695                                                  1.9691
+      3    0.71     0.5        2.2778                                                  2.2778
+      1    2        0.5        3.4816                                                  3.4817
+      1    7        0.5       10.2180                                                 10.2153               Table 12
+      1    0.71     0.1        1.5665                                                  1.5668               An experimental approach utilizing CCD.
+                                                                                                             Runs        Coded values                              Real values                          Response
+
+                                                                                                                         J1         J2           J3                Q2              Q3         R         Nu
+Table 8
+                                                                                                             ​
+                                                                                                                 1       − 1        − 1          − 1               3               1.5        0.1       1.8073
+Impact of varying parameter values.                                                                              2       1          − 1          − 1               3               1.5        0.4       1.7229
+  Parameter                           Symbol                Level                                                3       − 1        1            − 1               2               2.0        0.1       0.98976
+                                                                                                                 4       1          1            − 1               3               1.5        0.4       1.7229
+  ​                                   ​                     − 1                 0                1               5       − 1        − 1          1                 3               1.5        0.4       1.7229
+  0.5≤ M ≤1.5                         J1                      0.5               1                1.5             6       1          − 1          1                 2               1.0        0.1       1.7283
+  0.2≤ S ≤ 0.6                        J2                      0.2               0.4              0.6             7       − 1        1            1                 3               1.5        0.7       1.6858
+  2≤ K ≤4                             J3                      2                 3                4               8       1          1            1                 3               1.5        0.4       1.7229
+                                                                                                                 9       − 1        0            0                 2               1.5        0.4       1.2235
+                                                                                                                 10      1          0            0                 3               1.5        0.4       1.7229
+                                                                                                                 11      0          − 1          0                 4               1.0        0.1       2.9586
+Table 9
+                                                                                                                 12      0          1            0                 4               2.0        0.7       1.7503
+An experimental approach utilizing CCD.                                                                          13      0          0            − 1               3               1.5        0.4       1.7229
+  Runs            Coded values                            Real values                       Response             14      0          0            1                 4               1.5        0.4       2.1764
+                                                                                                                 15      0          0            0                 3               1.0        0.4       2.2141
+  ​               J1           J2              J3         M          S           K          Cf                   16      0          0            0                 2               1.0        0.7       1.5818
+      1           − 1          − 1             − 1        1.0        0.4         4          0.34709              17      0          0            0                 4               1.0        0.7       2.6352
+      2           1            − 1             − 1        1.0        0.4         3          0.39189              18      0          0            0                 3               1.5        0.4       1.7229
+      3           − 1          1               − 1        0.5        0.4         3          0.10024              19      0          0            0                 2               2.0        0.7       0.95515
+      4           1            1               − 1        0.5        0.2         4          − 0.1644             20      0          0            0                 4               2.0        0.1       1.8540
+      5           − 1          − 1             1          1.0        0.2         3          0.20207
+      6           1            − 1             1          1.5        0.6         4          0.78204
+      7           − 1          1               1          1.5        0.2         4          0.40962
+      8           1            1               1          1.0        0.4         3          0.39189
+      9           − 1          0               0          0.5        0.6         2          0.41522
+                                                                                                            Table 13
+      10          1            0               0          1.0        0.4         3          0.39189         Analysis of variance.
+      11          0            − 1             0          1.5        0.2         2          0.52345          Source            DF     SS(Adj)              MS                  F-value    P-        Coefficient
+      12          0            1               0          1.0        0.6         3          0.59048                                                        (Adj)                          value
+      13          0            0               − 1        0.5        0.2         2          0.00950
+      14          0            0               1          1.0        0.4         3          0.39189          Model             9      4.15902              0.46211              2006.78   0.000         1.72177
+      15          0            0               0          1.0        0.4         3          0.39189          Linear            3      3.91880              1.30627              5672.62   0.000     -
+      16          0            0               0          1.5        0.6         2          0.88807          Q2                1      2.39707              2.39707             10409.57   0.000       0.48960
+      17          0            0               0          1.0        0.4         3          0.39189          Q3                1      1.46848              1.46848              6377.06   0.000     − 0.41884
+      18          0            0               0          1.5        0.4         3          0.62943          R                 1      0.05325              0.05325               231.23   0.000     − 0.07297
+      19          0            0               0          1.0        0.4         2          0.47717          Square            3      0.03564              0.01188                51.59   0.000     -
+      20          0            0               0          0.5        0.6         4          0.25964          Q2 *Q2            1      0.00093              0.00093                 4.03   0.072     − 0.01984
+                                                                                                             Q3 *Q3            1      0.01066              0.01066                46.31   0.000       0.0775
+                                                                                                             R*R               1      0.00169              0.00169                 7.33   0.022       0.02676
+                                                                                                             2-Way             3      0.07003              0.02334               101.37   0.000     -
+                                                                                                               Interaction
+Table 10
+                                                                                                             Q2 *Q3             1     0.04872          0.04872                   211.57   0.000     − 0.07804
+Analysis of variance.                                                                                        Q2 *R              1     0.00756          0.00756                    32.85   0.000     − 0.03075
+  Source                DF       SS(Adj)             MS(Adj))    F-         P-          Coefficient          Q3 *R              1     0.01374          0.01374                    59.68   0.000       0.04145
+                                                                 Value      Value                            Error             10     0.00230          0.00023             ​              ​         -
+                                                                                                             Lack-of-Fit        4     0.00230          0.00058             *              *         -
+  Model                   9      0.831938            0.092438     43.08     0.000           0.3858           Pure Error         6     0.00000          0.00000             ​              ​         -
+  Linear                  3      0.798276            0.266092    124.01     0.000       -                    Total             19     4.16132          ​                   ​              ​         -
+  M                       1      0.521474            0.521474    243.03     0.000         0.2284
+  S                       1      0.264511            0.264511    123.27     0.000         0.1626
+  K                       1      0.012291            0.012291      5.73     0.038       − 0.0351
+  Square                  3      0.009233            0.003078      1.43     0.290       -                   Table 14
+  M*M                     1      0.000381            0.000381      0.18     0.682       − 0.0118
+                                                                                                            Impact of varying parameter values.
+  S*S                     1      0.001064            0.001064      0.50     0.497         0.0197
+  K*K                     1      0.003471            0.003471      1.62     0.232         0.0355             Parameter                     Symbol                       Level
+  2-Way                   3      0.024429            0.008143      3.80     0.047       ​
+                                                                                                             ​                             ​                            − 1                   0              1
+    Interaction
+                                                                                                             2≤ Sr ≤4                      J1                             2                   3              4
+  M*S                    1       0.006969            0.006969        3.25   0.102         0.0295
+                                                                                                             1≤ Sc ≤ 2                     J2                             1                   1.5            2
+  M*K                    1       0.006007            0.006007        2.80   0.125       − 0.0274
+                                                                                                             0.1≤ Kr ≤0.7                  J3                             0.1                 0.4            0.7
+  S*K                    1       0.011454            0.011454        5.34   0.043       − 0.0378
+  Error                 10       0.021457            0.002146    ​          ​           -
+  Lack-of-Fit            5       0.021457            0.004291    *          *           -
+  Pure Error             5       0.000000            0.000000    ​          ​           -
+                                                                                                            second-order polynomial was used to illustrate the relationship between
+  Total                 19       0.853396            ​           ​          ​           -                   the response variables and input parameters. The model includes
+                                                                                                            intercept, linear, quadratic, and interaction terms, denoted by Z0 , Zi ,
+
+
+                                                                                                       14
+R. B T et al.                                                                                                              Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+Table 15
+An experimental approach utilizing CCD.                                                                Nu = Z0 + Z1 Q2 + Z2 Q3 + Z3 R + Z11 Q2 2 + Z22 Q3 2 + Z33 R2 + Z12 Q2 Q3
+
+  Runs          Coded values                             Real values                 Response            + Z13 Q2 R + Z14 Q3
+  ​             J1         J2          J3                Sr          Sc        Kr    Sh                   To validate the proposed model and assess its practical implications,
+      1         − 1        − 1         − 1               0.4         2         4     1.8498            an analysis of variance (ANOVA) was performed, with the results pre-
+      2         1          − 1         − 1               0.1         1         4     2.2401
+      3         − 1        1           − 1               0.7         2         3     − 1.0502
+                                                                                                       sented in Table 13. A parameter was considered significant if its p-value
+      4         1          1           − 1               0.7         3         4     3.4142            was less than 0.05; otherwise, it was deemed non-significant. There is no
+      5         − 1        − 1         1                 0.4         2         3     1.01              significance for Q2 *Q2 . The high R2 value of 99.94% indicates excellent
+      6         1          − 1         1                 0.4         2         3     1.01              model accuracy. Upon examining the data, a significant relationship was
+      7         − 1        1           1                 0.1         3         2     3.5145
+                                                                                                       found between the input variables (Q2 , Q3 , and R) and the skin friction
+      8         1          1           1                 0.4         1         3     0.65624
+      9         − 1        0           0                 0.4         2         3     1.01              coefficient (Nu), as described by the following equation:
+      10        1          0           0                 0.1         3         4     5.1341
+      11        0          − 1         0                 0.1         1         2     1.6052            Nu = 1.72177 + 0.48960Q2 − 0.41884Q3 − 0.07297R + 0.0775Q3 2
+      12        0          1           0                 0.4         2         3     1.01                + 0.02676R2 − 0.07804Q2* Q3 − 0.03075Q2 *R + 0.04145Q3 *R
+      13        0          0           − 1               0.4         3         3     2.5207
+      14        0          0           1                 0.4         2         3     1.01
+      15        0          0           0                 0.7         3         2     − 2.4738          Sh = Z0 + Z1 Sr + Z2 Sc + Z3 Kr + Z11 Sr 2 + Z22 Sc 2 + Z33 Kr 2 + Z12 Sr Sc
+      16        0          0           0                 0.4         2         3     1.01                + Z13 Sr Kr + Z14 Sc Kr
+      17        0          0           0                 0.1         2         3     3.0702
+      18        0          0           0                 0.7         1         2     − 1.2054              To validate the proposed model and assess its practical implications,
+      19        0          0           0                 0.7         1         4     − 0.1437
+                                                                                                       an analysis of variance (ANOVA) was performed, with the results pre-
+      20        0          0           0                 0.4         2         2     0.04278
+                                                                                                       sented in Table 16. A parameter was considered significant if its p-value
+                                                                                                       was less than 0.05; otherwise, it was deemed non-significant. There is no
+                                                                                                       significance for Kr *Kr and Sr *Sc . The high R2 value of 96.57% indicates
+Table 16                                                                                               excellent model accuracy. Upon examining the data, a significant rela-
+Analysis of variance.                                                                                  tionship was found between the input variables (Sr , Sc , and Kr ) and the
+  Source              DF         SS(Adj)         MS            F-          P-       Coefficient        skin friction coefficient (Sh), as described by the following equation:
+                                                 (Adj)         Value       Value
+                                                                                                       Sh = 1.026 − 0.728Sr + 1.121 Sc + 0.394Kr + 1.011Sr *Sr + 0.539SC *SC
+  Model                9         30.1584      3.3509            31.27      0.000     1.026
+  Linear               3         19.4064      6.4688            60.37      0.000    -                    − 0.297Sr *Kr + 0.373Sc *Kr
+  Sr                   1          5.2951      5.2951            49.42      0.000    − 0.728
+  Sc                   1         12.5588     12.5588           117.21      0.000      1.121
+  Kr                   1          1.5526      1.5526            14.49      0.003      0.394            6. Conclusions
+  Square               3          8.9226      2.9742            27.76      0.000    -
+  Sr *Sr               1          2.8093      2.8093            26.22      0.000      1.011
+                                                                                                          This study presents a theoretical investigation of the effects of
+  SC *SC               1          0.7989      0.7989             7.46      0.021      0.539
+  Kr *Kr               1          0.0293      0.0293             0.27      0.613    − 0.103            metallic nanoparticles on unsteady MHD free convective Darcy-
+  2-Way                3          1.8293      0.6098             5.69      0.015    -                  Brinkman ternary nanofluid flow over a semi-infinite porous plate.
+     Interaction                                                                                       The current study has led to the following conclusions:
+  Sr *Sc               1          0.0087          0.0087            0.08   0.781    − 0.033
+  Sr *Kr               1          0.7055          0.7055            6.58   0.028    − 0.297
+  Sc *Kr               1          1.1151          1.1151           10.41   0.009      0.373
+                                                                                                       ➢ Velocity of the fluid decreases with increasing Magnetic field and
+  Error               10          1.0715          0.1071       ​           ​        -                    suction parameter whereas permeability parameter, injection
+  Lack-of-Fit          5          1.0715          0.2143       *           *        -                    parameter and Grashof number enhances the flow.
+  Pure Error           5          0.0000          0.0000       ​           ​        -                  ➢ Radiation and temperature-dependent enhances the temperature,
+  Total               19         31.2298                                            -
+                                             ​                 ​           ​
+                                                                                                         whereas suction and temperature gradient heat sources reduces the
+                                                                                                         temperature. Nano particles volume fractions decreases the heat
+Zii and Zij respectively. The regression coefficients, which represent the                               transfer rate from 0.15% to 0.73%, while rate of mass transfer rises
+interactions between input parameters, significantly impact the                                          from 0.53% to 1.94%.
+response variables. The polynomial model was fitted using Central                                      ➢ Higher Soret parameter enhances species diffusion, chemical re-
+Composite Design (CCD), which enabled 20 experimental runs,                                              actions modify concentration by consumption, and a higher Schmidt
+comprising six axial points, eight factorial points, and six center points.                              number slows diffusion by reducing mass transfer rates. Suction
+This design layout facilitated efficient estimation of regression co-                                    decreases, while injection increases the concentration boundary
+efficients and exploration of the factor space (Bezerra et al., 2008;                                    layer thickness.
+Manjunatha et al., 2025).                                                                              ➢ RSM model validated by ANOVA with R2 equal to 95.22%, 99.94%
+                                                                                                         and 96.57% values for skin friction, heat, and mass transfer,
+Cf = Z0 + Z1 M + Z2 S + Z3 K + Z11 M2 + Z22 S2 + Z33 K2 + Z12 M*S                                        respectively, and a significant effect of magnetic field, permeability,
+      + Z13 M*K + Z14 S*K                                                                                and Soret number.
+
+   To validate the proposed model and assess its practical implications,
+an analysis of variance (ANOVA) was performed, with the results pre-
+                                                                                                       6.1. Future work
+sented in Table 10. A parameter was considered significant if its p-value
+was less than 0.05; otherwise, it was deemed non-significant. The high
+                                                                                                           The study suggests several avenues for future research, building
+R2 value of 97.49% indicates excellent model accuracy.                                                 upon the current investigation of unsteady Darcy-Brinkman flow of
+   Upon examining the data, a significant relationship was found be-                                   ternary nanofluids: Further research could explore the influence velocity
+tween the input variables (M, K, and S) and the skin friction coefficient                              distribution under the combined effects of Hall current and ion slip.
+   (Cf), as described by the following equation: Cf = 0.3858 +                                         Extending the current model to include non-Newtonian rheological be-
+0.2284M + 0.1626S − 0.0351K − 0.0378S*K.                                                               haviours (e.g., Casson (Farooq et al., 2025c), Carreau–Yasuda, or Wil-
+                                                                                                       liamson models) would provide a more realistic analysis for industrial
+
+                                                                                                  15
+R. B T et al.                                                                                                             Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+
+fluids. An entropy generation minimization approach could provide                                    Supervision, Software, Methodology.
+deeper insight into system irreversibility and thermal efficiency. Further
+extend to Entropy Generation Minimization Approach also.                                             Data availability statement
+
+CRediT authorship contribution statement                                                                 The data will be available upon request.
+
+   Raju B T: Writing – original draft, Visualization, Validation. Suhana                             Acknowledgments
+Nijamuddeen Mujawar: Visualization, Validation, Software. Khalil Ur
+Rehman: Investigation, Formal analysis, Data curation. Wasfi Shata-                                     The authors would like to thank Prince Sultan University, Saudi
+nawi: Supervision, Investigation, Formal analysis. S.V.K. Varma:                                     Arabia, for the technical support through the TAS research lab.
+
+
+
+Nomenclature
+
+
+                uʹ, vʹ                  Velocity along the x and y axis (ms− 1 )                           Pr                     Prandtl number
+                u, v                    Dimensionless velocities (ms− 1 )                                  Kr                     Chemical reaction parameter
+                                                                                  )
+                B0                      Uniform magnetic field of strength (Am− 1                          Sr                     Soret number
+                − V0                    Normal velocity at the plate (ms− 1 )                              KT                     Mean fluid temperature (K)
+                                                                                                                                                        (
+                Tʹ                      Fluid temperature (K)                                              Dm                     Thermal diffusion rate m2 s− 1 )
+                                                                     )
+                Cʹ                      Fluid concentration (molm− 3                                       Tm                     Mean fluid temperature
+                Tʹ∞                     Free stream temperature (K)                                        μnf                    Dynamic viscosity of nanofluid
+                                                                             )
+                Cʹ  ∞                   Free stream concentration (molm− 3                                 μbf                    Base fluid viscosity
+                                                                                                                                                                     (       )
+                Tʹw                     Temperature at the wall (K)                                        σnf                    Electrical conduction of nanofluid Sm− 1
+                                                                                                                                                                     (       )
+                S                       Suction/injection parameter                                        σbf                    Electrical conduction of base fluid Sm − 1
+                                                                                                                                                             )
+                θ                       Dimensionless temperature (K)                                      ρnf                    Nanofluid density (kgm− 3
+                                                                                 )                                                                           )
+                ψ                       Dimensionless concentration (molm− 3                               ρbf                    Base fluid density (kgm− 3
+                                                                           )
+                Cʹ∞                     Concentration at the wall (molm− 3                                 Knf                    Nanofluid heat thermal conduction
+                g                       Acceleration o account of gravity (ms− 2 )                         Kbf                    Base fluid heat thermal conduction
+                Kʹ                      Permeability parameter                                             tʹ                     Time (s)
+                                                                        )
+                M                       Magnetic field parameter (Am− 1                                    t                      Dimensionless time (s)
+                Sc                      Schmidt number                                                     Gr                     Thermal Grashof number
+                R                       Radiation parameter                                                Nu                     Nusselt number
+                                                     (      )
+                τ                       Skin-friction Nm− 2                                                Sh                     Sherwood number
+                                                            (      )
+                qr                      Radiative heat flux Wm− 2                                          q1                     Constant heat source
+                q2                      Temperature-dependent heat source                                  q3                     Temperature gradient-dependent heat source
+                Subscripts
+                tnf                     Ternary nano fluid
+                hnf                     Hybrid nano fluid
+                nf                      Nanofluid
+                bf                      Base fluid
+
+
+
+
+References                                                                                           Farooq, U., & Imran, M. (2025c). Analysis of bio-convection in casson hybrid nanofluid
+                                                                                                         flow with motile microorganisms and heat transfer using cattaneo-christov heat and
+                                                                                                         mass flux theory over a cylinder. Case Studies in Thermal Engineering, 69, Article
+Abel, M. S., & Mahesha, N. J. A. M. M. (2008). Heat transfer in MHD viscoelastic fluid
+                                                                                                         105960.
+     flow over a stretching sheet with variable thermal conductivity, non-uniform heat
+                                                                                                     Farooq, U., Imran, M., Ali Khan, S., Ghachem, K., Aich, W., Ching, D. L. C., & Khan, I.
+     source and radiation. Applied Mathematical Modelling, 32(10), 1965–1983.
+                                                                                                         (2025). Numerical simulation of nonlinear thermal radiation effect on water-based
+Ahmed, N. (2010). MHD convection with Soret and Dufour effects in a three-dimensional
+                                                                                                         TiO2–SiO2 hybrid nanofluid flow with Cattaneo-Christov heat flux and multiple
+     flow past an infinite vertical porous plate. Canadian Journal of Physics, 88(9),
+                                                                                                         slips. Journal of Radiation Research and Applied Sciences, 18(3), Article 101784.
+     663–674.
+                                                                                                     Farooq, U., Khan, S. A., Aich, W., Rajhi, W., Muhammad, T., Rana, M. Z., Elaissi, S., &
+Asghar, Z., Ashfaq, M., Nie, Y., & Gondal, M. A. (2025). Comparative analysis of exact
+                                                                                                         Khan, I. (2025). Artificial neural network-assisted modeling of thermal performance
+     and FDM solutions with error analysis for thermal transport of copper-blood
+                                                                                                         in hybrid nanofluid-integrated solar water pumps. Journal of Radiation Research and
+     nanofluid in arteries with stenosis and thrombosis. Thermal Science and Engineering
+                                                                                                         Applied Sciences, 18(4), Article 101951.
+     Progress, Article 104178.
+                                                                                                     Goud, B. S., et al. (2019). Mass transfer effects on MHD flow through porous medium
+Bezerra, M. A., et al. (2008). Response surface methodology (RSM) as a tool for
+                                                                                                         past an exponentially accelerated inclined plate with variable temperature and
+     optimization in analytical chemistry. Talanta, 76(5), 965–977.
+                                                                                                         thermal radiation. International Journal of Thermofluid Science and Technology, 6,
+Bilal, M., et al. (2022). Numerical simulations through PCM for the dynamics of thermal
+                                                                                                         Article 19060402.
+     enhancement in ternary MHD hybrid nanofluid flow over plane sheet, cone, and
+                                                                                                     Gurivireddy, P., et al. (2016). Thermal diffusion effect on MHD heat and mass transfer
+     wedge. Symmetry, 14.11, 2419.
+                                                                                                         flow past a semi-infinite moving vertical porous plate with heat generation and
+Choudhury, K., & Ahmed, N. (2018). Soret effect on transient MHD convective flow past
+                                                                                                         chemical reaction. Applied Mathematics, 7(7), 638.
+     a semi-infinite vertical porous plate with heat sink and chemical reaction.
+                                                                                                     Ibrahim, F. S., Elaiw, A. M., & Bakr, A. A. (2008). Effect of the chemical reaction and
+     Applications and Applied Mathematics: International Journal, 13(2), 15.
+                                                                                                         radiation absorption on the unsteady MHD free convection flow past a semi-infinite
+Dharmaiah, G., et al. (2018). Heat and mass transfer on MHD fluid flow over a semi-
+                                                                                                         vertical permeable moving plate with heat source and suction. Communications in
+     infinite flat plate with radiation absorption, heat source, and diffusion thermo effect.
+                                                                                                         Nonlinear Science and Numerical Simulation, 13(6), 1056–1066.
+     Frontiers in Heat and Mass Transfer (FHMT), 11.
+                                                                                                     Jakati, S.V., Raju, B.T., Nargund, A.L., and B. Sathyanarayana, Global journal of
+Dharmaiah, G., Makinde, O. D., & Balamurugan, K. S. (2020). Perturbation analysis of
+                                                                                                         engineering science and research, MHD boundary layer flow of nanofluid over a
+     thermophoresis, hall current and heat source on flow dissipative aligned convective
+                                                                                                         moving surface in the presence of thermal radiation by homotopy analysis method.
+     flow about an inclined plate. International Journal Thermofluid Science and
+                                                                                                     Jakeer, S., et al. (2023). Exploring the influence of induced magnetic fields and double-
+     Technology, 7(1), Article 20070103.
+                                                                                                         diffusive convection on carreau nanofluid flow through diverse geometries: A
+Er-Raki, M., et al. (2006). Soret effect on the boundary layer flow regime in a vertical
+                                                                                                         comparative study using numerical and ANN approaches. Mathematics, 11(17),
+     porous enclosure subject to horizontal heat and mass fluxes. International Journal of
+                                                                                                         3687.
+     Heat and Mass Transfer, 49(17-18), 3111–3120.
+
+
+
+
+                                                                                                16
+R. B T et al.                                                                                                           Journal of Radiation Research and Applied Sciences 19 (2026) 102266
+
+Kim, Y. J. (2000). Unsteady MHD convective heat transfer past a semi-infinite vertical            Ravikumar, V., Raju, M. C., & Raju, G. S. S. (2014). Combined effects of heat absorption
+    porous moving plate with variable suction. International Journal of Engineering                   and MHD on convective Rivlin-Ericksen flow past a semi-infinite vertical porous
+    Science, 38(8), 833–845.                                                                          plate with variable temperature and suction. Ain Shams Engineering Journal, 5(3),
+Mabood, F., Khan, W. A., & Ai, M. I. (2015). MHD boundary layer flow and heat transfer                867–875.
+    of nanofluids over a nonlinear stretching sheet: A numerical study. Journal of                Reddy, M. U. (2017). Chemical reaction and viscous dissipation effects on MHD free
+    Magnetism and Magnetic Materials, 374, 569–576.                                                   convective flow past a semi-infinite moving vertical porous plate with radiation
+Madkhali, H. A., et al. (2023). Numerical study on the role of ternary nanoparticles on               absorption. Global Journal of Pure and Applied Mathematics, 13(12), 8297–8322.
+    heat transfer enhancement in MHD flow of cross-rheological-fluid. Case Studies in             Samad, M. A., & Mansur-Rahman, M. (2006). Thermal radiation interaction with
+    Thermal Engineering, 51, Article 103579.                                                          unsteady MHD flow past a vertical porous plate immersed in a porous medium.
+Manjunatha, S., et al. (2025). Thermal radiation and thermo-diffusion in casson-                      Journal of Naval Architecture and Marine Engineering, 3(1), 7–14.
+    ferrofluid over a magnetized porous surface: RSM analysis. International Journal of           Seddeek, M. A., & Salama, F. A. (2007). The effects of temperature-dependent viscosity
+    Thermofluids, Article 101130.                                                                     and thermal conductivity on unsteady MHD convective heat transfer past a semi-
+Mishra, P., Acharya, M. R., & Panda, S. (2021). Mixed convection MHD nanofluid flow                   infinite vertical porous moving plate with variable suction. Computational Materials
+    over a wedge with temperature-dependent heat source. Pramana, 95, 1–12.                           Science, 40(2), 186–192.
+Mythreye, A., Pramod, J. P., & Balamurugan, K. S. (2015). Chemical reaction on                    Seshaiah, B., Varma, S. V. K., & Raju, M. C. (2013). The effects of chemical reaction and
+    unsteady MHD convective heat and mass transfer past a semi-infinite vertical                      radiation on unsteady MHD free convective fluid flow embedded in a porous
+    permeable moving plate with heat absorption. Procedia Engineering, 127, 613–620.                  medium with time-dependent suction with temperature gradient heat source.
+Noreen, S., Farooq, U., Khan, S. A., Fatima, N., Wang, Z., Liu, H., & Imran, M. (2025c).              International Journal of Swimming Kinetics, 3(2), 2305-1493.
+    Modeling and simulation of bioconvective casson nanofluid flow with activation                Shahzad, H., Batool, H., Ali Alghafli, M., & Mlaiki, N. (2025). Entropy generation and
+    energy and gyrotactic microorganisms with thermal radiation effects over curved                   MHD flow characteristics of unsteady Williamson fluid toward a stagnation point
+    surface. International Communications in Heat and Mass Transfer, 168, Article 109447.             over a vertical Riga plate. Partial Differential Equations in Applied Mathematics, Article
+Noreen, S., Farooq, U., Liu, H., Fatima, N., Imran, M., Ali, B., Muhammad, T., & Rajhi, W.            101321.
+    (2025b). Response surface methodology-based modeling of radiative bioconvective               Singh, J. K., et al. (2017). Influence of hall and ion-slip currents on unsteady MHD free
+    Nanofluid flow with motile microorganisms and activation energy over a surface.                   convective flow of a rotating fluid past an oscillating vertical plate. International
+    International Communications in Heat and Mass Transfer, 169, Article 109858.                      Journal of Heat and Technology, 35(1), 37–52.
+Noreen, S., Khan, S. A., Farooq, U., Fatima, N., Ali, B., Muhammad, T., & Imran, M.               Singh, R. K., & Singh, A. K. (2012). MHD free convective flow past semi-infinite vertical
+    (2025a). Numerical analysis of TiO2–SiO2–CuO/water-based ternary-hybrid                           permeable wall. Applied Mathematics and Mechanics, 33, 1207–1222.
+    nanofluid with thermal conductivity over a stretching wedge. ZAMM-Journal of                  Vajravelu, K., Prasad, K. V., Datti, P. S., & Raju, B. T. (2014). MHD flow and heat transfer
+    Applied Mathematics and Mechanics/Zeitschrift für Angewandte Mathematik und                       of an Ostwald–de Waele fluid over an unsteady stretching surface. Ain Shams
+    Mechanik, 105(11), Article e70277.                                                                Engineering Journal, 5(1), 157–167.
+Pantokratoras, A., & Fang, T. (2014). Blasius flow with non-linear Rosseland thermal              Venkateswarlu, B., & Satya Narayana, P. V. (2015). Chemical reaction and radiation
+    radiation. Meccanica, 49, 1539–1545.                                                              absorption effects on the flow and heat transfer of a nanofluid in a rotating system.
+Prasad, P. D., Kiran Kumar, R. V. M. S. S., & Varma, S. V. K. (2018). Heat and mass                   Applied Nanoscience, 5, 351–360.
+    transfer analysis for the MHD flow of nanofluid with radiation absorption. Ain Shams          Wang, S., & Tan, W. (2011). Stability analysis of Soret-driven double-diffusive
+    Engineering Journal, 9(4), 801–813.                                                               convection of Maxwell fluid in a porous medium. International Journal of Heat and
+                                                                                                      Fluid Flow, 32(1), 88–94.
+
+
+
+
+                                                                                             17
+

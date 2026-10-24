@@ -1,0 +1,431 @@
+Ain Shams Engineering Journal (2014) 5, 169–175
+
+
+
+                                                        Ain Shams University
+
+                                            Ain Shams Engineering Journal
+                                                            www.elsevier.com/locate/asej
+                                                              www.sciencedirect.com
+
+
+
+
+MECHANICAL ENGINEERING
+
+
+Inﬂuence of thermal radiation, viscous dissipation
+and Hall current on MHD convection ﬂow
+over a stretched vertical ﬂat plate
+Gnaneswara Reddy Machireddy
+
+Department of Mathematics, Acharya Nagarjuna University Ongole Campus, Ongole, AP 523 001, India
+
+
+Received 16 April 2013; revised 24 August 2013; accepted 30 August 2013
+Available online 5 October 2013
+
+
+
+  KEYWORDS                             Abstract A boundary layer analysis has been presented to study the effects of thermal radiation,
+  Thermal radiation;                   viscous dissipation, and Hall current effects on the hydromagnetic convection ﬂow of an electrically
+  Viscous dissipation;                 conducting, viscous, incompressible ﬂuid past over a stretching vertical ﬂat plate. The governing
+  Hall current effect;                 partial differential equations are non-dimensionalized and transformed into a system of nonlinear
+  MHD;                                 ordinary differential similarity equations, in a single independent variable. The resulting coupled
+  Stretched ﬂat plate                  nonlinear equations are solved under appropriate transformed boundary conditions using the
+                                       Runge–Kutta fourth-order method along with the shooting method. The effects of the radiation
+                                       parameter, magnetic parameter, Hall parameter, viscous dissipation parameter and the buoyancy
+                                       parameter on the velocity proﬁles, the cross ﬂow velocity proﬁles and the temperature proﬁles
+                                       are presented graphically and discussed.
+                                                            Ó 2013 Production and hosting by Elsevier B.V. on behalf of Ain Shams University.
+
+
+
+
+1. Introduction                                                            nomena, it has attracted the attentions of many researchers
+                                                                           and one of the pioneering studies has been performed by Saki-
+The ﬁeld of boundary layer ﬂow problem over a stretching                   adis [1]. The study of stretching surfaces and the several com-
+sheet has many industrial applications such as polymer sheet               binations of additional effects on the stretching problems are
+or ﬁlament extrusion from a dye or long thread between feed                important in many practical applications because the produc-
+roll or wind-up roll, glass ﬁber and paper production, drawing             tion of sheeting material arises in a number of industrial man-
+of plastic ﬁlms, liquid ﬁlms in condensation process. Due to               ufacturing processes and includes both metal and polymer
+the high applicability of this problem in such industrial phe-             sheets. In the manufacture of the latter, the material is in a
+                                                                           molten phase when thrust through an extrusion die and then
+                                                                           cools and solidiﬁes some distance away from the die before
+E-mail address: mgrmaths@gmail.com                                         arriving at the collecting stage. The quality of the resulting
+Peer review under responsibility of Ain Shams University.                  sheeting material, as well as the cost of production, is affected
+                                                                           by the speed of collection and the heat transfer rate, and a
+                                                                           knowledge of the ﬂow properties of the ambient ﬂuid is clearly
+                                                                           desirable (see Banks and Zaturska [2]). On the other hand, it
+               Production and hosting by Elsevier
+                                                                           should be pointed out that the very important practical prob-
+2090-4479 Ó 2013 Production and hosting by Elsevier B.V. on behalf of Ain Shams University.
+http://dx.doi.org/10.1016/j.asej.2013.08.003
+170                                                                                                          M. Gnaneswara Reddy
+
+
+  Nomenclature
+
+  a,c       constants                                               T1        ambient temperature
+  B0        the strength of the imposed magnetic ﬁeld               u, v, w   velocity components along the x, y and z direc-
+  C fx      skin friction coefﬁcient in x-direction                           tions, respectively
+  C fz      skin friction coefﬁcient in z-direction                 uw(x)     velocity of the stretching plate
+  Ec        Eckert number                                           x, y, z   Cartesian coordinates along the stretching surface,
+  e         electric charge                                                   normal to it, and transverse to the xy plane,
+  f         dimensionless stream function                                     respectively
+    0
+  f         dimensionless velocity
+  g         acceleration due to gravity                             Greek symbols
+  Grx       local Grashof number                                    a       thermal diffusivity
+  h         cross ﬂow velocity                                      b       thermal expansion coefﬁcient
+  H0        external magnetic ﬁeld                                  k       constant buoyancy parameter
+  k         thermal conductivity of the ﬂuid                        rs      Stefan-Boltzmann constant
+  ke        mean absorption coefﬁcient                              h       dimensionless temperature
+  m         Hall parameter                                          m       kinematic viscosity
+  me        the mass of an electron                                 l       dynamic viscosity
+  M         magnetic parameter                                      le      magnetic permeability
+  ne        electron number density                                 q       ﬂuid density
+  Pr        Prandtl number                                          sw      wall shear stress
+  qr        radiative heat ﬂux
+  R         radiation parameter                                     Subscripts
+  Rex       local Reynolds number                                   w        condition at the surface
+  T         ﬂuid temperature                                        1        ambient condition
+  Te        electron collision time
+  Tw        surface temperature
+
+
+
+lems of the thermal processing of sheet-like materials which is     known as the Hall effect (Sato [8], Sutton and Sherman [9],
+a necessary operation in the production of paper, linoleum,         Pop [10], Raptis and Ram [11], Hossain and Rashid [12]).
+polymeric sheets, rooﬁng shingles, insulating materials, ﬁne-ﬁ-        The case of non-isothermal stretching ﬂat plate in the pres-
+ber matts are described in the excellent papers by Sparrow and      ence of a transverse magnetic ﬁeld where the Hall effect has
+Abraham [3] and Abraham and Sparrow [4]. Other very                 been neglected was considered by Ezzat et al. [13] and Zakaria
+important applications of the stretching sheets are described       [14]. Yih [15] studied the effect of free convection on MHD
+in the papers by Lakshmisha et al. [5].                             heat and mass transfer of a continuously moving permeable
+    Magnetohydrodynamics (MHD) is the study of the interac-         vertical surface. The study of MHD free convection ﬂow along
+tion of conducting ﬂuids with electromagnetic phenomena.            a vertical surface with the effects of Hall current over a porous
+The ﬂow of an electrically conducting ﬂuid in the presence of       plate has been considered by Hossain [16], Hossain and
+a magnetic ﬁeld is of importance in various areas of technology     Mohammad [17]. Also, Salem and Abd El-Aziz [18] have stud-
+and engineering such as MHD power generation, MHD ﬂow               ied the effects of Hall current and chemical reaction on the
+meters, MHD pumps etc. The viscous ﬂow due to stretching            hydromagnetic ﬂow of a stretching vertical surface. Recently,
+boundary is important in extrusion processes where sheet            Ghosh et al. [19] have studied the Hall effects in a parallel plate
+material is pulled out of an oriﬁce with increasing velocity. It    channel, while Abd El-Aziz [20] has analyzed the effects of
+is worth mentioning that Sakiadis [6] was the ﬁrst to study         Hall currents on the ﬂow and heat transfer of an electrically
+the boundary layer ﬂow on a continuously moving solid sur-          conducting ﬂuid over an unsteady stretching surface in the
+face. Crane [7] extended this idea for the steady two-dimen-        presence of a strong magnetic ﬁeld.
+sional boundary layer ﬂow due to a stretching sheet whose              In the context of space technology and in the processes
+velocity varies linearly with the distance from a ﬁxed point        involving high temperatures, the effects of radiation are of vi-
+in the sheet. Recently, the study of magnetohydrodynamics           tal importance. Recent developments in hypersonic ﬂights,
+(MHD) become important in engineering applications, such            missile re-entry, rocket combustion chambers, power plants
+as in designing cooling system with liquid metals, MHD gener-       for inter planetary ﬂight and gas cooled nuclear reactors, have
+ator and other devices in the petroleum industry. For ionized       focused attention on thermal radiation as a mode of energy
+gases, the conventional MHD is not valid under the strong           transfer, and emphasized the need for improved understanding
+electric ﬁeld. In an ionized gas, the density is low and the mag-   of radiative transfer in these processes. The interaction of
+netic ﬁeld is very strong, the conductivity normal to the mag-      radiation with laminar free convection heat transfer from a
+netic ﬁeld is reduced due to the free spiralling of electrons and   vertical plate was investigated by Cess [21] for an absorbing,
+ions about the magnetic lines of force before suffering colli-      emitting ﬂuid in the optically thick region, using the singular
+sions, and also a current is induced in the direction normal        perturbation technique. Arpaci [22] considered a similar prob-
+to both electric and magnetic ﬁelds. This phenomenon is also        lem in both the optically thin and optically thick regions and
+Inﬂuence of thermal radiation, viscous dissipation and Hall current on MHD convection ﬂow                                            171
+
+used the approximate integral technique and ﬁrst-order pro-                 Continuity equation
+ﬁles to solve the energy equation. Gnaneswara Reddy and                @u @v
+Bhaskar Reddy [23] studied the radiation and mass transfer ef-           þ   ¼0                                                          ð3Þ
+                                                                       @x @y
+fects on unsteady MHD free convection ﬂow past a vertical
+porous plate with viscous dissipation by using ﬁnite element                Momentum equations
+method. Recently, Gnaneswara Reddy and Bhaskar Reddy
+                                                                           @u    @u    @2u                   rB20
+[24] investigated mass transfer and heat generation effects on         u      þv    ¼ m 2 þ gbðT  T1 Þ             ðu þ mwÞ            ð4Þ
+MHD free convection ﬂow past an inclined vertical surface                  @x    @y    @y                 qð1 þ m2 Þ
+in a porous medium. MHD boundary-layer ﬂow over a
+stretching surface with internal heat generation or absorption             @w    @w   @2w     rB20
+                                                                       u      þv    ¼m 2 þ            ðmu  wÞ                           ð5Þ
+was studied by Basiri Parsa et al. [25]. Gnaneswara Reddy                  @x    @y   @y   qð1 þ m2 Þ
+[26] analyzed thermophoresis, viscous dissipation and joule                 Energy equation
+heating effects on steady MHD heat and mass transfer ﬂow                                                "       2 #
+                                                                                                             2
+over an inclined radiative isothermal permeable surface with             @T    @T   k @2T   l             @u      @w       1
+                                                                       u    þv    ¼       þ                    þ        
+variable thermal conductivity.                                           @x    @y qcp @y2 qcp             @y      @y      qcp
+    The objective of the present paper is to study the effects of
+                                                                                              @qr
+Joule heating on steady MHD mixed convection boundary                                                                                   ð6Þ
+layer ﬂow over a stretched vertical ﬂat plate in the presence                                 @y
+of thermal radiation and viscous dissipation. The partial differ-           The boundary conditions are
+ential equations are reduced to similarity or nonlinear ordinary
+                                                                       u ¼ uw ðxÞ;       v ¼ w ¼ 0;   T ¼ Tw ðxÞaty ¼ 0                  ð7Þ
+differential equations which are solved numerically. The effects
+of various governing parameters on the velocity, cross ﬂow             u ! 0;     w ! 0;       T ! T1 as y ! 1
+velocity, temperature, skin-friction coefﬁcient and Nusselt
+number are shown in ﬁgures and tables and discussed in detail.            By using the Rosseland approximation Brewster [28], the
+                                                                       radiative heat ﬂux qr is given by
+2. Mathematical analysis                                                        4rs @T4
+                                                                       qr ¼                                                             ð8Þ
+                                                                                3ke @y
+Consider the steady mixed convection ﬂow of an incompress-
+ible, viscous and electrically conducting ﬂuid past a stretching       where rs is the Stefan–Boltzmann constant and ke is the mean
+ﬂat plate in the vertical direction with a velocity proportional       absorption coefﬁcient. It should be noted that by using the
+                                                                       Rosseland approximation, the present analysis is limited to
+to the distance from the ﬁxed origin O of a stationary frame of
+                                                                       optically thick ﬂuids. If the temperature differences within
+reference (x, y, z). The frame of reference (x, y, z) is chosen such
+that the x-axis is along the direction of motion of the surface,       the ﬂow are sufﬁciently small, then Eq (8) can be linearized
+                                                                       by expanding T4 into the Taylor series about T1, which after
+the y-axis is normal to the surface and the z-axis is transverse
+                                                                       neglecting higher order terms takes the form
+to the xy-plane. We consider that an external constant mag-
+netic ﬁeld H0 is applied in the positive y-direction. It is also as-   T4 ﬃ 4T31 T  3T41                                                ð9Þ
+sumed that the surface of the sheet has a variable temperature.
+    Tw(x), while T1, Tw(x) > T1 where corresponds to a                 In view of Eqs (8) and (9), Eq (6) reduces to
+                                                                                                         "         2 #
+heated plate and Tw(x) < T1 corresponds to a cooled plate.               @T    @T             @2T     l     @u
+                                                                                                                2
+                                                                                                                     @w
+    Taking Hall effects into account and assuming that the elec-       u    þv     ¼ að1 þ RÞ 2 þ                 þ                  ð10Þ
+                                                                         @x    @y             @y     qcp    @y       @y
+tron pressure gradient, the ion slip and the thermo-electric ef-
+fects are neglected, the generalized Ohm’s law can be written as       where a ¼ k=qcp        is the thermal diffusivity and
+(Cowling [27])                                                         R ¼ 16r T31 =3kk is the radiation parameter.
+                                                                        In order for (3)–(5) and (10) admit a similarity solution, we
+                        l
+j ¼ r E þ le v  H  e j  H                                     ð1Þ   assume that uw(x) and Tw(x) vary linearly with the variable x
+                        ene
+                                                                       as
+where the electron pressure gradient and ion-slip effects are ne-
+                                                                       uw ðxÞ ¼ cx;       Tw ðxÞ ¼ T1 þ ax                           ð11Þ
+glected. In (1), ne and e stand for the electron number density
+and the electric charge, respectively and the electrical conduc-       where c(>0) and a are constants. We notice that for a > 0
+tivity, r is given by                                                  (Tw(x) > T1), the plate is heated and for a < 0 (Tw(x) < T1)
+                                                                       the plate is cooled.
+r ¼ e2 ne Te =me                                                ð2Þ
+                                                                          We look for a similarity solution of (3)–(6) of the form
+where Te and me denote the electron collision time and the                                                                   T  T1
+mass of an electron, respectively. The effect of Hall current          u ¼ cxf0 ðgÞ; v ¼ ðcmÞ1=2 fðgÞ; w ¼ cxhðgÞ; hðgÞ ¼           ;
+                                                                                                                             Tw  T1
+gives rise to a force in the z-direction resulting in a cross-ﬂow
+in this direction and thus the ﬂow becomes three-dimensional.          g ¼ ðc=mÞ1=2 y;
+Using the boundary layer variables with the observation that                  rB20         gbðTw  T1 Þx3      Grx      m
+the physical variables do not depend on the coordinate z.              M¼          ; Grx ¼                ; k ¼ 2 ; Pr ¼ ;
+                                                                               cq                m2            Rex      a
+    Under the above stated assumptions and usual Bous-
+                                                                                    m2
+sinesq’s approximation, the governing equations relevant to            Ec ¼                                                          ð12Þ
+                                                                              cp ðTw  T1 Þ
+the problem are:
+172                                                                                                                 M. Gnaneswara Reddy
+
+where primes denote differentiation with respect to g.                magnetic ﬁeld (M = 0), constant buoyancy parameter
+    By substituting (12) into (4), (5), and (10), we obtain the       ðk ¼ 0Þ, thermal radiation (R = 0) and viscous dissipation
+following ordinary differential equations                             (R = 0); were compared with those of Yih [15] and Ali et al.
+                           M                                          [30] and found to be in good agreement. These comparisons
+f 000 þ ff 00  f 02           ðf 0 þ mhÞ þ kh ¼ 0           ð13Þ    are shown in Table 1. The effects of various governing param-
+                         1 þ m2
+                                                                      eters on the skin-friction coefﬁcient f00 (0) and local Nusselt
+                           M                                          number h0 (0) are shown in Table 2. It is observed that as
+H00 þ fh0  f 0 h þ             ðmf 0  hÞ ¼ 0                ð14Þ    the Hall current parameter m or the constant buoyancy or
+                         1 þ m2
+                                                                      mixed convection parameter k increases the magnitude of the
+ð1 þ RÞh00 þ Pr½fh0  f0 h þ Ecðf 002 þ h002 Þ ¼ 0           ð15Þ    skin friction coefﬁcient f00 (0) and local Nusselt h0 (0) number
+                                                                      increases. It is found that as the magnetic parameter M in-
+    The corresponding boundary conditions take the form               creases the magnitude of the skin friction coefﬁcient f00 (0)
+f ¼ 0; f 0 ¼ 1; h ¼ 0; h ¼ 1 at g ¼ 0                                 and local Nusselt –h0 (0) number decreases. It is noticed that
+                                                              ð16Þ    as the radiation parameter R or Eckert number Ec increases,
+f 0 ! 0; h ! 0; h ! 0 as g ! 1
+                                                                      the magnitude of the skin friction coefﬁcient f00 (0) also in-
+where Pr is the Prandtl number, M is the magnetic parameter, m is     creases while the local Nusselt number, h0 (0) decreases.
+the Hall parameter, k is the constant buoyancy or mixed convec-           To analyze the results, numerical computation has been
+tion parameter, Grx is the local Grashof number and Rex ¼ uwmðxÞ is   carried out for variations in the governing parameters such
+the local Reynolds number and Ec is the Eckert number.                as the Prandtl number Pr, magnetic ﬁeld parameter M, Hall
+   It should be mentioned that k > 0 corresponds to the assist-       parameter m, constant buoyancy or mixed convection param-
+ing ﬂow (heated plate) while k < 0 corresponds to the oppos-          eter k and Eckert number Ec.
+ing ﬂow (cooled plate) and k ¼ 0 corresponds to the forced                In the present study following default parameter values are
+convection ﬂow.                                                       adopted for computations: Pr = 0.71, M = 1.0, m = 1.0,
+   The quantities of physical interest are the skin friction coef-    k ¼ 1:0, R = 1.0 and Ec = 0.01. All graphs therefore corre-
+ﬁcients Cfx and Cfz as well as the Nusselt number Nu, which are       spond to these values unless speciﬁcally indicated on the
+deﬁned as                                                             appropriate graph.
+        s2wx               s2wz                                           In order to assess the accuracy of our computed results, the
+                                              xqw
+Cfx ¼        ;   Cfz ¼          ;   Nu ¼                      ð17Þ    present result has been compared with Ali et al. [30] for differ-
+        quw                quw             kðTw  T1 Þ
+                                                                      ent values of Pr on velocity, cross ﬂow velocity and tempera-
+where swx and swz are the wall shear stresses in the directions of    ture proﬁles shown Figs. 1–3 with R = Ec = 0.0. It is
+x and z, respectively, while qw is the heat ﬂux from the surface      observed that the agreements with the solution of temperature
+of the ﬂat plate, which are given by                                  proﬁles are excellent.
+                                                                      Figs. 4–6 show the effects of the Hall parameter m and con-
+         @u                   @w
+swx ¼ l          ; swz ¼ l            ; qw                            stant buoyancy or mixed convection parameter k on the veloc-
+         @y y¼0               @y y¼0                                  ity f0 , the cross ﬂow velocity h and the temperature h proﬁles,
+          
+           @T                                                         respectively. The effect of increasing m has increased the veloc-
+    ¼ k                                                      ð18Þ
+           @y y¼0                                                     ity proﬁles f0 and the cross ﬂow velocity proﬁles h, however it
+                                                                      decreases the temperature proﬁles h. It is observed that the
+with k being the thermal conductivity of the ﬂuid. Using (12),        effect of the Hall parameter m on the temperature is small
+we get                                                                and that the magnetic and Hall parameters have opposite
+           00                         0
+Cfx Re1=2
+      x ¼ f ð0Þ;           Cfz Re1=2
+                                 x ¼ h ð0Þ;      NuRe1=2
+                                                     x
+
+           ¼ h0 ð0Þ                                          ð19Þ
+                                                                       Table 1 Comparison of results for the heat transfer rate
+                                                                       h0 (0) with m = 0, k ¼ 0, M = 0, R = 0 and Ec = 0.
+3. Results and discussion
+                                                                       Pr             Yih [15]          Ali el al. [30]        Present results
+                                                                       0.71           0.8086            0.8086                 0.80864
+The set of nonlinear ordinary differential Eqs. (13)–(15) with         1              1.0000            1.0000                 1.0001
+boundary conditions (16) have been solved by using the                 3              1.9237            1.9237                 1.9230
+Runge–Kutta fourth order along with Shooting method. First             10             3.7207            3.7208                 3.72028
+of all, higher order non-linear differential Eqs. (13)–(15) are
+converted into simultaneous linear differential equations of
+ﬁrst order and they are further transformed into initial value         Table 2 Numerical values of the skin-friction coefﬁcient and
+problem by applying the shooting technique (Jain et al. [29]).         Nusselt number for Pr = 0.71.
+The resultant initial value problem is solved by employing
+Runge–Kutta fourth order technique. The step size                      m          k              M     R     Ec      f00 (0)        h(0)
+Dg = 0.01 is used to obtain the numerical solution with ﬁve            1.0        1.0            1.0   1.0   0.01    0.707122      0.584872
+decimal place accuracy as the criterion of convergence.                2.0        1.0            1.0   1.0   0.01    0.554359      0.605207
+However, we have considered only the assisting ﬂow ðk > 0Þ             1.0        3.0            1.0   1.0   0.01     0.185339      0.681148
+and forced convection ﬂow ðk ¼ 0Þ cases.                               1.0        1.0            2.0   1.0   0.01    0.972345      0.54508
+                                                                       1.0        1.0            1.0   3.0   0.01    0.653399      0.417914
+   In order to assess the accuracy of the numerical method,
+                                                                       1.0        1.0            1.0   1.0   0.06    0.70602       0.57886
+results for h0 (0) in the absence of Hall current (m = 0),
+Inﬂuence of thermal radiation, viscous dissipation and Hall current on MHD convection ﬂow                                            173
+
+
+
+
+          Figure 1     Comparison of velocity proﬁles.                Figure 4      Velocity proﬁles for different values of m; k.
+
+
+
+
+     Figure 2   Comparison of cross ﬂow velocity proﬁles.
+                                                                  Figure 5     Cross ﬂow velocity proﬁles for different values of m; k.
+
+
+
+
+        Figure 3     Comparison of temperature proﬁles.
+                                                                    Figure 6     Temperature proﬁles for different values of m; k.
+
+effects of the velocity and temperature proﬁles. The curve for
+the case k ¼ 0 (forced convection ﬂow) is also included in each       Figs. 7 and 8 show the effects of magnetic parameter, M on
+ﬁgure in order to see the changes from forced convection to       the velocity f0 and the temperature h proﬁles, respectively. The
+mixed convection ﬂows. When m and M are ﬁxed at m = 1.0           curve for the case M = 0.0 (magnetic ﬁeld is absent) is also in-
+and M = 1.0, the maximum value of the velocity and the cross      cluded in each ﬁgure in order to see the changes. As expected,
+ﬂow velocity proﬁles increase with increasing the parameter k,    the velocity f0 and the temperature proﬁles h increase with the
+while the temperature proﬁles decrease with increasing k. It is   increase in M. When M increases, this will also increase the
+shown that the thickness of the velocity boundary layer is        Lorentz force which opposes the ﬂow and leads to enhanced
+much smaller than the thickness of the thermal boundary layer     deceleration of the velocity proﬁles. The Prandtl number de-
+due to the small value of Pr, and this is a well-known fact for   ﬁnes the ratio of momentum diffusivity to thermal diffusivity.
+low Prandtl number ﬂuids.                                         It is noticed that an increase in the Prandtl number results a
+174                                                                                                          M. Gnaneswara Reddy
+
+
+
+
+      Figure 7     Velocity proﬁles for different values of M, Pr.    Figure 10    Cross ﬂow velocity proﬁles for different values of
+                                                                      R, Ec.
+
+
+
+
+ Figure 8        Temperature proﬁles for different values of M, Pr.
+                                                                       Figure 11   Temperature proﬁles for different values of R, Ec.
+
+
+                                                                      f0 , the cross ﬂow velocity h and the temperature h proﬁles are
+                                                                      shown in Figs. 9–11 respectively. The radiation parameter R
+                                                                      deﬁnes the relative contribution of conduction heat transfer
+                                                                      to thermal radiation transfer. It is obvious that an increase
+                                                                      in the radiation parameter results in increasing velocity, cross
+                                                                      ﬂow velocity and temperature within the boundary layer.
+                                                                      The Eckert number Ec expresses the relationship between the
+                                                                      kinetic energy in the ﬂow and the enthalpy. It embodies the
+                                                                      conversion of kinetic energy into internal energy by work done
+                                                                      against the viscous ﬂuid stresses. Greater viscous dissipative
+                                                                      heat causes a rise in the temperature, as well as the velocity
+                                                                      and cross ﬂow velocity. This behavior is evident from Figs. 9–
+                                                                      11.
+      Figure 9     Velocity proﬁles for different values of R, Ec.
+                                                                      4. Conclusions
+
+decrease of the thermal boundary layer thickness and in gen-          In this paper, a boundary layer analysis to study the combined
+eral lower average temperature within the boundary layer.             effects of thermal radiation, viscous dissipation, Hall current
+The reason is that smaller values of Pr are equivalent to             on MHD convection, viscous, incompressible boundary layer
+increasing the thermal conductivities, and therefore heat is able     ﬂuid ﬂow over a stretched vertical ﬂat plate is presented. The
+to diffuse away from the heated plate more rapidly than for           governing partial differential equations of the free convective
+higher values of Pr. Hence in the case of smaller Prandtl num-        boundary layer ﬂow are reduced to non-linear ordinary differ-
+bers as the boundary layer is thicker and the rate of heat trans-     ential equations and solutions for primary velocity, secondary
+fer is reduced.                                                       velocity and temperature ﬁeld are obtained. The expressions
+    The inﬂuence of the radiation parameter R and viscous dis-        for the skin-friction, heat transfer and mass transfer rates are
+sipation parameter i.e., the Eckert number Ec on the velocity         also derived. In this study, only the assisting ﬂow ðk > 0Þ
+Inﬂuence of thermal radiation, viscous dissipation and Hall current on MHD convection ﬂow                                                  175
+
+and forced convection ﬂow ðk ¼ 0Þ the thermal diffusivity de-            [17] Hossain MA, Mahammad K. Effect of Hall current on hydro-
+creases and these phenomena lead to the decreasing of energy                  magnetic free convection ﬂow near an accelerated porous plate.
+ability that reduces the thermal boundary layer. It is found                  Jpn J Appl Phys 1988;27(8):1531–5.
+that the velocity, cross ﬂow velocity and temperature distribu-          [18] Salem AM, Abd El-Aziz M. Effect of Hall currents and chemical
+                                                                              reaction on a hydromagnetic ﬂow of a stretching vertical surface
+tion increases as the radiation parameter R or viscous dissipa-
+                                                                              with internal heat generation/absorption. Appl Math Model
+tion parameter Ec increases.                                                  2008;32(7):1236–54.
+                                                                         [19] Ghosh SK, Anwar Bég O, Narahari M. Hall effects on MHD ﬂow
+Acknowledgments                                                               in a rotating system with heat transfer characteristics. Meccanica
+                                                                              2009;44:741–65.
+The author is very thankful to the editor and reviewers for              [20] Abd El-Aziz M. Flow and heat transfer over an unsteady
+                                                                              stretching surface with Hall effect. Meccanica 2010;45:97–109.
+their encouraging comments and constructive suggestions to
+                                                                         [21] Cess RD. The interaction of thermal radiation with free convec-
+improve the presentation of this manuscript.                                  tion heat transfer. Int J Heat Mass Transfer 1966;9:1269–77.
+                                                                         [22] Arpaci VS. Effect of thermal radiation on the laminar free
+References                                                                    convection from a heated vertical plate. Int J Heat Mass Transfer
+                                                                              1968;11:871–81.
+ [1] Sakiadis BC. Boundary layer behaviour on continuous solid           [23] Gnaneswara Reddy M, Bhaskar Reddy N. Radiation and mass
+     surfaces. AlChe J 1961;7:26–8.                                           transfer effects on unsteady MHD free convection ﬂow past a
+ [2] Banks WHH, Zaturska MB. Eigen solutions in boundary-layer                vertical porous plate with viscous dissipation. Int J Appl Math
+     ﬂow adjacent to a stretching wall. IMA J Appl Math                       Mech 2010;6(6):96–110.
+     1986;36:263–73.                                                     [24] Gnaneswara Reddy M, Bhaskar Reddy N. Mass transfer and heat
+ [3] Sparrow EM, Abraham JP. Universal solutions for the stream               generation effects on MHD free convection ﬂow past an inclined
+     wise variation of the temperature of a moving sheet in the               vertical surface in a porous medium. J Appl Fluid Mech
+     presence of a moving ﬂuid. Int J Heat Mass Transfer                      2011;4(3):7–11.
+     2005;48:3047–56.                                                    [25] Basiri Parsa A, Rashidi MM, Hayat T. MHD boundary-layer
+ [4] Abraham JP, Sparrow EM. Friction drag resulting from the                 ﬂow over a stretching surface with internal heat generation or
+     simultaneous imposed motions of a free stream and its bounding           absorption. Heat Trans – Asian Res 2013;42(6):500–14.
+     surface. Int J Heat Fluid Flow 2005;26:289–95.                      [26] Gnaneswara Reddy M. Effects of thermophoresis, viscous dissi-
+ [5] Lakshmisha KN, Venkateswaran S, Nath G. Three dimensional                pation and joule heating on steady MHD heat and mass transfer
+     unsteady ﬂow with heat and mass transfer over a continuous               ﬂow over an inclined radiative isothermal permeable surface with
+     stretching surface. J Heat Trans 1988;110:590–5.                         variable thermal conductivity. Int J Heat Technol
+ [6] Sakiadis BC. Boundary-layer behaviour on continuous solid                2012;30(1):99–110.
+     surfaces: I. Boundary-layer equations for two dimensional and       [27] Cowling TG. Magnetohydrodynamics. New York: Interscience;
+     axisymmetric ﬂow. AIChE J 1961;7:26–8.                                   1957.
+ [7] Crane LJ. Flow past a stretching plate. Z Angew Math Phys           [28] Brewster MQ. Thermal radiative transfer and properties. New
+     1970;21:645–7.                                                           York: John Wiley & Sons; 1992.
+ [8] Sato H. The Hall effect in the viscous ﬂow of ionized gas between   [29] Jain MK, Iyengar SRK, Jain RK. Numerical methods for
+     parallel plates under transverse magnetic ﬁeld. J Phys Soc Jpn           scientiﬁc and engineering computation. New Delhi: Wiley Eastern
+     1961;16:1427–33.                                                         Ltd.; 1985.
+ [9] Sutton GW, Sherman A. Engineering magnetohydrodynamics.             [30] Ali FM, Nazar R, Ariﬁn NM, Pop I. Effect of Hall current on
+     New York: McGraw-Hill; 1965.                                             MHD mixed convection boundary layer ﬂow over a stretched
+[10] Pop I. The effect of Hall currents on hydromagnetic ﬂow near an          vertical ﬂat plate. Meccanica 2011;46:1103–12.
+     accelerated plate. J Math Phys Sci 1971;5:375–85.
+[11] Raptis A, Ram PC. Effects of Hall current and rotation.
+     Astrophys Space Sci 1984;106:257–64.                                                         M. Gnaneswara Reddy was born and brought
+[12] Hossain MA, Rashid RIMA. Hall effect on hydromagnetic free                                   up in Chittoor District, Andhra Pradesh. He
+     convection ﬂow along a porous ﬂat plate with mass transfer. J                                obtained the B.Sc. Computers and M.Sc.
+     Phys Soc Jpn 1987;56:97–104.                                                                 degrees in Mathematics from the Sri Venk-
+[13] Ezzat M, Zakaria M, Moursy M. Magnetohydrodynamic bound-                                     ateswara University, Tirupati. He joined as a
+     ary layer ﬂow past a stretching plate and heat transfer. J Appl                              regular research scholar in the Department of
+     Math 2004;1:9–21.                                                                            Mathematics, the Sri Venkateswara Univer-
+[14] Zakaria M. Magnetohydrodynamic viscoelastic boundary layer                                   sity in 2006 and was awarded his Ph.D. degree
+     ﬂow past a stretching plate and heat transfer. Appl Math Comput                              in Fluid Mechanics from the same University
+     2004;155:165–77.                                                                             in 2009. He is working as an Assistant Pro-
+[15] Yih KA. Free convection effect on MHD coupled heat and mass                                 fessor in the Department of Mathematics,
+     transfer of a moving permeable vertical surface. Int Commun         Acharya Nagarjuna University, Andhra Pradesh since 2009. His
+     Heat Mass Transfer 1999;26:95–104.                                  research interest covers the areas are convection ﬂows, heat transfer
+[16] Hossain MA. Effect of Hall current on unsteady hydromagnetic        and mass transfer in porous/non-porous media. His research interest
+     free convection ﬂow near an inﬁnite vertical porous plate. J Phys   also covers applied cryptography.
+     Soc Jpn 1986;55(7):2183–90.
+

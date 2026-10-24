@@ -1,0 +1,11 @@
+FoamFile { format ascii; class volScalarField; object G; }
+dimensions [1 0 -3 0 0 0 0];
+internalField uniform 0;
+boundaryField
+{
+ inlet { type zeroGradient; }
+ outlet { type zeroGradient; }
+ plate { type MarshakRadiation; emissivityMode lookup; emissivity uniform 0.8; value uniform 0; }
+ top { type MarshakRadiation; emissivityMode lookup; emissivity uniform 1.0; value uniform 0; }
+ frontAndBack { type empty; }
+}

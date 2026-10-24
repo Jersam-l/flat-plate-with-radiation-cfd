@@ -1,0 +1,535 @@
+                                                                 Journal of Engineering Research 13 (2025) 898–908
+
+
+                                                                      Contents lists available at ScienceDirect
+
+
+                                                           Journal of Engineering Research
+                                          journal homepage: www.journals.elsevier.com/journal-of-engineering-research
+
+
+
+
+Study the thermal response of a solar flat-plate collector under transient
+solar radiation experimentally and numerically
+Basim Freegah a, Mohammed Hussien Alkhafaji a, b, *, Mohammed Hamed Alhamdo a
+a
+    Mechanical Engineering Department, Engineering College, Mustansiriyah University, Baghdad, Iraq
+b
+    Alnukhba University Collage
+
+
+
+
+A R T I C L E I N F O                                        A B S T R A C T
+
+Keywords:                                                    The target of the current study is to investigate and comparing the thermal response of solar flat plate collector
+Solar radiation                                              (SFPC) for traditional and new model numerically and experimentally. The new model consists of elliptical-
+Computational fluid mechanics (CFD)                          shaped riser pipes and a flat plate with longitudinal channels and wavy fins. The idea behind the new model
+Surface absorption
+                                                             is to increase the surface area exposed to solar radiation. All numerical models were created and simulated using
+Solar Flat Plate Collector (SFPC)
+                                                             ANSYS Fluid 19. R3. While, all of the experimental tests were conducted during the winter season in Baghdad,
+                                                             Iraq. The study showed that there are agree well between experimental and numerical results, and both models
+                                                             have the same behavior. The results showed that the new model outperformed the traditional one in terms of
+                                                             thermal response. The new one performed 23.6% better to compare the conventional model in terms of liquid
+                                                             temperature in the container. Additionally, the mass flow rate of liquid flowing within the closed loop of the new
+                                                             model is 7.9% higher than the traditional model. Moreover, in terms of overall thermal efficiency, the new model
+                                                             outperformed the traditional model by 22.4%.
+
+
+                                                                                                      proposed model is 25% higher than the conventional model in terms of
+                                                                                                      water temperature in the container. Other researchers have tried to
+1. Introduction                                                                                       improve the thermal response of SFPC by inserting various tube con­
+                                                                                                      figurations within the riser pipe. Freegah [4] studied the effect of
+    Nowadays, due to the rising cost of fossil fuels and the possibility of                           inserting several tube configurations inside the riser pipe, namely
+climate variation, renewable energy has gained popularity worldwide.                                  straight, helical, and wavy, on the thermal response of the SFPC. He
+Renewable energy is of economic and environmental benefit to hu­                                      found that the thermal response of the straight tube model is the best
+manity and can be described as clean energy that comes from natural                                   among other models and is higher by 12.3% as compared to the tradi­
+sources. There are numerous kinds of renewable energy sources; how­                                   tional one. The researcher Jasim et al. [5] also reached the same results
+ever, a solar energy source is the most significant due to its global                                 as Freegah, as they conducted a study on the influence of inserting a
+availability [1]. There are a variety of devices that can be used to convert                          straight closed-tube into the ascending tube. They reported that the
+solar energy into thermal or electrical energy for heating water or                                   proposed model outperformed the conventional model by 15.14% and
+buildings, cooking food, etc. In order to improve the thermal response of                             19.89% in terms of the water temperature in the container and the
+such systems, many researchers have studied the effects of several pa­                                working liquid temperature of the riser pipe outlet, respectively. To
+rameters. Badiei et al. [2] carried out a numerical investigation of SFPC,                            increase the surface area of the collector and hence increase the amount
+with and without fins, in order to enhance their thermal response. They                               of heat that is received from the solar, Alkhafaji et al. [6] studied the
+reported that a model with fins performed 4% better than one without                                  effect of adding fins to the collector on the thermal response of the SFPC.
+fins in terms of thermal efficiency. A computational and experimental                                 They discovered that adding fins improved performance by approxi­
+investigation was carried out by Jasim et al. [3] to examine the influence                            mately 20.8% higher than the conventional model. On the other hand,
+of various factors on the thermal response of the FPSC. These parameters                              Junaid and Sadaq [7] investigated the effect of inserting fins inside the
+are the addition of toroidal fins around the riser-pipe and the insertion of                          riser tube on the thermal response of the FPSC numerically. They found
+a closed tube within the riser-pipe, while keeping the same amount of                                 that adding fins to the riser pipes significantly improved the thermal
+the working liquid. They found that the thermal response of the
+
+
+    * Corresponding author at: Mechanical Engineering Department, Engineering College, Mustansiriyah University, Baghdad, Iraq.
+      E-mail address: mohammadhusain9591@gmail.com (M.H. Alkhafaji).
+
+https://doi.org/10.1016/j.jer.2024.03.004
+Received 23 June 2023; Received in revised form 18 August 2023; Accepted 11 March 2024
+Available online 12 March 2024
+2307-1877/© 2024 The Authors. Published by Elsevier B.V. on behalf of Kuwait University.                                This is an open access article under the CC BY license
+(http://creativecommons.org/licenses/by/4.0/).
+B. Freegah et al.                                                                                                      Journal of Engineering Research 13 (2025) 898–908
+
+
+
+    Nomenclature                                                                       ρ         Density, kg/m3
+                                                                                       μ         Dynamic viscosity, N•s/m2
+    Pr              Prandtl number                                                     IT        Intensity of solar radiation
+    SWHs            Solar water heating system                                         δ         Declaration angle
+    FPSC            Flat Plate Solar Collector                                         ε         Earth’s orbit correction factor
+    T               Temperature, ◦ C                                                   θ         Incline angle of FPSC
+    Tw,t            Temperature in tank, ◦ C                                           τ         Atmospheric transmittance
+    Tw,o            The riser pipe outlet temperature, ◦ C                             ω         Sun hour angle
+    q               Heat flux, w/m2                                                    ∝         local latitude
+    Qu              Actual collected useful energy, w                                  ṁ        Mass flow rate, kg/s
+    Cp              Specific heat,J/kg.◦ C                                             η         Thermal efficiency of the solar collector, %
+
+    Greek symbols
+    v        Kinematic viscosity, m2/s
+
+
+
+efficiency and outlet temperature as compared with a conventional                      inlet working liquid temperature. They discovered that increasing all of
+model, by 2 oC and 25%, respectively. Koholé & Tchuen [8] studied the                 the above parameters except the working fluid’s inlet temperature
+effect of three types of FPSC, namely, upper, lower, and side bond                     increased the SFPC’s thermal response. Shrirao et al. [13] compared the
+configurations of absorber pipes, on the thermal response of FPSC. They                cross sections of two types of riser pipe: airfoil and circular. They found
+found that, among all the studied models, the best one is the upper bond               that the airfoil absorber tubes gained a large amount of solar radiation
+model of the absorption tube. Qasim et al. [9] have done numerical                     compared to the other absorber tubes. Thus, the efficiency of the
+comparison study between two models, namely the traditional model                      airfoil-shaped absorption tube improved by 10–12% as compared to the
+(riser pipes are in the form of a straight) and the new model (the riser               circular cross section. Hamed [14] studied the influence of ambient
+pipes are in the form of a helical). The results show that the helical riser           temperature on the efficiency by using nine pipes welded above flat
+pipe model performed best as compared to the straight pipe one. Mandal                 plate. They found that increasing the ambient temperature by 8 ◦ C in­
+and Ghosh [10] have tried to enhance the thermal response of SFPC by                   creases FPSC efficiency by 3%. Shelke and Patil [15] conduct a nu­
+studying the effect of a double riser pipe with a reflector and comparing              merical study to compare the thermal response of two shapes of riser
+it to a single riser pipe. They reported that, compared to a single pass, the          pipes in FPSC, defined as elliptical and circular pipes. They confirmed
+double pass performed better. The comparison between the new model                     that the SFPC with the elliptical pipe has a 4.17 ◦ C higher average sur­
+(fins inside the riser pipe) and the traditional one has been conducted                face temperature than the traditional one.
+experimentally by Seco-Nicolás et al. [11]. They reported that the dif­                   Despite the abundance of (SFPC) previous work, it has been noted
+ference in the average working liquid temperature between the two                      that the majority of these studies were conducted under steady-state
+models is minimal. Gunjo et al. [12] conducted an experimental and                     heat flux boundary condition with using active methods to flow the
+numerical study to improve the thermal efficiency of SFPC for various                  liquid inside the system. Keeping the above in view, the present work
+operating parameters such as the flow rate of the working liquid, sur­                 attempts to establish the optimal thermal response of SFPC by increasing
+rounding temperature, solar collector conductivity, solar radiation, and               the surface area that exposed to solar radiation (without changing the
+
+
+
+
+                                    Fig. 1. Plate of the SFPC system under consideration, a) conventional model and, (b) New model.
+
+                                                                                 899
+B. Freegah et al.                                                                                                          Journal of Engineering Research 13 (2025) 898–908
+
+
+
+
+                                                                                                         Fig. 3. Flowchart for conducting experiments.
+
+
+
+                                                                                         Table 2
+                                                                                         Standard uncertainty estimated.
+                     Fig. 2. Schematic of the experimental setup.
+                                                                                                           Thermocouple at the   Thermocouple           Thermocouple at
+                                                                                                           outlet of the riser   inside the tank (ºC)   the flat plate (ºC)
+                                                                                                           (ºC)
+Table 1
+Specifications of the experimental rig.                                                   Average          + 0.607               + 0.225                + 0.49
+                                                                                           standard
+  The parts                                         Specifications                         uncertainty
+  The height of the SFPC                            120 cm
+
+  The width of the S FPC                            60 cm
+                                                                                         a 9.6-liter water storage container, a heat exchanger inside the
+  tilt angle                                        33º                                  container, a wooden frame, a glass layer, flat-plate, and a down-comer
+  The number of riser-pipe                          One                                  pipe that return the liquid to the riser-pipe as shown in Fig. 1. Further
+                                                                                         a number of temperature sensors (type K) are utilized. One is utilized to
+  Length of the riser pipe                          100 cm
+                                                                                         evaluate the temperature of the working fluid at the riser pipe’s outlet,
+  Riser-pipe material                               Copper                               three are used to measure the temperature of the water inside a
+  The container diameter                            20 cm                                container, and three are employed to gauge the plate temperature. Fig. 2
+  The high of the container                         30 cm                                depicts the operation of a laptop-connected solar meter and data
+                                                                                         acquisition device. The wooden structure is 1 m long, 0.1 m wide, and
+  The material of the container                     Plastic
+                                                                                         0.1 mm thick, with a total length of 0.01 m. A copper flat plate with
+  The thickness of the rubber buffer                0.01 m                               dimensions of 0.109 m wide by 1 m long by 0.65 ×10− 3 m thick and a
+  The flat plate length                             1m                                   glass sheet with measurements of 1.006 m long by 0.130 m wide by 6
+  Width of flat plate                               0.1 m                                ×10− 3 m thick are used to lid the collector, with an air gap of 0.3 m
+                                                                                         above the absorber plate, respectively. In order to prevent the loss of
+  Flat plate thickness                              0.65×10− 3 m
+                                                                                         heat through the air gap and fix the glass in place, rubber was used.
+  Data acquisition                                  BTM-4208 SD with 12 channels         Furthermore, all experimental test data was saved on a laptop. 2 In
+  Solar power meter                                 TES-1333R                            addition, the descriptions of the test rig used in the present study are
+                                                                                         depicted in Table 1.
+
+collector main dimensions). Therefore, under transient heat flux and
+passive technique to circulate the liquid, this work aims to develop and                 2.2. Procedure of test
+test a new SFPC model (against traditional circular – riser pipe and
+smooth plate model). This new developed model contains elliptical                           The present experimental test was done on the 15th of November
+cross-section riser pipe and flat plate with both longitudinal channels                  outdoors for period between 8:00 am. and 3:00 pm. Before beginning
+and added wavy fins.                                                                     the experimental test, several steps should be taken into account. These
+                                                                                         steps are summarized in a flow chart as shown in Fig. 3.
+2. Experimental setup
+                                                                                         2.3. Estimating uncertainty
+   This section includes the description of all rig parts and the re­
+quirements for the measuring instruments utilized in the current                             Estimating uncertainty is considered as the amount of fluctuations or
+experimental work. All of the experiments performed were carried out in                  error measurements because of user error. Such errors can adversely
+Baghdad, Iraq, during the winter session.                                                affect both the working fluid flow and the temperature measurement of
+                                                                                         the FPSC. Measurement errors are calculated by many tools, which
+2.1. Test rig                                                                            cannot work under the ideal measuring conditions.
+                                                                                             To calculate uncertainty, the first step is to calculate the mean
+    The experimental set-up consists of several parts namely a riser pipe,               sample. The mean sample X is calculated by taking the sample average
+
+                                                                                   900
+B. Freegah et al.                                                                                                  Journal of Engineering Research 13 (2025) 898–908
+
+
+
+
+                    Fig. 4. Geometry of SFPC for (a) the SFPC whole system, (b) the conventional collector, and (c) the new collector.
+
+
+
+                                                                                 Table 3
+                                                                                 Mesh independency.
+                                                                                  Model              Element no.   Water of container          Percentage
+                                                                                                     (million)     temperature (◦ C)           Difference (%)
+
+                                                                                  Conventional       2.21          26.67                       0.22
+
+                                                                                                     4.51          26.61
+
+                                                                                  New                3.4           34.85                       0.229
+                                                                                   model             6.9           34.93
+
+
+
+                                                                                 value. The average value is calculated using Eq. (1) by combining the
+                                                                                 sampled values and dividing them by the sample size n [16].
+                                                                                          1∑n
+                                                                                   X=           Xi                                                              (1)
+                                                                                          n i=1
+
+                                                                                 Where,X, Xi and n are respectively mean value, sample value and sample
+                                                                                 number.
+                                                                                    Then, the sample standard deviation was computed. The sample
+                                                                                 standard deviation (SX ) was computed using Eq. (2) via taking the sum
+                                                                                 square root of the sampled deviations squares from the mean divided via
+                                                                                 (sample number − 1) [17].
+                        Fig. 5. SFPC meshing.
+
+
+
+
+                                                                           901
+B. Freegah et al.                                                                                                               Journal of Engineering Research 13 (2025) 898–908
+
+
+
+
+                                                               Fig. 6. Variation in solar radiation for seven hours.
+
+           √̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+                1           ∑n                                                                 process, as shown in the Fig. (5). The hybrid mesh has two hexagonal
+SX     =                                (Xi − X)2                                  (2)         forms and tetrahedral each type has parameters, characteristics, and
+            n− 1                   i=1
+                                                                                               conditions to be used. Compared to other methods, the hexagonal mesh
+Where, n-1 is the degrees of freedom for the estimate. The degrees of                          is considered one of the most widespread methods because it has many
+freedom used to estimate the uncertainty are important for determining                         advantages, such as less memory needs, provides further accurate out­
+the confidence limits and the other decision variables. Lastly, Eq. (3) can                    comes because of the less diffusion, and the capability to connect the
+be used to estimate the standard uncertainty. Based on the Eqs. (1), (2)                       complex engineering shapes [18].
+and (3), the uncertainty is calculated and the results are listed in Table 2.                      Furthermore, the element number of the grid has an important in­
+                                                                                               fluence on the accuracy of the numerical results. So mesh independency
+        SX
+Eu =                                                                               (3)         tests were performed in order to select the sufficient element number of
+       √n                                                                                      the mesh. Table 3 shows the findings of these tests, which summarize the
+                                                                                               numerical outcomes of the average water temperature in the container
+3. Numerical analysis                                                                          at various mesh shapes for both models under study. Based on Table 3,
+                                                                                               the doubled of the element numbers had little effect on the numerical
+   In order to analyze any model with ANSYS Fluent, several steps must                         results. So, the minimum number of elements for all models in this study
+be taken. The first step involves creating the model and generating the                        was used to reduce the cost and the simulation run time.
+mesh domain. The second step includes determining the boundary
+conditions and setting them up. At the third step, the outcomes are
+presented. In this study, ANSYS Fluent R 19.3 is used.                                         3.3. Boundary conditions
+
+3.1. Geometric models                                                                              One of the boundary conditions used in the current study is the initial
+                                                                                               temperature of water in the container and the working liquid tempera­
+    In this study, two models of the SFPC are created, namely the                              ture inside the pipe loop of 21.6 ◦ C. Furthermore, the container contains
+traditional model (circular cross-sectional shape of the riser pipe,                           9.6 L of water, and the closed loop contains 0.6 L of working fluid. The
+smooth plate, and without fins) and the new model (elliptic cross-                             riser-pipe and plate were exposed to transient heat flux for seven hours
+sectional shape of the riser-pipe, the plate with a channel, and the                           (see Fig. 6), which calculated from Equ. 4 [19]. To input the heat flux
+wavy fins on the flat plate), as shown in Fig. 4(a-c). A SFPC collector has                    values to the Ansys Fluent software, a user-defined function (UDF) was
+a width and height of 60 cm and 120 cm, respectively, with a incline                           used ANSYS (FLUENT) as the input value for heat flux (CFD). The water
+angle of 33◦ , with one riser pipe connecting the bottom with the up-riser.                    that circulated inside closed loop was water. The physical properties of
+Furthermore, the riser pipe’s length for both models is 1 m, while the                         water used in the numerical aspect are density (998.2 kg/m3), heat ca­
+thickness and diameter of the return pipe have similar dimensions to the                       pacity (4.182 kJ/kg-K), viscosity (1003 *10− 6 kg/m.s), thermal con­
+riser-pipe of the traditional one.                                                             ductivity (0.6 W/m.K) and thermal expansion rate (149 *10− 61/K).
+                                                                                               q = IT ετ[ sinδsin   (θ − ∝) + cosδcos   (θ − ∝)cosω      ]                   (4)
+3.2. Mesh generation
+                                                                                               where δ,τ,θ, IT ,∝ and ω denote to the tilt angle of SFPC, the atmo­
+   A mesh was created for the system, where the hybrid meshing has                             spheric transmittance, local latitude, solar radiation intensity and the
+been used to simulate the model after completing the engineering model                         hour angle of the sun respectively. By using Eq. (5), it can be estimate the
+
+
+
+
+                                                                                         902
+B. Freegah et al.                                                                                                     Journal of Engineering Research 13 (2025) 898–908
+
+
+
+
+     Fig. 7. Validation of numerical outcomes for (a) working liquid temperature at the riser-pipe exit and (b) the fluid temperature inside container storage.
+
+
+                                                                                      correction factor for Earth’s orbit ε [20].
+Table 4
+                                                                                          [               (            )]
+Acceptance criteria of statistical tests.                                                                     360Nd
+                                                                                      ε = 1 + 0.033cos                                                             (5)
+  Test type                 Criteria of acceptance         The result of                                        365
+                                                           validation
+                                                                                         Nd depicted the number of the day over the year.
+  Chi-square                Less than 0.05 is acceptable   0.012
+                            [26]
+  t-Test                    Closed to 0 [27]               0.000015
+                                                                                      3.4. Governing equations
+  Durbin–Watson             Less than two is acceptable    1.2104
+    statistic               [28]
+                                                                                          The 3D Navier-Stokes equations, the energy equation, and the con­
+                                                                                      tinuity equations were numerically resolved.
+                                                                                          The continuity equation governing incompressible fluid flow can be
+                                                                                      written as below:
+
+                                                                                903
+B. Freegah et al.                                                                                                          Journal of Engineering Research 13 (2025) 898–908
+
+
+
+
+              Fig. 8. Temperature contour of the water in the container and the working liquid for both models: (a) the traditional one and (b) the new one.
+
+
+∂                                                                                          4. Result and discussion
+      (ρui ) = 0                                                               (6)
+∂x
+                                                                                               The normal convection phenomenon was demonstrated using an
+   The following equation can be used to calculate heat conduction in
+                                                                                           Ansys Fluent numerical analysis. Furthermore, the average temperature
+3D solid materials: [21]
+                                                                                           of the fluid in the container and the SFPC loop were used to calculate the
+   ( 2              )
+    ∂ T ∂2 T ∂2 T                                                                          fluid properties.
+Km       + 2 + 2 =0                                               (7)
+    ∂x 2  ∂y    ∂z
+   Heat convection can be estimated using Eq. 8 [22].                                      4.1. Numerical approach validation
+  ( → )            →
+∇. ρhU     = − p∇U + ∇(k∇T) + ɸ + sh                                           (8)             This section shows a comparison between experimental and nu­
+                                                                                           merical outcomes. This comparison was conducted to prove the validity
+   The 3-D of the Navier-Stokes equations can be written as in Eq. (9)                     of the numerical model. This comparison was done for the temperature
+[23]:                                                                                      of the container water and the working liquid at the riser-pipe outlet, as
+  ( → )      ∂p ∂τxx ∂τyx ∂τzx                                                             shown in Fig. 7. It is clear from this Fig. that the maximum difference
+∇. ρ U u = −   +
+             ∂x ∂x
+                    +
+                      ∂y
+                         +
+                           ∂z                                                              between the numerical and experimental results for each of the average
+                                                                                           temperatures of the container water and the working liquid are 8.12%
+  ( → )      ∂p ∂τxy ∂τyy ∂τzy                                                             and 8.36%, respectively. From another side the current results have
+∇. ρ U v = −   +    +    +                                                     (9)
+             ∂y ∂x    ∂y   ∂z                                                              been compared with previous experimental study Ref. [25]. This
+                                                                                           compared shown that the results of the current study have same
+  ( →   )    ∂p ∂τxz ∂τyz ∂τzz                                                             behavior of previous experimental resulst. Furthermore, some statistical
+∇. ρ U w = −   +    +    +
+             ∂z ∂x    ∂y   ∂z                                                              analysis to prove that the results are very close has been done, and the
+                                                                                           results of these statistical analyses are shown in Table 4. These estimates
+                                                                                           give a good indication that the developed numerical approach is reliable
+3.5. Computation of the collector thermal efficiency                                       for investigating the heat transfer improvements of the new model.
+
+   The instantaneous thermal efficiency of a solar collector is defined as
+the ratio of the collected useful energy (Qu) to the intensity of the solar                4.2. Numerical analysis
+radiation. It is calculated as follows [24]:
+                                                                                              Fig. 8 shows the temperature contour at 13 p.m. for the conventional
+η=
+      Qu
+                                                                             (10)          and new models for working liquid within the pipes loop and water
+     Ac I T                                                                                within the container. This Fig. clearly shows that the working liquid
+                                                                                           temperature inside the riser-pipe part is higher than the down-comer
+Where, the instantaneous useable energy gathered via the solar collector
+                                                                                           part for both models. Furthermore, the new model’s average water
+is specified via:
+                                                                                           temperature inside the container and working liquid temperature are
+Qu = ṁCp (Tw,o − Tw,i )                                                     (11)          higher than the conventional model’s. This is due to the increased ab­
+                                                                                           sorption area that the collector of new model has as a result of changing
+Where, ṁ, Cp, Tw,o, and Tw,i represent the mass flow rate of working                      the cross-sectional shape of the riser pipe to elliptic, adding fins to the
+liquid, the specific heat of water, the outlet and the inlet of water tem­                 plate, and making a channel on the plate. In addition, the average
+perature, respectively.                                                                    temperature of the container water is 38.99 ◦ C for the conventional
+
+
+
+
+                                                                                     904
+B. Freegah et al.                                                                                                  Journal of Engineering Research 13 (2025) 898–908
+
+
+
+
+                      Fig. 9. Temperature distribution of both models (a) the working liquid at the upriser and (b) the container water.
+
+
+model and 44.39 ◦ C for the new model, respectively.                               collector surface area of the new model.
+    Fig. 9 depicts the temperature variation for (a) the working liquid at             Fig. 10. depicts the variation of the working liquid mass flow rate for
+the upriser and (b) the container water for both models considered in              both models. The working liquid flow rate inside the riser pipe of the
+this study. Fig. (9, a) depicts that the maximum working liquid tem­               SFPC increases and then decreases as a result of the increase and
+perature at the upriser-pipe is at 14 p.m., while the temperature de­              decrease in the rate of solar radiation. The maximum value of the flow
+creases in the last hours as heat flux decreases. The temperature of the           rate for both models happens at one o’clock in the afternoon. The flow
+water at the upriser has increased by 40.69 ◦ C and 51.78 ◦ C, for new and         rates for the conventional, and new models are 1.29 g/s and 1.403 g/s
+conventional models, respectively. Fig. (9, b) shows that the water                respectively.
+temperature in the container increased by 26.62 ◦ C for the conventional               Fig. 11 illustrates the variation in thermal efficiency of SFPCs during
+model and 34.85 ◦ C for the new model, respectively. It can be concluded           operating time for both models. This Fig. shows that as solar radiation
+that the new model performed better than the traditional one in terms of           increases and decreases, the thermal efficiency of the SFPC increases,
+the temperature of the container water and the working liquid tem­                 reaching a maximum at midday and then decreasing at the end of the
+perature at the riser-pipe outlet. This is because an increase in the              day. At 13 pm, SFPC the thermal response is 59.8% and 77.05% for
+
+
+                                                                             905
+B. Freegah et al.                                                                                                       Journal of Engineering Research 13 (2025) 898–908
+
+
+                                                                                        overall thermal efficiency value of the traditional and new models is
+                                                                                        55.1% and 71%, respectively.
+
+
+                                                                                        4.3. Numerical validation of the new model
+
+                                                                                            The same boundary conditions and geometrical dimensions are used
+                                                                                        in the experimental test rig to validate the numerical results. Upon such
+                                                                                        base, the temperature of water in the container and the temperature of
+                                                                                        working liquid at the riser pipe outlet for (7 hours) operating are
+                                                                                        compared as displayed in Fig. (13) (a & b). This Fig. shows that the
+                                                                                        numerical temperature behavior is the same as the experimental
+                                                                                        behavior. In addition, close results are found between the experimental
+                                                                                        and the numerical findings. For the average temperature of the
+                                                                                        container water and the working liquid at the riser-pipe outlet, the
+                                                                                        difference between the numerical and experimental results is 9.42% and
+                                                                                        10.46%, respectively, as shown in Fig. 13 (a and b). There’re many
+                                                                                        causes for the difference between the experimental outcomes and the
+                                                                                        present results. Nevertheless, the thermal losses happened during the
+Fig. 10. The variation of the working liquid mass flow rate distribution at the
+upriser pipe outlet.
+                                                                                        experimental test that being hard for monitoring, and the errors resulted
+                                                                                        via the inadequate precision of measuring apparatuses are among these
+                                                                                        most significant causes.
+                                                                                            Finally, it can be summarized that the comparison between this study
+                                                                                        and previous studies similar to the present study in terms of the overall
+                                                                                        efficiency of SFPC enhancements as shown in Table 5.
+
+                                                                                        5. Conclusions
+
+                                                                                           In the current work, the thermal response of SFPC for the two models
+                                                                                        under consideration was investigated numerically and experimentally.
+                                                                                        Under the limitations of the current study, the following conclusions can
+                                                                                        be drawn:
+
+                                                                                        1. The disparity between the numerical and experimental findings was
+                                                                                           found to be 8.12% and 8.36%, for the average temperature of the
+                                                                                           water in the container and the working liquid at the outlet of the riser
+                                                                                           pipe for the conventional model. While for the new model, the
+                                                                                           disparity between the numerical and experimental findings was
+          Fig. 11. Instantaneous thermal efficiency variance for SFPC.                     found to be 9.42% and 10.46%, respectively, for the working liquid
+                                                                                           at the outlet of the riser pipe and the average temperature of the
+traditional model and new model respectively. Meanwhile, Fig. 12 de­                       container water.
+picts the overall efficiency of SFPC for conventional, and new models.                  2. Compared to the conventional model, the new model performed
+According to this Fig., the new model has the highest overall thermal                      23.6% better for water temperature in the container and 21.9%
+efficiency as compared to the conventional model, and this could be                        better for working liquid temperature at the riser pipe outlet.
+related to the increased absorption surface area of the SFPC. As the                    3. In the new model, the working liquid mass flow rate is 7.9% higher
+                                                                                           than in the conventional model.
+
+
+
+
+                                                         Fig. 12. The overall thermal efficiency for SFPC.
+
+                                                                                  906
+B. Freegah et al.                                                                                                         Journal of Engineering Research 13 (2025) 898–908
+
+
+
+
+Fig. 13. Comparison between the numerical and experimental findings of the temperature (a) the working liquid at the riser-pipe outlet and (b) the container water.
+
+
+
+
+Table 5
+The percentage of the overall efficiency of SFPC enhancements of the current study with previous studies.
+                                                 The best model of the present study                    Herrero et al. [29]                      Vijayakumar et al. [30]
+
+  The overall efficiency of SFPC                 22.4%                                                  4.5%                                     18.6%
+
+
+
+4. The new model performed 22.4% better than the conventional model                     Declaration of Competing Interest
+   in terms of the overall efficiency of SFPC.
+                                                                                           Also the authors declare no conflict of interest.
+   In order to establish the optimal thermal response of SFPC, this study
+provides the necessary knowledge base.                                                  Acknowledgment
+
+                                                                                           The authors would like to thank Mustansiriyah University (www.
+
+
+                                                                                  907
+B. Freegah et al.                                                                                                                         Journal of Engineering Research 13 (2025) 898–908
+
+
+uomustansiriyah.edu.iq) in Baghdad -Iraq for its support in the present                            [14] Hameed, Raed Sabri. Theoretical and Experimental Analysis of Flat Plate Collector.
+                                                                                                        Thi-Qar University Journal for Engineering Sciences, 2012, 3.1: 43-52.
+work.
+                                                                                                   [15] V. Shelke, C. Patil, Analyze the effect of variations in shape of tubes for flat plate
+                                                                                                        solar water heater. International Journal of Scientific Engineering and Research
+References                                                                                              (IJSER) 3.4 (2015) 118–124.
+                                                                                                   [16] Stephanie Bell, Measurement good practice guide no. 11 (issue 2). A beginner’s
+ [1] John Twidell, Tony Weir, Renewable Energy Resources, Routledge, 2015.                              guide to uncertainty of measurement, National Physical Laboratory Teddington,
+ [2] Z. Badiei, M. Eslami, K. Jafarpur, Performance improvements in solar flat plate                    Middlesex, United Kingdom, 2001.
+     collectors by integrating with phase change materials and fins: A CFD modeling,               [17] Castrup, S. and H. Castrup, Measurement uncertainty analysis principles and
+     Energy 192 (2020) 116719.                                                                          methods. National Aeronautics and Space Administration, 2010.
+ [3] Jasim, Ayoob Khalid; Freegah, Basim; Alhamdo, Mohammed Hamed. Numerical                       [18] H.U. Jiangtao, et al., Overlay Grid Based Geometry Cleanup, IMR, 2002,
+     and experimental study of a thermosyphon closed-loop system for domestic                           pp. 313–322.
+     applications. Heat Transfer.                                                                  [19] Nay Zar Aung, Songjing Li, Numerical investigation on effect of riser diameter and
+ [4] Freegah, Basim. "Numerical and experimental analysis of the flat plate solar water                 inclination on system parameters in a two-phase closed loop thermosyphon solar
+     heater systems’ thermal response." Heat Transfer.                                                  water heater, Energy Convers. Manag. 75 (2013) 25–35.
+ [5] Ayoob Khalid Jasim, Basim Freegah, Mohammed Hamed Alhamdo, Numerical and                      [20] A.S.H.R.A.E. Handbook, Fundamentals. American Society of Heating,
+     experimental investigation of a thermosiphon solar water heater system thermal                     Refrigerating, and Air Conditioning Engineers, Inc., Atlanta, Georgia, 1985,
+     response used in domestic applications, Heat. Transf. 50 (5) (2021) 4575–4594.                     p. 1985.
+ [6] Mohammed H. Alkhafaji, Basim Freegah, Mohammed Hamed Alhamdo, Study the                       [21] Jiri Blazek, Computational Fluid Dynamics: Principles and Applications,
+     influence of adding fins to the plate of the solar collector on thermal response                   Butterworth-Heinemann, 2015.
+     under natural phenomena, Int. Commun. Heat. Mass Transf. 135 (2022) 106058.                   [22] Henk Kaarle Versteeg, Weeratunge Malalasekera, An Introduction to
+ [7] Design and optimization of fins in solar flat plate collector using CFD 1 ( 6 Int. J.              Computational Fluid Dynamics: The Finite Volume Method, Pearson education,
+     Sci. Res. (IJSR) , 2017, ,Int. J. Sci. Res.IJSR) (1696–1700.                                       2007.
+ [8] Yemeli Wenceslas Koholé, Ghislain Tchuen, Comparative study of three                         [23] Donald F. Young, et al., A Brief Introduction to Fluid Mechanics, John Wiley &
+     thermosyphon solar water heaters made of flat-plate collectors with different                      Sons, 2010.
+     absorber configurations, Int. J. Sustain. Energy 36 (5) (2017) 430–449.                       [24] Duffie, John A.; Beckman, William A.. Solar engineering of thermal processes,
+ [9] M.S. Qasim, B. Freegah, G.S. Ali, Numerical analysis of the thermal response in                    fourth editio. 2013.
+     conventional and developed shapes of thermosyphon, IOP Conf. Ser.: Mater. Sci.                [25] Freegah, Basim, and Aouf A.Al-Tabbakh. Experimental and numerical analysis of a
+     Eng. IOP Publ. (2020) 012090.                                                                      thermosyphon solar water heater for domestic applications. UPB Scientific
+[10] S. Mandal, S.K. Ghosh, Experimental investigation of the performance of a double                   Bulletin, Series D: Mechanical Engineering 81, no. 1 (2019): 117-132.
+     pass solar water heater with reflector, Renew. Energy 149 (2020) 631–640,                     [26] Preacher K.J. Calculation for the chi-square test: an interactive calculation tool for
+     https://doi.org/10.1016/j.renene.2019.11.160.                                                      chi-square tests of goodness of fit and independence. 2001.
+[11] Manuel Seco-Nicolás, Mariano Alarcón García, Juan Pedro Luna-Abad,                          [27] Runkel P. What Are T Values and P Values in Statistics? 2016.
+     Experimental calculation of the mean temperature of flat plate thermal solar                  [28] J.O. Rawlings, S.G. Pantula, D.A. Dickey, Applied Regression Analysis: A Research
+     collectors, Results Eng. 5 (2020) 100095.                                                          Tool, Springer Science & Business Media, 2001.
+[12] Dawit Gudeta Gunjo, Pinakeswar Mahanta, P.S. Robi, CFD and experimental                       [29] M.R. Herrero, J. Pérez-García, A. García, F.J. García-Soto, E. López-Galiana,
+     investigation of flat plate solar water heating system under steady state condition,               Simulation of an enhanced flat plate solar fluid collector with wire-coil insert
+     Renew. Energy 106 (2017) 24–36.                                                                    devices, Sol. Energy 85 (3) (2011) 455–469.
+[13] Pankaj N. Shrirao, Sachin S. Pente, Ashish N. Mahure, Comparative thermal                     [30] S. Vijayakumar, R. Vinoth, K. Abilash, P. Praveen, Enhancement of heat transfer
+     analysis of a flat plate solar collector using aerofoil absorber tubes with                        rate in a solar flat plate collector using twisted tapes and wire coiled turbulators,
+     conventional circular absorber tubes, Int J. Basic Appl. Res (2018) 8.                             Int J. Mech. Aerosp. Ind. Mechatron. Eng. 8 (2) (2014) 495–498.
+
+
+
+
+                                                                                             908
+

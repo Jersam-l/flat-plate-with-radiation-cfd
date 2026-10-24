@@ -1,0 +1,46 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  13
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 13-18870c24d21c
+Exec   : foamToVTK -latestTime
+Date   : Oct 23 2026
+Time   : 23:31:42
+Host   : "jersam26"
+PID    : 180210
+I/O    : uncollated
+Case   : /home/jerlin/Documents/projects/blt/cases/surfaceRadiation_coarse
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 1500
+
+Time: 1500
+Using dynamicCode for codedFixedValue greySurfaceRadiationHeatBalance at line 16122 in "/home/jerlin/Documents/projects/blt/cases/surfaceRadiation_coarse/1500/T/plate"
+    volScalarFields            : wallHeatFlux p T p_rgh rho
+    volVectorFields            : U
+
+    Internal  : "/home/jerlin/Documents/projects/blt/cases/surfaceRadiation_coarse/VTK/surfaceRadiation_coarse_1500.vtk"
+    Original cells:16000 points:32562   Additional cells:0  additional points:0
+
+Combining patches:
+    patch 0 inlet
+    patch 1 outlet
+    patch 2 plate
+    patch 3 top
+    discarding empty/nonConformal/processor patch 4 frontAndBack
+    Patch     : "/home/jerlin/Documents/projects/blt/cases/surfaceRadiation_coarse/VTK/inlet/inlet_1500.vtk"
+    Patch     : "/home/jerlin/Documents/projects/blt/cases/surfaceRadiation_coarse/VTK/outlet/outlet_1500.vtk"
+    Patch     : "/home/jerlin/Documents/projects/blt/cases/surfaceRadiation_coarse/VTK/plate/plate_1500.vtk"
+    Patch     : "/home/jerlin/Documents/projects/blt/cases/surfaceRadiation_coarse/VTK/top/top_1500.vtk"
+    surfScalarFields  : phi
+End
+

@@ -1,0 +1,6 @@
+# dynamicCode:
+# SHA1 = a5a70ea331d2a8420d21030acaaa7987c447865f
+
+codedFixedValueFvPatchFieldTemplate.C
+
+LIB = $(PWD)/../platforms/$(WM_OPTIONS)/lib/libgreySurfaceRadiationHeatBalance_a5a70ea331d2a8420d21030acaaa7987c447865f

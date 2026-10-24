@@ -1,0 +1,4 @@
+heaterFlux_Wm2=1000
+surroundingsTemperature_K=300
+surfaceEmissivity=0.8
+radiationModel=greyDiffuseSurfaceEnergyBalance

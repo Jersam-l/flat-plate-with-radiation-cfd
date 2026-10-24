@@ -1,0 +1,4 @@
+FoamFile { format ascii; class dictionary; object radiationProperties; }
+// Air is transparent. Surface radiation is represented by the wall energy split,
+// so do not solve a participating-medium radiation equation in the fluid.
+radiationModel none;

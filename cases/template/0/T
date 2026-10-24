@@ -1,0 +1,43 @@
+FoamFile { format ascii; class volScalarField; object T; }
+dimensions [0 0 0 1 0 0 0];
+internalField uniform 300;
+boundaryField
+{
+ inlet { type fixedValue; value uniform 300; }
+ outlet { type inletOutlet; inletValue uniform 300; value uniform 300; }
+ // Temperature-dependent, grey-diffuse surface radiation to a 300 K enclosure.
+ // At every wall face: k*deltaCoeffs*(Tw-Tcell)+eps*sigma*(Tw^4-Tsur^4)=qHeater.
+ plate
+ {
+     type codedFixedValue;
+     value uniform 300;
+     name greySurfaceRadiationHeatBalance;
+     code
+     #{
+         const scalar sigma = 5.670374419e-8;
+         const scalar emissivity = EMISSIVITY;
+         const scalar Tsur = 300.0;
+         const scalar qHeater = 1000.0;
+         const scalar kappa = 0.02613;
+         const scalarField ti(this->patchInternalField());
+         const scalarField dc(this->patch().deltaCoeffs());
+         scalarField tw(ti.size());
+         forAll(ti, facei)
+         {
+             scalar t = max(ti[facei] + qHeater/(kappa*dc[facei]), scalar(1));
+             for (label iter=0; iter<12; ++iter)
+             {
+                 const scalar t4 = sqr(sqr(t));
+                 const scalar f = kappa*dc[facei]*(t - ti[facei])
+                     + emissivity*sigma*(t4 - sqr(sqr(Tsur))) - qHeater;
+                 const scalar df = kappa*dc[facei] + 4*emissivity*sigma*t*t*t;
+                 t = max(t - f/df, scalar(1));
+             }
+             tw[facei] = t;
+         }
+         operator==(tw);
+     #};
+ }
+ top { type zeroGradient; }
+ frontAndBack { type empty; }
+}
