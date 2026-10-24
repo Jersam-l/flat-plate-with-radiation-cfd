@@ -368,7 +368,7 @@ plot_four_cases('T', t_levels, 'viridis', 'four_case_temperature_zoom.png',
 
 plot_four_cases('U', u_levels, 'viridis', 'four_case_velocity_full.png',
                 '4-Case Comparison: Full-Domain Streamwise Velocity u / U∞ (0 ≤ y ≤ 0.20 m)', 'Normalized Velocity, u / U∞', (0, 0.20), is_velocity=True)
-plot_four_cases('U', np.linspace(0, 1.05, 25), 'viridis', 'four_case_velocity_zoom.png',
+plot_four_cases('U', u_levels, 'viridis', 'four_case_velocity_zoom.png',
                 '4-Case Comparison: Boundary-Layer Zoom Streamwise Velocity (0 ≤ y ≤ 0.025 m)', 'Normalized Velocity, u / U∞', (0, 0.025), is_velocity=True)
 
 plot_four_cases('pDeviation', p_levels, 'coolwarm', 'four_case_pressure_full.png',
@@ -437,7 +437,7 @@ fig, axs = plt.subplots(1, 2, figsize=(12, 4.0), sharey=True)
 for ax, (name, d) in zip(axs, [('Fine No Radiation: Velocity Zoom', fine0),
                                ('Fine Surface Radiation: Velocity Zoom', fineR)]):
     X, Y = np.meshgrid(d['x'], d['y'])
-    h = ax.contourf(X, Y, d['U'][:, :, 0] / UINF, levels=np.linspace(0, 1.05, 25), cmap='viridis')
+    h = ax.contourf(X, Y, d['U'][:, :, 0] / UINF, levels=u_levels, cmap='viridis', extend='both')
     ax.contour(X, Y, d['U'][:, :, 0] / UINF, levels=[0.5, 0.9, 0.99], colors='white', linewidths=0.55)
     ax.set(title=name, xlabel='x / m', xlim=(0, 1), ylim=(0, 0.025))
 axs[0].set_ylabel('y / m')
@@ -449,7 +449,7 @@ fig, axs = plt.subplots(1, 2, figsize=(12, 4.0), sharey=True)
 for ax, (name, d) in zip(axs, [('Fine No Radiation: Velocity Full Domain', fine0),
                                ('Fine Surface Radiation: Velocity Full Domain', fineR)]):
     X, Y = np.meshgrid(d['x'], d['y'])
-    h = ax.contourf(X, Y, d['U'][:, :, 0] / UINF, levels=np.linspace(0, 1.08, 28), cmap='viridis')
+    h = ax.contourf(X, Y, d['U'][:, :, 0] / UINF, levels=u_levels, cmap='viridis', extend='both')
     ax.plot(d['x'], d['delta_u'], 'w--', lw=1.1, label='Hydrodynamic BL δ99')
     ax.set(title=name, xlabel='x / m', xlim=(0, 1), ylim=(0, 0.20))
     ax.legend(loc='upper right', fontsize=8)
