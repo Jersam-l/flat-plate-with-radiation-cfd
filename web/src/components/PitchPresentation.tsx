@@ -19,7 +19,9 @@ import {
   ExternalLink,
   CheckCircle2,
   AlertTriangle,
+  Search,
 } from 'lucide-react';
+import { FigureItem, STATIC_FIGURES } from '@/data/figuresList';
 
 export default function PitchPresentation() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
@@ -27,11 +29,61 @@ export default function PitchPresentation() {
   const [showToc, setShowToc] = useState<boolean>(false);
   const [showNotes, setShowNotes] = useState<boolean>(false);
   const [zoomedImage, setZoomedImage] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'interactive' | 'rendered'>('interactive');
+  const [viewMode, setViewMode] = useState<'interactive' | 'results'>('interactive');
+  const [figures, setFigures] = useState<FigureItem[]>(STATIC_FIGURES);
+  const [galleryCategory, setGalleryCategory] = useState<string>('All');
+  const [gallerySearch, setGallerySearch] = useState<string>('');
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const galleryScrollRef = useRef<HTMLDivElement>(null);
   const currentSlide: PresentationSlide = PRESENTATION_SLIDES[currentSlideIndex];
   const totalSlides = PRESENTATION_SLIDES.length;
+
+  // Dynamically fetch all figures from /api/figures (reads results/figures live)
+  useEffect(() => {
+    fetch('/api/figures')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && Array.isArray(data.figures) && data.figures.length > 0) {
+          setFigures(data.figures);
+        }
+      })
+      .catch((err) => {
+        console.warn('Using static figures list:', err);
+      });
+  }, []);
+
+  // Handle mouse wheel scrolling: cursor over gallery scrolls horizontally
+  useEffect(() => {
+    const el = galleryScrollRef.current;
+    if (!el || viewMode !== 'results') return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > 0) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY * 2;
+      }
+    };
+
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, [viewMode]);
+
+  const scrollGallery = (direction: 'left' | 'right') => {
+    if (galleryScrollRef.current) {
+      const offset = direction === 'left' ? -420 : 420;
+      galleryScrollRef.current.scrollBy({ left: offset, behavior: 'smooth' });
+    }
+  };
+
+  const filteredFigures = figures.filter((fig) => {
+    const matchesCat = galleryCategory === 'All' || fig.category === galleryCategory;
+    const matchesSearch =
+      !gallerySearch.trim() ||
+      fig.title.toLowerCase().includes(gallerySearch.toLowerCase()) ||
+      fig.filename.toLowerCase().includes(gallerySearch.toLowerCase());
+    return matchesCat && matchesSearch;
+  });
 
   const goToNextSlide = useCallback(() => {
     setCurrentSlideIndex((prev) => (prev < totalSlides - 1 ? prev + 1 : prev));
@@ -112,7 +164,7 @@ export default function PitchPresentation() {
             Presenter Notes
           </button>
 
-          {/* Toggle between Interactive and Rendered High-Res Slides */}
+          {/* Toggle between Interactive and Results Figures */}
           <div className="flex items-center bg-[#16264A] p-0.5 rounded-lg border border-slate-700/80 text-xs sm:text-sm">
             <button
               onClick={() => setViewMode('interactive')}
@@ -126,15 +178,15 @@ export default function PitchPresentation() {
               Interactive View
             </button>
             <button
-              onClick={() => setViewMode('rendered')}
+              onClick={() => setViewMode('results')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-all font-semibold ${
-                viewMode === 'rendered'
+                viewMode === 'results'
                   ? 'bg-[#0B1426] text-cyan-400 border border-cyan-500/40 shadow-xs'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <ImageIcon className="w-3.5 h-3.5" />
-              Rendered Slide
+              <ImageIcon className="w-3.5 h-3.5 text-[#FF7A1A]" />
+              Results ({figures.length})
             </button>
           </div>
         </div>
@@ -213,14 +265,129 @@ export default function PitchPresentation() {
               : 'bg-[#EEF2F7] text-[#0B1426] border-slate-300'
           }`}
         >
-          {viewMode === 'rendered' ? (
-            /* Rendered Mode: High-Resolution Exact Slide from PPTX */
-            <div className="relative w-full h-full flex items-center justify-center bg-[#0B1426]">
-              <img
-                src={`/slide_images/slide-${currentSlideIndex + 1}.png`}
-                alt={`Slide ${currentSlideIndex + 1}`}
-                className="w-full h-full object-contain"
-              />
+          {viewMode === 'results' ? (
+            /* Results Gallery: Horizontal Scrollable Gallery of all 61+ plots from results/figures */
+            <div className="relative z-10 w-full h-full flex flex-col justify-between p-4 sm:p-6 bg-[#0B1426] text-white overflow-hidden">
+              {/* Gallery Header Bar */}
+              <div className="shrink-0 pb-3 border-b border-slate-800 space-y-2.5">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <h2
+                        className="text-lg sm:text-xl font-bold text-white font-serif tracking-tight"
+                        style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                      >
+                        Simulation Results & Verification Figures
+                      </h2>
+                      <span className="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-cyan-950/80 text-cyan-400 border border-cyan-800">
+                        {filteredFigures.length} Figures
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Source: <code className="text-cyan-400 font-mono">results/figures/</code> • Place cursor over cards & scroll up/down to slide left/right
+                    </p>
+                  </div>
+
+                  {/* Manual Arrow Nav & Search */}
+                  <div className="flex items-center gap-2">
+                    <div className="relative">
+                      <Search className="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-slate-400" />
+                      <input
+                        type="text"
+                        placeholder="Search figures..."
+                        value={gallerySearch}
+                        onChange={(e) => setGallerySearch(e.target.value)}
+                        className="bg-[#16264A] border border-slate-700/80 text-white text-xs pl-8 pr-3 py-1.5 rounded-lg focus:outline-none focus:border-cyan-400 w-36 sm:w-48 placeholder-slate-400"
+                      />
+                    </div>
+
+                    <button
+                      onClick={() => scrollGallery('left')}
+                      className="p-1.5 rounded-lg bg-[#16264A] hover:bg-[#1E3360] border border-slate-700 text-slate-200 hover:text-white"
+                      title="Scroll Left"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => scrollGallery('right')}
+                      className="p-1.5 rounded-lg bg-[#16264A] hover:bg-[#1E3360] border border-slate-700 text-slate-200 hover:text-white"
+                      title="Scroll Right"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Filter Pills */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+                  {['All', 'Thermal & Radiation', 'Velocity & Similarity', 'Pressure & Friction', 'Mesh & Grid', 'Convergence & Residuals'].map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setGalleryCategory(cat)}
+                      className={`px-2.5 py-1 rounded-lg font-medium whitespace-nowrap transition-colors ${
+                        galleryCategory === cat
+                          ? 'bg-orange-500 text-white shadow-xs'
+                          : 'bg-[#16264A] text-slate-300 hover:bg-[#1E3360] hover:text-white border border-slate-700/60'
+                      }`}
+                    >
+                      {cat} {cat === 'All' ? `(${figures.length})` : ''}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Horizontal Scrollable Row (Cursor up/down scrolls left/right) */}
+              <div
+                ref={galleryScrollRef}
+                className="flex-1 w-full flex items-center gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden py-3 px-1 scroll-smooth"
+                style={{ scrollbarWidth: 'thin', scrollbarColor: '#FF7A1A #16264A' }}
+              >
+                {filteredFigures.map((fig, idx) => (
+                  <div
+                    key={fig.filename}
+                    onClick={() => setZoomedImage(fig.src)}
+                    className="w-[300px] sm:w-[360px] lg:w-[400px] h-[310px] sm:h-[350px] shrink-0 bg-[#16264A] hover:bg-[#1C325E] border border-slate-700/80 hover:border-cyan-400 rounded-2xl overflow-hidden shadow-xl transition-all cursor-pointer group flex flex-col justify-between"
+                  >
+                    {/* Thumbnail Image */}
+                    <div className="relative flex-1 w-full bg-slate-950/70 p-3 flex items-center justify-center overflow-hidden">
+                      <img
+                        src={fig.src}
+                        alt={fig.title}
+                        className="max-h-full max-w-full object-contain group-hover:scale-[1.03] transition-transform duration-200"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-semibold gap-1.5">
+                        <ZoomIn className="w-4 h-4 text-cyan-400" /> Click to Zoom
+                      </div>
+                      <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-mono bg-black/70 text-slate-300 border border-slate-700">
+                        #{idx + 1}
+                      </span>
+                    </div>
+
+                    {/* Bottom Metadata */}
+                    <div className="p-3 bg-[#111F3C] border-t border-slate-800 space-y-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <h4 className="text-xs sm:text-sm font-bold text-white truncate font-serif" title={fig.title}>
+                          {fig.title}
+                        </h4>
+                        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-cyan-950/80 text-cyan-400 border border-cyan-800/80 shrink-0">
+                          {fig.category}
+                        </span>
+                      </div>
+                      <p className="text-[10px] font-mono text-slate-400 truncate">
+                        results/figures/{fig.filename}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Gallery Footer Bar */}
+              <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-mono shrink-0">
+                <span>Showing {filteredFigures.length} figures from results/figures/</span>
+                <span className="text-[#FF7A1A]">Mouse wheel over cards slides left / right</span>
+              </div>
             </div>
           ) : (
             /* Interactive Mode: Large Font, Beautiful Human-Designed Slide */

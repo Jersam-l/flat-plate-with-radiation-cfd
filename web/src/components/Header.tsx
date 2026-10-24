@@ -53,80 +53,80 @@ export default function Header({ currentMode, setMode, onExportPdf }: HeaderProp
 
   return (
     <header className="no-print sticky top-0 z-40 w-full border-b border-technical-border dark:border-technical-darkBorder bg-white/90 dark:bg-technical-darkBg/90 backdrop-blur-md transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-10 h-16 flex items-center justify-between gap-4 overflow-x-auto">
         {/* Left: Project Brand & Compact Identifier */}
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-aeroblue-600 flex items-center justify-center text-white shadow-sm font-mono font-bold text-sm">
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="w-9 h-9 rounded-lg bg-aeroblue-600 flex items-center justify-center text-white shadow-sm font-mono font-bold text-sm shrink-0">
             BLT
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-sm sm:text-base text-technical-slate dark:text-white tracking-tight">
+          <div className="shrink-0">
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <span className="font-bold text-sm sm:text-base text-technical-slate dark:text-white tracking-tight whitespace-nowrap">
                 Boundary Layer on a Flat Plate with Radiation
               </span>
-              <span className="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-aeroblue-50 dark:bg-aeroblue-950 text-aeroblue-700 dark:text-aeroblue-300 border border-aeroblue-200 dark:border-aeroblue-800">
+              <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-aeroblue-50 dark:bg-aeroblue-950 text-aeroblue-700 dark:text-aeroblue-300 border border-aeroblue-200 dark:border-aeroblue-800 shrink-0">
                 OpenFOAM 13
               </span>
             </div>
-            <p className="hidden md:block text-[11px] text-technical-muted font-mono">
+            <p className="text-[11px] text-technical-muted font-mono whitespace-nowrap">
               Jersam Lithin L (URK24AE1026) • Karunya • Boundary Layer Theory
             </p>
           </div>
         </div>
 
         {/* Center: Mode Switcher */}
-        <nav className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+        <nav className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shrink-0 whitespace-nowrap">
           <button
             onClick={() => setMode('pitch')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap shrink-0 ${
               currentMode === 'pitch'
                 ? 'bg-white dark:bg-technical-darkCard text-aeroblue-600 dark:text-aeroblue-400 shadow-xs'
                 : 'text-technical-steel dark:text-slate-300 hover:text-technical-slate dark:hover:text-white'
             }`}
           >
             <Presentation className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Pitch</span> Presentation
+            <span>Pitch Presentation</span>
           </button>
 
           <button
             onClick={() => setMode('paper')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap shrink-0 ${
               currentMode === 'paper'
                 ? 'bg-white dark:bg-technical-darkCard text-aeroblue-600 dark:text-aeroblue-400 shadow-xs'
                 : 'text-technical-steel dark:text-slate-300 hover:text-technical-slate dark:hover:text-white'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
-            Research Paper
+            <span>Research Paper</span>
           </button>
 
           <button
             onClick={() => setMode('documents')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap shrink-0 ${
               currentMode === 'documents'
                 ? 'bg-white dark:bg-technical-darkCard text-aeroblue-600 dark:text-aeroblue-400 shadow-xs'
                 : 'text-technical-steel dark:text-slate-300 hover:text-technical-slate dark:hover:text-white'
             }`}
           >
             <FolderArchive className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">Supporting</span> Docs
+            <span>Supporting Docs</span>
           </button>
 
           <button
             onClick={() => setMode('analysis')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap shrink-0 ${
               currentMode === 'analysis'
                 ? 'bg-white dark:bg-technical-darkCard text-aeroblue-600 dark:text-aeroblue-400 shadow-xs'
                 : 'text-technical-steel dark:text-slate-300 hover:text-technical-slate dark:hover:text-white'
             }`}
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">Scientific</span> Analysis
+            <span>Scientific Analysis</span>
           </button>
         </nav>
 
         {/* Right: Actions, Theme, GitHub, Export PDF */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           {/* Export PDF Dropdown */}
           <div className="relative">
             <button
