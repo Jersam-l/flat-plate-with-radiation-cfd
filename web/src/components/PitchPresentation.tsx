@@ -88,41 +88,38 @@ export default function PitchPresentation() {
           : 'space-y-4'
       }`}
     >
-      {/* Presentation Top Control Bar (Consistent Across All 14 Slides) */}
-      <div className={`no-print border rounded-xl p-3 sm:p-4 shadow-sm flex flex-wrap items-center justify-between gap-3 shrink-0 ${
-        isFullscreen
-          ? 'bg-[#16264A] text-white border-slate-700/80'
-          : 'bg-white dark:bg-[#16264A] border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-200'
-      }`}>
-        <div className="flex items-center gap-2 sm:gap-3">
+      {/* Presentation Top Control Bar (Consistent Across All 14 Slides Starting from Slide 1) */}
+      <div className="no-print bg-[#0B1426] border border-slate-800 rounded-xl p-3 sm:p-4 shadow-xl flex flex-wrap items-center justify-between gap-3 shrink-0 text-white">
+        {/* Left: Index, Notes, View Mode */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
           <button
             onClick={() => setShowToc(!showToc)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors shadow-xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-[#16264A] hover:bg-[#1E3360] text-slate-200 hover:text-white border border-slate-700/80 transition-all shadow-xs"
           >
-            <List className="w-4 h-4 text-orange-500" />
+            <List className="w-4 h-4 text-[#FF7A1A]" />
             Slide Index ({totalSlides})
           </button>
 
           <button
             onClick={() => setShowNotes(!showNotes)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors shadow-xs ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold border transition-all shadow-xs ${
               showNotes
-                ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-800'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700'
+                ? 'bg-amber-950/80 text-amber-300 border-amber-600 shadow-inner'
+                : 'bg-[#16264A] hover:bg-[#1E3360] text-slate-200 hover:text-white border-slate-700/80'
             }`}
           >
-            <MessageSquare className="w-4 h-4 text-amber-600" />
+            <MessageSquare className="w-4 h-4 text-[#FFC24B]" />
             Presenter Notes
           </button>
 
           {/* Toggle between Interactive and Rendered High-Res Slides */}
-          <div className="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs sm:text-sm">
+          <div className="flex items-center bg-[#16264A] p-0.5 rounded-lg border border-slate-700/80 text-xs sm:text-sm">
             <button
               onClick={() => setViewMode('interactive')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-all font-semibold ${
                 viewMode === 'interactive'
-                  ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-xs'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                  ? 'bg-[#0B1426] text-cyan-400 border border-cyan-500/40 shadow-xs'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
               <Layout className="w-3.5 h-3.5" />
@@ -132,8 +129,8 @@ export default function PitchPresentation() {
               onClick={() => setViewMode('rendered')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-all font-semibold ${
                 viewMode === 'rendered'
-                  ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-xs'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                  ? 'bg-[#0B1426] text-cyan-400 border border-cyan-500/40 shadow-xs'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
               <ImageIcon className="w-3.5 h-3.5" />
@@ -142,35 +139,35 @@ export default function PitchPresentation() {
           </div>
         </div>
 
-        {/* Progress & Counter */}
+        {/* Center: Slide Progress & Counter */}
         <div className="flex items-center gap-3">
-          <div className="text-xs sm:text-sm font-medium">
-            Slide <span className="font-bold text-base sm:text-lg text-orange-500">{currentSlideIndex + 1}</span> of {totalSlides}
+          <div className="text-xs sm:text-sm font-medium text-slate-300">
+            Slide <span className="font-bold text-base sm:text-lg text-[#FF7A1A]">{currentSlideIndex + 1}</span> of {totalSlides}
           </div>
-          <div className="w-24 sm:w-40 h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+          <div className="w-24 sm:w-40 h-2.5 bg-slate-800/90 border border-slate-700/60 rounded-full overflow-hidden">
             <div
-              className="bg-orange-500 h-full transition-all duration-200"
+              className="bg-[#FF7A1A] h-full transition-all duration-200"
               style={{ width: `${((currentSlideIndex + 1) / totalSlides) * 100}%` }}
             />
           </div>
         </div>
 
-        {/* Navigation & Controls */}
+        {/* Right: PDF, Navigation & Fullscreen */}
         <div className="flex items-center gap-1.5">
           <a
             href="/downloads/Flat_Plate_Radiation_CFD_Pitch.pdf"
             download="Flat_Plate_Radiation_CFD_Pitch.pdf"
-            className="hidden lg:flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-[#16264A] hover:bg-[#1E3360] text-slate-200 hover:text-white border border-slate-700/80 transition-all shadow-xs"
             title="Download PDF Presentation"
           >
-            <Download className="w-4 h-4 text-orange-500" />
+            <Download className="w-4 h-4 text-[#FF7A1A]" />
             PDF Deck
           </a>
 
           <button
             onClick={goToPrevSlide}
             disabled={currentSlideIndex === 0}
-            className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 disabled:opacity-30 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            className="p-2 rounded-lg bg-[#16264A] hover:bg-[#1E3360] border border-slate-700/80 disabled:opacity-30 disabled:cursor-not-allowed text-slate-200 hover:text-white transition-all shadow-xs"
             title="Previous Slide (Left Arrow)"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -179,7 +176,7 @@ export default function PitchPresentation() {
           <button
             onClick={goToNextSlide}
             disabled={currentSlideIndex === totalSlides - 1}
-            className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 disabled:opacity-30 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            className="p-2 rounded-lg bg-[#16264A] hover:bg-[#1E3360] border border-slate-700/80 disabled:opacity-30 disabled:cursor-not-allowed text-slate-200 hover:text-white transition-all shadow-xs"
             title="Next Slide (Right Arrow or Space)"
           >
             <ChevronRight className="w-5 h-5" />
@@ -187,15 +184,15 @@ export default function PitchPresentation() {
 
           <button
             onClick={() => setCurrentSlideIndex(0)}
-            className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-            title="Restart Presentation"
+            className="p-2 rounded-lg bg-[#16264A] hover:bg-[#1E3360] border border-slate-700/80 text-slate-200 hover:text-white transition-all shadow-xs"
+            title="Restart Presentation (Slide 1)"
           >
             <RotateCcw className="w-4 h-4" />
           </button>
 
           <button
             onClick={toggleFullscreen}
-            className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            className="p-2 rounded-lg bg-[#16264A] hover:bg-[#1E3360] border border-slate-700/80 text-slate-200 hover:text-white transition-all shadow-xs"
             title="Toggle Fullscreen"
           >
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
