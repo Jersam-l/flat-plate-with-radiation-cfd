@@ -12,7 +12,7 @@ export interface DocumentItem {
     | 'Literature Review & References'
     | 'Limitations & Future Improvements';
   description: string;
-  status: 'VERIFIED' | 'THEORETICAL' | 'ASSUMPTION' | 'ROADMAP';
+  status: 'VERIFIED' | 'THEORETICAL' | 'ASSUMPTION' | 'ROADMAP' | 'PROVISIONAL';
   format: 'CSV' | 'PDF' | 'PNG' | 'OpenFOAM Dict' | 'Script' | 'Markdown';
   filePath?: string;
   externalLink?: string;
@@ -68,6 +68,39 @@ export const SUPPORTING_DOCUMENTS: DocumentItem[] = [
     previewType: 'text',
     contentSnippet: `application foamRun;\nstartFrom startTime;\nstartTime 0;\nstopAt endTime;\nendTime 1500;\ndeltaT 1;\nwriteControl timeStep;\nwriteInterval 250;`,
   },
+  {
+    id: 'doc-script-runall',
+    title: 'Automated Mesh and Solver Execution Pipeline (runAll.sh)',
+    category: 'CFD Setup & Solver Configuration',
+    description: 'Master automation shell script executing blockMesh, checkMesh, and foamRun across all 4 coarse and fine test cases.',
+    status: 'VERIFIED',
+    format: 'Script',
+    filePath: 'scripts/runAll.sh',
+    previewType: 'text',
+    contentSnippet: `#!/usr/bin/env bash\nset -euo pipefail\nfor case in cases/noRadiation_coarse cases/noRadiation_fine cases/surfaceRadiation_coarse cases/surfaceRadiation_fine; do\n    echo "Running $case..."\n    (cd "$case" && foamRun > log.foamRun 2>&1)\ndone`,
+  },
+  {
+    id: 'doc-script-makecases',
+    title: 'Case Directory Instantiation Script (makeCases.sh)',
+    category: 'CFD Setup & Solver Configuration',
+    description: 'Generates coarse (200×80) and fine (400×160) case directories from cases/template, substituting nx, ny, and surface emissivity.',
+    status: 'VERIFIED',
+    format: 'Script',
+    filePath: 'scripts/makeCases.sh',
+    previewType: 'text',
+    contentSnippet: `#!/usr/bin/env bash\n# Clones cases/template and parametrizes blockMeshDict and 0/T\nsed -i "s/\\$nx/$nx/g; s/\\$ny/$ny/g" system/blockMeshDict\nsed -i "s/\\$emissivity/$emissivity/g" 0/T`,
+  },
+  {
+    id: 'doc-script-evidencereport',
+    title: 'VTK Field Extraction and Analysis Pipeline (evidenceReport.py)',
+    category: 'CFD Setup & Solver Configuration',
+    description: 'Python script reading OpenFOAM VTK cell arrays, extracting wall profiles, computing skin friction and heat flux partition, solving Blasius/Pohlhausen similarity equations, and generating results/case_audit.csv.',
+    status: 'VERIFIED',
+    format: 'Script',
+    filePath: 'scripts/evidenceReport.py',
+    previewType: 'text',
+    contentSnippet: `import vtk, numpy as np\n# Reads VTK meshes and extracts u(x,y), T(x,y), p(x,y)\n# Solves Blasius shooting method and evaluates boundary-layer thickness\n# Outputs results/case_audit.csv and 61 publication figures`,
+  },
 
   // 2. Geometry & Mesh
   {
@@ -104,9 +137,9 @@ export const SUPPORTING_DOCUMENTS: DocumentItem[] = [
   },
   {
     id: 'doc-fig-mesh-zoom',
-    title: 'Leading-Edge Mesh Ultra-Zoom (Figure 3)',
+    title: 'Leading-Edge Mesh Structured Detail (Figure 3)',
     category: 'Geometry & Mesh',
-    description: 'Ultra-zoom resolving boundary layer inception at the stagnation point with pristine orthogonality.',
+    description: 'Near-wall structured mesh zoom at the plate leading edge (x ≤ 0.05 m, y ≤ 0.005 m) demonstrating 80:1 wall-normal inflation and zero non-orthogonality.',
     status: 'VERIFIED',
     format: 'PNG',
     filePath: '/figures/mesh_leading_edge_zoom.png',
@@ -196,20 +229,20 @@ export const SUPPORTING_DOCUMENTS: DocumentItem[] = [
   },
   {
     id: 'doc-fig-blasius',
-    title: 'Blasius Velocity Similarity Validation Curve (Figure 21)',
+    title: 'Blasius Velocity Similarity Comparison Curve (Figure 21)',
     category: 'Validation & Scientific Comparison',
-    description: 'OpenFOAM velocity data markers collapsing onto the analytical Blasius ODE solution.',
-    status: 'VERIFIED',
+    description: 'OpenFOAM dimensionless velocity data u/U_inf plotted against Blasius similarity variable eta = y*sqrt(U_inf/(nu*x)). Note: trailing-edge thickness is under investigation (5.38 mm CFD vs 14.1 mm Blasius).',
+    status: 'PROVISIONAL',
     format: 'PNG',
     filePath: '/figures/blasius_velocity_validation.png',
     previewType: 'image',
   },
   {
     id: 'doc-fig-pohlhausen',
-    title: 'Pohlhausen Thermal Similarity Validation Curve (Figure 22)',
+    title: 'Pohlhausen Thermal Similarity Comparison Curve (Figure 22)',
     category: 'Validation & Scientific Comparison',
-    description: 'Non-dimensional temperature theta(eta) vs similarity variable eta compared against Pohlhausen theory for Pr = 0.71.',
-    status: 'VERIFIED',
+    description: 'Non-dimensional temperature theta(eta) vs similarity variable eta compared against Pohlhausen theory for Pr = 0.71. Reported CFD thermal thickness (5.07 mm) is marked provisional.',
+    status: 'PROVISIONAL',
     format: 'PNG',
     filePath: '/figures/pohlhausen_thermal_validation.png',
     previewType: 'image',
@@ -218,7 +251,7 @@ export const SUPPORTING_DOCUMENTS: DocumentItem[] = [
     id: 'doc-fig-skinfriction',
     title: 'Skin Friction vs Blasius Theory (Figure 24)',
     category: 'Validation & Scientific Comparison',
-    description: 'Local skin friction coefficient Cf(x) for all 4 cases matching 0.664 / sqrt(Re_x) within 0.11% at trailing edge.',
+    description: 'Local skin friction coefficient Cf(x) for all 4 cases evaluated against 0.664 / sqrt(Re_x). Near-wall shear approximated via first cell-centre velocity (mu * u1 / y1).',
     status: 'VERIFIED',
     format: 'PNG',
     filePath: '/figures/skin_friction_comparison.png',
@@ -226,6 +259,28 @@ export const SUPPORTING_DOCUMENTS: DocumentItem[] = [
   },
 
   // 7. Data Tables & Plotted Results
+  {
+    id: 'doc-figure-index',
+    title: 'Master Visual Evidence Index (FIGURE_INDEX.md)',
+    category: 'Data Tables & Plotted Results',
+    description: 'Comprehensive gallery cataloging all 61 publication-grade CFD figures generated from OpenFOAM 13 cases, including 4-case comparative contours, cooling footprint, and similarity comparisons.',
+    status: 'VERIFIED',
+    format: 'Markdown',
+    filePath: 'FIGURE_INDEX.md',
+    previewType: 'text',
+    contentSnippet: `# Master Visual Evidence Index: Flat Plate CFD with Surface Radiation\nCatalogs all 61 publication-grade CFD figures generated from OpenFOAM 13 simulation cases by scripts/evidenceReport.py.\n1.1 Four-Case Temperature Distribution\n1.2 Radiation Cooling Footprint (Delta T)\n1.3 Fine-Mesh Direct Field Comparisons\n1.4 Velocity Field Contours (Momentum Decoupling)\n1.5 Pressure Deviation Contours`,
+  },
+  {
+    id: 'doc-plot-guide',
+    title: 'Post-Processing & Figure Provenance Guide (PLOT_GUIDE.md)',
+    category: 'Data Tables & Plotted Results',
+    description: 'Complete documentation of the numerical post-processing pipeline, VTK data extraction mechanics (vtkCellCenters), and analytical similarity ODE solvers.',
+    status: 'VERIFIED',
+    format: 'Markdown',
+    filePath: 'PLOT_GUIDE.md',
+    previewType: 'text',
+    contentSnippet: `# Scientific Post-Processing & Figure Provenance Guide\n1. OpenFOAM VTK Field Exports (foamToVTK -latestTime)\n2. OpenFOAM Linear Solver Logs (log.foamRun)\n3. Analytical Similarity Solvers (solve_blasius, solve_pohlhausen)\nTable of 61 Generated Figures and Data Sources`,
+  },
   {
     id: 'doc-case-audit-csv',
     title: 'Master Case Audit CSV Dataset (results/case_audit.csv)',
@@ -239,7 +294,7 @@ export const SUPPORTING_DOCUMENTS: DocumentItem[] = [
   },
   {
     id: 'doc-fig-fourcase-breakdown',
-    title: 'Four-Case Comprehensive Metric Breakdown (Figure 35)',
+    title: 'Four-Case Metric Breakdown Bar Chart (Figure 35)',
     category: 'Data Tables & Plotted Results',
     description: 'Four-panel bar chart comparing trailing wall temperature, heat flux split, local Nusselt number, and boundary layer thickness.',
     status: 'VERIFIED',
@@ -263,7 +318,7 @@ export const SUPPORTING_DOCUMENTS: DocumentItem[] = [
     id: 'doc-ref-reddy',
     title: 'Reddy (2014) — Ain Shams Engineering Journal',
     category: 'Literature Review & References',
-    description: 'Influence of thermal radiation, viscous dissipation and Hall current on MHD convection flow over a stretched vertical flat plate.',
+    description: 'Influence of thermal radiation, viscous dissipation and Hall current on MHD convection flow over a stretched vertical flat plate. (Literature context; not direct validation for horizontal non-MHD flat plate).',
     status: 'VERIFIED',
     format: 'PDF',
     filePath: '/docs/res flat plate ins4.pdf',

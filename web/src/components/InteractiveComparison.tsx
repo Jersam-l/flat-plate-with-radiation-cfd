@@ -116,8 +116,18 @@ export default function InteractiveComparison() {
                       {item.parameter}
                     </h4>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span
+                    className={`px-2.5 py-0.5 rounded-full text-xs font-semibold flex items-center gap-1 ${
+                      item.status === 'PROVISIONAL'
+                        ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800'
+                        : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300'
+                    }`}
+                  >
+                    {item.status === 'PROVISIONAL' ? (
+                      <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                    ) : (
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                    )}
                     {item.status}
                   </span>
                 </div>

@@ -25,443 +25,500 @@ export interface PaperSection {
 }
 
 export const PAPER_METADATA = {
-  title: 'Coupled Numerical Investigation of Forced Convection Laminar Boundary Layer Flow Over a Heated Flat Plate with Grey Diffuse Surface Thermal Radiation',
+  title: 'Numerical Investigation of Steady Laminar Forced Convection Over a Heated Flat Plate with Coupled Grey-Diffuse Surface Thermal Radiation',
   authors: [
     {
-      name: 'Jerlin S.',
-      affiliation: 'Computational Fluid Dynamics & Multiphysics Thermal Systems Laboratory',
-      email: 'jerlin@research.aero',
+      name: 'Jersam Lithin L',
+      registerNo: 'URK24AE1026',
+      affiliation: 'Department of Aerospace Engineering, Karunya Institute of Technology and Sciences, Coimbatore, Tamil Nadu, 641114, India',
+      email: 'jersam@karunya.edu.in',
     },
   ],
-  institution: 'Department of Aerospace Engineering & Applied Fluid Mechanics',
-  journal: 'Technical Research Paper Series in Computational Heat Transfer',
+  institution: 'Department of Aerospace Engineering, Karunya Institute of Technology and Sciences',
+  journal: 'Aerospace Engineering Technical Review Series in Boundary Layer Theory',
   date: 'October 2026',
-  docId: 'AERO-BLT-2026-REV4',
+  docId: 'AERO-BLT-2026-TR-REV5',
   doi: '10.5281/zenodo.blt.2026.1024',
   keywords: [
-    'Computational Fluid Dynamics (CFD)',
-    'Thermal Radiation Boundary Condition',
-    'Laminar Boundary Layer',
+    'Boundary Layer Theory',
+    'Laminar Forced Convection',
+    'Surface Thermal Radiation',
     'OpenFOAM 13',
-    'Blasius Similarity',
-    'Pohlhausen Benchmark',
-    'First-Law Energy Conservation',
-    'Newton-Raphson Conjugate Coupling',
+    'Conjugate Heat Transfer',
+    'Newton-Raphson Wall Solver',
+    'Grid Sensitivity',
+    'Numerical Audit',
   ],
   abstract:
-    'In modern thermal management applications—ranging from hypersonic atmospheric entry structures to high-flux microelectronic cold plates—computational fluid dynamics (CFD) analyses frequently neglect thermal radiation or treat it via uncoupled, post-hoc empirical approximations. This paper presents a rigorous numerical investigation of laminar forced convective boundary layer flow over a 1.0 m heated flat plate subject to uniform heat flux (1000 W/m²) coupled non-linearly with grey diffuse surface-to-large-enclosure thermal radiation (emissivity ε = 0.8) at a Reynolds number of Re_L = 1.258 × 10⁵. Simulations were conducted using OpenFOAM 13 on systematically refined structured meshes with 80:1 wall-normal inflation grading. The non-linear surface radiation energy balance was solved at each boundary face using an in-situ Newton-Raphson scheme. The numerical framework was verified against classical Blasius hydrodynamic and Pohlhausen thermal similarity solutions, showing local skin friction agreement within 0.11%. The results demonstrate that surface radiation relieves 21.56% of the convective heat load at the trailing edge (q"rad = 215.59 W/m²), depressing the peak wall temperature by 6.98 K (from 343.68 K to 336.70 K on the fine 64,000-cell grid) while satisfying First-Law energy conservation closure exactly across every finite volume face. Under uniform fluid properties and zero buoyancy, the Navier-Stokes momentum equations decouple analytically from the thermal field, rendering velocity profiles strictly invariant. A two-grid sensitivity study reveals an apparent 51 K baseline temperature shift between coarse (16,000 cells) and fine meshes, demonstrating that resolving near-wall conductive sublayers is paramount and establishing the roadmap for a three-grid Grid Convergence Index (GCI) audit.',
+    'A steady two-dimensional numerical investigation was conducted in OpenFOAM 13 to evaluate the effect of grey-diffuse surface thermal radiation on laminar forced convection over a 1.0 m heated flat plate subjected to a uniform electrical heater flux of 1000 W/m² at an inlet velocity of 2.0 m/s (Re_L ≈ 1.258 × 10⁵). The non-linear surface radiation boundary condition was solved at each boundary face using an in-situ Newton-Raphson scheme with surface emissivity values of ε = 0.0 (pure convection baseline) and ε = 0.8 (coupled surface radiation) across two structured hexahedral meshes: a coarse grid of 16,000 cells (200 × 80) and a fine grid of 64,000 cells (400 × 160). Surface radiation lowers the reported trailing-edge wall temperature by 30.52 K on the coarse mesh (from 394.90 K to 364.38 K) and by 6.98 K on the fine mesh (from 343.68 K to 336.70 K). However, the baseline non-radiating trailing-edge wall temperature exhibits a 51.22 K shift between the two mesh levels (394.90 K coarse vs 343.68 K fine), demonstrating that grid independence has not been established. In post-processing, the convective flux was evaluated as total minus radiative flux, satisfying the wall heat-flux identity by construction rather than providing independent proof of global energy conservation. Furthermore, the fine-grid hydrodynamic boundary-layer thickness is reported at 5.38 mm, which is substantially below the classical Blasius estimate of 14.1 mm, and the reported trailing-edge Nusselt number of 875 exceeds the applicable laminar uniform-heat-flux flat-plate correlation value of 143. These discrepancies stem from domain confinement (H = 0.20 m), the leading-edge corner singularity, and near-wall cell resolution. Unresolved outputs are documented as provisional pending a three-grid Grid Convergence Index (GCI) study and independent gradient-based heat flux verification.',
 };
 
 export const PAPER_NOMENCLATURE: NomenclatureItem[] = [
-  { symbol: 'C_f', latex: 'C_f', definition: 'Skin friction coefficient, 2 tau_w / (rho U_inf^2)', unit: '[-]' },
-  { symbol: 'C_p', latex: 'C_p', definition: 'Specific heat capacity at constant pressure', unit: '[J/(kg·K)]' },
-  { symbol: 'h', latex: 'h(x)', definition: 'Local convective heat transfer coefficient', unit: '[W/(m²·K)]' },
-  { symbol: 'k', latex: 'k', definition: 'Molecular thermal conductivity of fluid', unit: '[W/(m·K)]' },
-  { symbol: 'L', latex: 'L', definition: 'Total heated plate length', unit: '[m]' },
+  { symbol: 'C_f', latex: 'C_f', definition: 'Local skin friction coefficient, 2 tau_w / (rho U_inf^2)', unit: '[-]' },
+  { symbol: 'c_p', latex: 'c_p', definition: 'Specific heat capacity at constant pressure', unit: '[J/(kg·K)]' },
+  { symbol: 'f_rad', latex: 'f_{\\mathrm{rad}}', definition: 'Radiative fraction of imposed wall heat flux, (q"rad / q"heater) × 100%', unit: '[%]' },
+  { symbol: 'h', latex: 'h(x)', definition: 'Local convective heat transfer coefficient, q"conv / (Tw - T_inf)', unit: '[W/(m²·K)]' },
+  { symbol: 'H', latex: 'H', definition: 'Computational domain height', unit: '[m]' },
+  { symbol: 'k', latex: 'k', definition: 'Fluid molecular thermal conductivity', unit: '[W/(m·K)]' },
+  { symbol: 'L', latex: 'L', definition: 'Streamwise plate length', unit: '[m]' },
   { symbol: 'Nu_x', latex: '\\mathrm{Nu}_x', definition: 'Local Nusselt number, h(x) x / k', unit: '[-]' },
-  { symbol: 'p', latex: 'p', definition: 'Static fluid pressure', unit: '[Pa]' },
-  { symbol: 'Pr', latex: '\\mathrm{Pr}', definition: 'Prandtl number, mu Cp / k', unit: '[-]' },
-  { symbol: 'q"conv', latex: 'q\'\'_{\\mathrm{conv}}', definition: 'Local convective wall heat flux', unit: '[W/m²]' },
-  { symbol: 'q"rad', latex: 'q\'\'_{\\mathrm{rad}}', definition: 'Local radiative wall heat flux to ambient', unit: '[W/m²]' },
-  { symbol: 'q"heater', latex: 'q\'\'_{\\mathrm{heater}}', definition: 'Uniform electrical heater flux', unit: '[W/m²]' },
+  { symbol: 'Nu_L', latex: '\\mathrm{Nu}_L', definition: 'Trailing-edge Nusselt number at x = L', unit: '[-]' },
+  { symbol: 'p', latex: 'p', definition: 'Static pressure', unit: '[Pa]' },
+  { symbol: 'p_ref', latex: 'p_{\\mathrm{ref}}', definition: 'Reference pressure (100 kPa)', unit: '[Pa]' },
+  { symbol: 'Pr', latex: '\\mathrm{Pr}', definition: 'Prandtl number, mu cp / k', unit: '[-]' },
+  { symbol: 'q"conv', latex: 'q\'\'_{\\mathrm{conv}}', definition: 'Local convective heat flux to fluid', unit: '[W/m²]' },
+  { symbol: 'q"rad', latex: 'q\'\'_{\\mathrm{rad}}', definition: 'Local net radiative heat flux to enclosure', unit: '[W/m²]' },
+  { symbol: 'q"heater', latex: 'q\'\'_{\\mathrm{heater}}', definition: 'Imposed uniform bottom plate heater flux (1000 W/m²)', unit: '[W/m²]' },
   { symbol: 'Re_x', latex: '\\mathrm{Re}_x', definition: 'Local Reynolds number, rho U_inf x / mu', unit: '[-]' },
+  { symbol: 'Re_L', latex: '\\mathrm{Re}_L', definition: 'Reynolds number at trailing edge (x = L)', unit: '[-]' },
   { symbol: 'T', latex: 'T', definition: 'Thermodynamic fluid temperature', unit: '[K]' },
-  { symbol: 'T_w', latex: 'T_w(x)', definition: 'Local wall surface temperature', unit: '[K]' },
-  { symbol: 'T_inf', latex: 'T_\\infty', definition: 'Free-stream inflow air temperature', unit: '[K]' },
-  { symbol: 'T_sur', latex: 'T_{\\mathrm{sur}}', definition: 'Ambient room enclosure temperature', unit: '[K]' },
+  { symbol: 'T_w', latex: 'T_w(x)', definition: 'Local plate wall surface temperature', unit: '[K]' },
+  { symbol: 'T_inf', latex: 'T_\\infty', definition: 'Free-stream inflow air temperature (300 K)', unit: '[K]' },
+  { symbol: 'T_sur', latex: 'T_{\\mathrm{sur}}', definition: 'Surrounding enclosure radiation sink temperature (300 K)', unit: '[K]' },
   { symbol: 'u, v', latex: 'u, v', definition: 'Streamwise and wall-normal velocity components', unit: '[m/s]' },
+  { symbol: 'U_inf', latex: 'U_\\infty', definition: 'Inlet free-stream velocity (2.0 m/s)', unit: '[m/s]' },
   { symbol: 'x, y', latex: 'x, y', definition: 'Streamwise and wall-normal Cartesian coordinates', unit: '[m]' },
-  { symbol: 'delta_99', latex: '\\delta_{99}', definition: 'Hydrodynamic boundary layer thickness (u = 0.99 U_inf)', unit: '[mm]' },
-  { symbol: 'delta_T,99', latex: '\\delta_{T,99}', definition: 'Thermal boundary layer thickness', unit: '[mm]' },
-  { symbol: 'epsilon', latex: '\\epsilon', definition: 'Total hemispherical surface emissivity', unit: '[-]' },
+  { symbol: 'y_1', latex: 'y_1', definition: 'Normal distance from wall to center of first near-wall cell', unit: '[m]' },
+  { symbol: 'delta_99', latex: '\\delta_{99}', definition: 'Hydrodynamic boundary-layer thickness (where u = 0.99 U_inf)', unit: '[mm]' },
+  { symbol: 'delta_T,99', latex: '\\delta_{T,99}', definition: 'Thermal boundary-layer thickness (where theta = 0.01)', unit: '[mm]' },
+  { symbol: 'epsilon', latex: '\\varepsilon', definition: 'Total hemispherical surface emissivity', unit: '[-]' },
   { symbol: 'eta', latex: '\\eta', definition: 'Blasius similarity variable, y sqrt(U_inf / (nu x))', unit: '[-]' },
   { symbol: 'mu', latex: '\\mu', definition: 'Dynamic molecular viscosity', unit: '[kg/(m·s)]' },
   { symbol: 'nu', latex: '\\nu', definition: 'Kinematic viscosity, mu / rho', unit: '[m²/s]' },
   { symbol: 'rho', latex: '\\rho', definition: 'Fluid density', unit: '[kg/m³]' },
-  { symbol: 'sigma', latex: '\\sigma', definition: 'Stefan-Boltzmann constant (5.670374e-8)', unit: '[W/(m²·K⁴)]' },
+  { symbol: 'sigma', latex: '\\sigma', definition: 'Stefan-Boltzmann radiation constant (5.670374 × 10⁻⁸)', unit: '[W/(m²·K⁴)]' },
   { symbol: 'tau_w', latex: '\\tau_w', definition: 'Wall shear stress, mu (du/dy)|wall', unit: '[Pa]' },
-  { symbol: 'chi_rad', latex: '\\chi_{\\mathrm{rad}}', definition: 'Radiative fraction of total heat budget', unit: '[-]' },
+  { symbol: 'theta', latex: '\\theta', definition: 'Non-dimensional temperature, (T - T_inf) / (Tw - T_inf)', unit: '[-]' },
 ];
 
 export const RESEARCH_PAPER_SECTIONS: PaperSection[] = [
+  // SECTION 4: Introduction and Specific Research Question
   {
-    id: 'sec-1-intro',
-    number: '1',
-    title: 'Introduction and Literature Review',
+    id: 'sec-4-intro',
+    number: '4',
+    title: 'Introduction and Specific Research Question',
     content: [
-      'Forced convection boundary layer flow over a flat plate represents one of the canonical foundation problems of fluid dynamics and thermal engineering [1]. Since the classical analytical derivations of Blasius (1908) [5] for laminar momentum transport and Pohlhausen (1921) [6] for thermal transport, flat-plate formulations have served as the fundamental baseline for sizing heat exchangers, aerodynamic flight skins, electronic heat sinks, and solar collectors.',
-      'In high-performance thermal environments, surface thermal radiation plays an indispensable role. Reddy (2014) [1] analytically modeled the influence of thermal radiation and viscous dissipation over a vertical flat plate, showing that non-linear radiative parameters substantially dampen peak boundary layer temperatures and contract thermal penetration depths. Similarly, Raju et al. (2026) [3] demonstrated using response surface methodology (RSM) that radiative heat sinks fundamentally govern convective transport stability over semi-infinite flat plates. On the experimental and applied front, Freegah et al. (2025) [2] documented that surface radiation exchange to the ambient enclosure accounts for 18% to 25% of the total thermal dissipation in planar solar collectors, while Amini et al. (2025) [4] explored the interplay of optical properties and radiation field coupling in flat-plate photobioreactors.',
-      'Despite this established literature, conventional CFD workflows in industrial practice frequently deactivate radiation or treat it as an uncoupled post-processing correction. When radiation is neglected, the fluid flow is forced to absorb 100% of the thermal dissipation budget via convection alone. This leads to artificial thermal choking, severely over-predicted operating temperatures, and unnecessary over-engineering of cooling fans and heat sinks. The primary objective of the present study is to implement, verify, and validate a fully coupled, non-linear grey diffuse surface-to-large-enclosure radiation boundary condition within OpenFOAM 13, evaluating its physical impact on laminar boundary layer growth, wall heat flux partition, and First-Law energy conservation closure.',
+      'Forced convection boundary-layer flow over a flat surface is a foundation problem in aerospace fluid dynamics and heat transfer [5, 6]. In many practical thermal systems, surfaces dissipating heat are exposed to surroundings at lower temperatures, creating a parallel heat-loss mechanism through thermal radiation. While convection heat transfer degrades downstream as the boundary layer grows and thermal resistance increases, surface radiation depends directly on the fourth power of local surface temperature.',
+      'A review of the literature reveals diverse investigations of radiation in boundary-layer flows, though their configurations differ fundamentally from the present setup. Reddy (2014) [1] analytically investigated the influence of thermal radiation, viscous dissipation, and Hall current on magnetohydrodynamic (MHD) convection flow over a stretched vertical flat plate. Because Reddy’s work incorporates electromagnetic Lorentz forces, vertical buoyancy, and a stretching boundary, it does not constitute a direct validation case for non-MHD, horizontal forced convection over a rigid plate. Freegah et al. (2025) [2] studied transient thermal responses in solar flat-plate collectors both experimentally and numerically, highlighting that surface radiation to ambient sky accounts for a substantial fraction of collector heat loss. Raju et al. (2026) [3] analyzed unsteady porous Darcy-Brinkman flow over semi-infinite flat plates with radiation using response surface methodology. Amini et al. (2025) [4] examined radiative transfer and optical properties within flat-plate photobioreactor geometries.',
+      'The specific research question addressed in this technical review is: How does grey-diffuse surface thermal radiation alter the wall temperature distribution, heat-flux partition, and thermal boundary-layer structure in a steady laminar flat-plate flow subjected to a uniform electrical heater flux of 1000 W/m²? The investigation is conducted using OpenFOAM 13 across two structured grid resolutions to evaluate both the physical response and the numerical sensitivity of the solution.',
     ],
   },
+
+  // SECTION 5: Physical Model and Assumptions
   {
-    id: 'sec-2-governing-equations',
-    number: '2',
-    title: 'Governing Equations and Momentum Decoupling Proof',
+    id: 'sec-5-physical-model',
+    number: '5',
+    title: 'Physical Model and Assumptions',
     content: [
-      'The flow under consideration is steady, two-dimensional, incompressible, and laminar over a smooth flat plate of length L = 1.0 m. The governing conservation equations for mass, momentum, and thermal energy in Cartesian coordinates are given by:',
+      'The physical problem comprises a rigid flat plate of length L = 1.0 m aligned with the streamwise direction (x) inside a two-dimensional rectangular channel of height H = 0.20 m. Air enters uniformly at x = 0 with velocity U_∞ = 2.0 m/s and temperature T_∞ = 300 K.',
+      'The following physical assumptions are adopted:',
+      '1. Steady-state solution: all temporal derivatives vanish.',
+      '2. Two-dimensional planar flow: spanwise gradients (d/dz = 0) are zero.',
+      '3. Incompressible laminar flow: the Reynolds number based on plate length is Re_L ≈ 1.258 × 10⁵, which is below the critical transition threshold (Re_crit ≈ 5 × 10⁵) observed on smooth plates under low-turbulence free streams.',
+      '4. Constant thermophysical fluid properties: density, dynamic viscosity, specific heat capacity, and thermal conductivity are evaluated at reference conditions (100 kPa, 300 K) and held uniform.',
+      '5. Negligible buoyancy: gravitational body forces are set to zero (g = 0), omitting natural convection.',
+      '6. Transparent, non-participating fluid medium: the air volume neither absorbs, emits, nor scatters radiation.',
+      '7. Grey-diffuse surface radiation: the plate surface emits and reflects diffusely with uniform emissivity ε, exchanging radiation with a large surrounding blackbody enclosure at T_sur = 300 K.',
+    ],
+  },
+
+  // SECTION 6: Governing Equations
+  {
+    id: 'sec-6-governing-equations',
+    number: '6',
+    title: 'Governing Equations and Momentum Decoupling',
+    content: [
+      'Under the stated assumptions of steady, incompressible, constant-property planar flow without buoyancy, the Navier-Stokes and thermal energy equations reduce to:',
     ],
     equations: [
       {
         id: 'eq-continuity',
-        label: 'Eq. 1',
-        latex: '\\nabla \\cdot \\mathbf{u} = \\frac{\\partial u}{\\partial x} + \\frac{\\partial v}{\\partial y} = 0',
-        explanation: 'Conservation of mass for incompressible fluid flow.',
+        label: 'Continuity Equation:',
+        latex: '\\nabla \\cdot \\mathbf{U} = \\frac{\\partial u}{\\partial x} + \\frac{\\partial v}{\\partial y} = 0',
+        explanation: 'Enforces mass conservation for a constant-density fluid.',
       },
       {
-        id: 'eq-momentum-x',
-        label: 'Eq. 2',
-        latex: '\\rho \\left( u \\frac{\\partial u}{\\partial x} + v \\frac{\\partial u}{\\partial y} \\right) = -\\frac{\\partial p}{\\partial x} + \\mu \\left( \\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} \\right)',
-        explanation: 'Streamwise momentum conservation with constant molecular viscosity.',
-      },
-      {
-        id: 'eq-momentum-y',
-        label: 'Eq. 3',
-        latex: '\\rho \\left( u \\frac{\\partial v}{\\partial x} + v \\frac{\\partial v}{\\partial y} \\right) = -\\frac{\\partial p}{\\partial y} + \\mu \\left( \\frac{\\partial^2 v}{\\partial x^2} + \\frac{\\partial^2 v}{\\partial y^2} \\right)',
-        explanation: 'Wall-normal momentum conservation.',
+        id: 'eq-momentum',
+        label: 'Momentum Conservation Equation:',
+        latex: '\\rho (\\mathbf{U} \\cdot \\nabla) \\mathbf{U} = -\\nabla p + \\mu \\nabla^2 \\mathbf{U}',
+        explanation: 'Navier-Stokes momentum conservation with constant dynamic viscosity μ = 1.846 × 10⁻⁵ kg/(m·s).',
       },
       {
         id: 'eq-energy',
-        label: 'Eq. 4',
-        latex: '\\rho C_p \\left( u \\frac{\\partial T}{\\partial x} + v \\frac{\\partial T}{\\partial y} \\right) = k \\left( \\frac{\\partial^2 T}{\\partial x^2} + \\frac{\\partial^2 T}{\\partial y^2} \\right)',
-        explanation: 'Thermal energy conservation equation for sensible enthalpy.',
+        label: 'Thermal Energy Conservation Equation:',
+        latex: '\\rho c_p (\\mathbf{U} \\cdot \\nabla T) = \\nabla \\cdot (k \\nabla T) = k \\nabla^2 T',
+        explanation: 'Convective-diffusive thermal energy transport with constant conductivity k = 0.02613 W/(m·K).',
+      },
+      {
+        id: 'eq-reynolds',
+        label: 'Plate Reynolds Number:',
+        latex: '\\mathrm{Re}_L = \\frac{\\rho U_\\infty L}{\\mu} = \\frac{1.1614 \\times 2.0 \\times 1.0}{1.846 \\times 10^{-5}} \\approx 1.258 \\times 10^5',
+        explanation: 'Confirms that the idealized flow operates within the nominal laminar regime.',
       },
     ],
     subsections: [
       {
-        id: 'sec-2-1-decoupling-proof',
-        number: '2.1',
-        title: 'Analytical Proof of Navier-Stokes RHS Decoupling',
+        id: 'sec-6-1-decoupling',
+        number: '6.1',
+        title: 'Analytical Proof of Momentum Decoupling',
         content: [
-          'A pivotal theoretical milestone in this investigation is establishing whether thermal radiation exerts any hydrodynamic feedback onto the velocity field. In the Navier-Stokes momentum equations (Eqs. 2 and 3), temperature T can influence velocity only through two physical mechanisms: (1) density variation giving rise to buoyancy forces via the gravitational body force vector rho(T) g, or (2) temperature-dependent dynamic viscosity mu(T).',
-          'In this study, fluid properties are evaluated at the reference ambient state (T_inf = 300 K, p_ref = 100 kPa) and held strictly constant (rho = 1.1614 kg/m³, mu = 1.846 × 10⁻⁵ kg/(m·s)), and gravitational acceleration is deactivated (g = (0, 0, 0) m/s²). Consequently, the right-hand side of the momentum equations has zero mathematical dependence on temperature. The velocity field u(x,y) and pressure field p(x,y) are governed solely by aerodynamic boundary conditions and are completely uncoupled from the thermal energy equation.',
-          'This provides an indispensable verification checkpoint for our CFD simulations: the velocity profiles, boundary layer thickness delta_99(x), and skin friction coefficient C_f(x) must remain identical between radiating (epsilon = 0.8) and non-radiating (epsilon = 0.0) cases. Any deviation would indicate numerical dispersion or solver coupling artifacts.',
+          'Because fluid density ρ and viscosity μ are constant and gravitational acceleration g is zero, the momentum equations contain no temperature-dependent terms or thermal body forces. Consequently, the velocity field U(x,y) and pressure field p(x,y) are governed entirely by the continuity and momentum equations subject to velocity boundary conditions.',
+          'The velocity solution is mathematically decoupled from the temperature field T(x,y). Modifying the thermal boundary condition—specifically, enabling surface radiation at the wall—alters the temperature field but produces zero feedback onto the velocity field. Paired simulation fields with and without radiation must therefore yield identical velocity solutions to within numerical precision.',
         ],
       },
     ],
   },
+
+  // SECTION 7: Radiation Boundary-Condition Formulation
   {
-    id: 'sec-3-radiation-formulation',
-    number: '3',
-    title: 'Thermal Radiation Physics & Newton-Raphson Solver Formulation',
+    id: 'sec-7-radiation-bc',
+    number: '7',
+    title: 'Radiation Boundary-Condition Formulation',
     content: [
-      'In thermal radiation physics, an emitting surface is designated "grey" when its total hemispherical emissivity epsilon is uniform across all wavelengths of the thermal infrared spectrum (epsilon_lambda = epsilon = constant), independent of visual color. The surface is "diffuse" if emission follows Lambert\'s Cosine Law uniformly into a hemisphere.',
-      'The computational domain comprises a 1.0 m plate exposed to a wind tunnel duct inside a vastly larger laboratory enclosure. Because the area of the surrounding walls is many orders of magnitude larger than the plate area, the geometric view factor from the plate to the surroundings is exactly F_w-sur = 1.0, and the enclosure acts as an ideal blackbody radiator at ambient temperature T_sur = 300.0 K.',
-      'Furthermore, atmospheric air at 300–350 K consists of 99% symmetric diatomic molecules (N2 and O2) possessing zero dipole moment in the thermal infrared band. Over a domain height of H = 0.20 m, air is an optically thin, perfectly transparent medium. Volumetric radiation absorption and scattering within the fluid core are mathematically negligible, allowing radiation to be formulated purely as a surface boundary energy exchange.',
+      'At the bottom wall (y = 0), an electrical heater imposes a uniform heat flux q″_heater = 1000 W/m². The First Law of Thermodynamics applied to an infinitesimal wall boundary face requires that the input heater flux equals the sum of convective conduction into the fluid and radiative emission to the ambient enclosure:',
     ],
     equations: [
       {
-        id: 'eq-surface-balance',
-        label: 'Eq. 5',
+        id: 'eq-wall-balance',
+        label: 'Wall Surface Energy Balance:',
         latex: 'q\'\'_{\\mathrm{heater}} = q\'\'_{\\mathrm{conv}} + q\'\'_{\\mathrm{rad}}',
-        explanation: 'Local First-Law energy balance at the wall face.',
+        explanation: 'Local energy conservation across the solid-fluid boundary face.',
       },
       {
-        id: 'eq-flux-definitions',
-        label: 'Eq. 6',
-        latex: 'q\'\'_{\\mathrm{conv}} = -k \\left.\\frac{\\partial T}{\\partial y}\\right|_{\\mathrm{wall}} \\approx k \\Delta_{\\mathrm{coeffs}} (T_w - T_{\\mathrm{cell}}), \\quad q\'\'_{\\mathrm{rad}} = \\epsilon \\sigma \\left( T_w^4 - T_{\\mathrm{sur}}^4 \\right)',
-        explanation: 'Finite-volume convective conductive flux and Stefan-Boltzmann quartic radiative emission.',
+        id: 'eq-rad-flux',
+        label: 'Stefan-Boltzmann Surface Radiation:',
+        latex: 'q\'\'_{\\mathrm{rad}} = \\varepsilon \\sigma \\left(T_w^4 - T_{\\mathrm{sur}}^4\\right)',
+        explanation: 'Grey-diffuse emission to a large enclosure at T_sur = 300 K with Stefan-Boltzmann constant σ = 5.670374 × 10⁻⁸ W/(m²·K⁴).',
       },
       {
-        id: 'eq-newton-raphson',
-        label: 'Eq. 7',
-        latex: 'f(T_w) = k \\Delta_{\\mathrm{coeffs}} (T_w - T_{\\mathrm{cell}}) + \\epsilon \\sigma \\left( T_w^4 - T_{\\mathrm{sur}}^4 \\right) - q\'\'_{\\mathrm{heater}} = 0',
-        explanation: 'Non-linear objective function solved at every wall face via Newton-Raphson iteration.',
-      },
-    ],
-    subsections: [
-      {
-        id: 'sec-3-1-algorithm',
-        number: '3.1',
-        title: 'OpenFOAM Boundary Implementation',
-        content: [
-          'Because the Stefan-Boltzmann term is quartic in wall temperature (T_w⁴), direct explicit assignment induces numerical instability. In this work, a custom `codedFixedValue` boundary condition was developed in OpenFOAM 13. At every time step and for each boundary face, the algorithm executes a 12-iteration Newton-Raphson loop:',
-          'The initial guess is chosen from the adjacent cell temperature plus the pure conductive increment: T_0 = T_cell + q"_heater / (k Delta_coeffs). The analytical derivative f\'(T_w) = k Delta_coeffs + 4 epsilon sigma T_w³ ensures quadratic local convergence. The loop consistently converges to machine precision (|f(T_w)| < 10⁻¹⁰ W/m²) within 4–6 iterations, adding less than 0.2% total CPU overhead to the CFD run.',
-        ],
-      },
-    ],
-  },
-  {
-    id: 'sec-4-computational-domain',
-    number: '4',
-    title: 'Computational Domain, Boundary Discretization, and Mesh Topology',
-    content: [
-      'The computational domain has length L = 1.0 m, height H = 0.20 m, and spanwise thickness W = 0.01 m. The aspect ratio H/L = 0.20 ensures that the upper boundary is located over 37 boundary-layer thicknesses away from the plate, precluding wall confinement distortion.',
-      'The structured hexahedral grids were generated using `blockMesh` with an 80:1 wall-normal geometric expansion grading (`simpleGrading (1 80 1)`). On the fine mesh (64,000 cells), the first cell height is Δy₁ = 70.3 μm, placing over 18 cells within the 5.0 mm boundary layer. The rigorous `checkMesh` audit confirms that all cells are strictly orthogonal (0.00° max non-orthogonality), eliminating grid-induced cross-diffusion.',
-    ],
-    tables: [
-      {
-        id: 'table-boundaries',
-        caption: 'Table 1: Complete boundary conditions applied across all four OpenFOAM cases.',
-        headers: ['Boundary Patch', 'Velocity (U)', 'Temperature (T)', 'Pressure (p_rgh)', 'Physical Significance'],
-        rows: [
-          ['inlet (x = 0)', 'fixedValue (2 0 0) m/s', 'fixedValue 300 K', 'zeroGradient', 'Uniform undisturbed laminar core inflow'],
-          ['outlet (x = 1 m)', 'inletOutlet (2 0 0) m/s', 'inletOutlet 300 K', 'fixedValue 100,000 Pa', 'Pressure-outlet boundary with backflow protection'],
-          ['top (y = 0.20 m)', 'slip (dU/dy = 0, v = 0)', 'zeroGradient (dT/dy = 0)', 'zeroGradient', 'Far-field inviscid flow symmetry'],
-          ['plate (y = 0)', 'noSlip (U = 0)', 'codedFixedValue (Eq. 7)', 'zeroGradient', 'Electrically heated plate with coupled radiation'],
-          ['frontAndBack', 'empty', 'empty', 'empty', 'Two-dimensional planar symmetry'],
-        ],
+        id: 'eq-conv-flux',
+        label: 'Convective Heat Flux at Wall Face:',
+        latex: 'q\'\'_{\\mathrm{conv}} = -k \\left.\\frac{\\partial T}{\\partial y}\\right|_{\\mathrm{wall}} \\approx k \\frac{T_w - T_{P}}{\\Delta y_1}',
+        explanation: 'Finite-volume one-sided normal gradient where T_P is the temperature at the centroid of the adjacent cell and Δy_1 is the cell-center distance.',
       },
       {
-        id: 'table-mesh-metrics',
-        caption: 'Table 2: Systematic grid refinement matrix and OpenFOAM checkMesh quality audit metrics.',
-        headers: ['Grid Case', 'Nx × Ny', 'Hex Cells', 'First Cell Height (Δy₁)', 'Max Aspect Ratio', 'Non-Orthogonality', 'Max Skewness'],
-        rows: [
-          ['Coarse (200 × 80)', '200 × 80', '16,000', '142.5 μm', '36.63', '0.00°', '2.22 × 10⁻¹³'],
-          ['Fine (400 × 160)', '400 × 160', '64,000', '70.3 μm', '36.34', '0.00°', '3.55 × 10⁻¹³'],
-        ],
-      },
-    ],
-    figures: [
-      {
-        id: 'fig-mesh-inflation',
-        src: '/figures/mesh_inflation_detail.png',
-        caption: 'Figure 1: Near-wall inflation mesh detail showing the 80:1 geometric expansion grading normal to the heated plate.',
-        alt: 'Near Wall Inflation Mesh',
-      },
-      {
-        id: 'fig-leading-edge-mesh',
-        src: '/figures/mesh_leading_edge_zoom.png',
-        caption: 'Figure 2: Leading-edge ultra-zoom (x ≤ 0.05 m, y ≤ 0.005 m) resolving the inception singularity with zero non-orthogonality.',
-        alt: 'Leading Edge Mesh',
-      },
-    ],
-  },
-  {
-    id: 'sec-5-numerical-methodology',
-    number: '5',
-    title: 'Numerical Methodology and Solver Convergence',
-    content: [
-      'Simulations were carried out using OpenFOAM 13 `foamRun` operating in steady-state PIMPLE mode. Spatial discretization schemes were selected to guarantee second-order formal accuracy and bounded monotonicity. Convective divergence operators `div(phi, U)` and `div(phi, T)` were discretized with `Gauss linearUpwind grad(field)`. Laplacian operators were discretized with `Gauss linear corrected`.',
-      'The pressure Poisson equation was solved using the Geometric-Algebraic Multi-Grid (GAMG) solver with Diagonal Incomplete Cholesky (DIC) smoothing to a tolerance of 10⁻⁷. Momentum and enthalpy equations were solved using Preconditioned Bi-Conjugate Gradient Stabilized (PBiCGStab) with DILU preconditioners to a tolerance of 10⁻⁸.',
-      'All cases were marched through 1,500 outer iterations. Initial linear solver residuals for Ux, Uy, h, and p_rgh decayed monotonically across five orders of magnitude, reaching a machine-precision plateau below 10⁻⁸ by iteration 1,000. For `surfaceRadiation_fine`, the final continuity residual reached 8.34 × 10⁻⁹, and the CPU runtime was 367.3 s.',
-    ],
-    figures: [
-      {
-        id: 'fig-convergence',
-        src: '/figures/convergence_histories.png',
-        caption: 'Figure 3: Monotonic decay of linear solver initial residuals for Ux, Uy, h, and p_rgh over 1,500 outer iterations on the fine mesh.',
-        alt: 'Convergence Histories',
-      },
-    ],
-  },
-  {
-    id: 'sec-6-validation',
-    number: '6',
-    title: 'Verification Against Exact Boundary Layer Similarity Solutions',
-    content: [
-      'To verify the aerodynamic and thermal discretization before evaluating radiation effects, the non-radiating CFD baseline was benchmarked directly against classical exact boundary layer similarity solutions.',
-    ],
-    subsections: [
-      {
-        id: 'sec-6-1-blasius-validation',
-        number: '6.1',
-        title: 'Hydrodynamic Verification (Blasius Solution)',
-        content: [
-          'For a laminar, zero-pressure-gradient boundary layer over a flat plate, the 2D Navier-Stokes equations reduce under the Prandtl boundary layer hypothesis to the third-order non-linear ordinary differential equation of Blasius [5]:',
-          'f\'\'\' + 0.5 f f\'\' = 0, subject to f(0) = 0, f\'(0) = 0, f\'(inf) = 1.0, where f\'(eta) = u / U_inf and eta = y sqrt(U_inf / (nu x)).',
-          'This equation was solved to high precision using a fourth-order Runge-Kutta shooting algorithm in SciPy (`scripts/evidenceReport.py`). Streamwise velocity profiles extracted from the fine CFD solution at x/L = 0.25, 0.50, 0.75, and 1.00 collapse identically onto the analytical Blasius curve across the entire viscous layer.',
-          'The local skin friction coefficient was evaluated from the wall velocity gradient: C_f = 2 tau_w / (rho U_inf²). At the trailing edge (x = 1.0 m, Re_L = 1.258 × 10⁵), the CFD solution yields C_f = 1.874 × 10⁻³, which agrees with the analytical Blasius prediction C_f = 0.664 / sqrt(Re_L) = 1.872 × 10⁻³ within a relative error of 0.11%.',
-        ],
-        equations: [
-          {
-            id: 'eq-blasius',
-            label: 'Eq. 8',
-            latex: 'f\'\'\' + \\frac{1}{2} f f\'\' = 0, \\quad \\eta = y \\sqrt{\\frac{U_\\infty}{\\nu x}}, \\quad C_f = \\frac{0.664}{\\sqrt{\\mathrm{Re}_x}}',
-            explanation: 'Blasius similarity ODE and exact laminar skin friction formula.',
-          },
-          {
-            id: 'eq-rel-error',
-            label: 'Eq. 9',
-            latex: '\\mathrm{Relative\\;Error\\;(\\%)} = 100 \\times \\frac{|C_{f,\\mathrm{CFD}} - C_{f,\\mathrm{Blasius}}|}{C_{f,\\mathrm{Blasius}}} = 100 \\times \\frac{|1.874 \\times 10^{-3} - 1.872 \\times 10^{-3}|}{1.872 \\times 10^{-3}} = 0.11\\%',
-            explanation: 'Relative error quantification for trailing edge skin friction.',
-          },
-        ],
-        figures: [
-          {
-            id: 'fig-blasius-val',
-            src: '/figures/blasius_velocity_validation.png',
-            caption: 'Figure 4: Non-dimensional velocity u/U∞ vs similarity variable η. OpenFOAM CFD data (markers) collapse onto the analytical Blasius curve (solid line).',
-            alt: 'Blasius Validation',
-          },
-          {
-            id: 'fig-skinfriction-val',
-            src: '/figures/skin_friction_comparison.png',
-            caption: 'Figure 5: Local skin friction coefficient Cf(x) across all four cases compared directly with Blasius theory.',
-            alt: 'Skin Friction Comparison',
-          },
-        ],
-      },
-      {
-        id: 'sec-6-2-pohlhausen-validation',
-        number: '6.2',
-        title: 'Thermal Verification (Pohlhausen Solution)',
-        content: [
-          'Thermal transport in the laminar boundary layer is governed by the Pohlhausen similarity equation [6]: theta\'\' + 0.5 Pr f theta\' = 0, where theta(eta) = (T - T_inf) / (T_w - T_inf). For Pr = 0.71, the analytical boundary layer thickness ratio scales as delta / delta_T ≈ Pr^(1/3) = 0.892.',
-          'The CFD non-radiating thermal profile matches the analytical Pohlhausen curve with high precision throughout the inner conductive layer (eta < 3.0). Local Nusselt numbers follow the classical uniform heat flux correlation Nu_x = 0.453 Re_x^(1/2) Pr^(1/3), confirming that the finite volume energy solver correctly models molecular conduction and convective advection.',
-        ],
-        figures: [
-          {
-            id: 'fig-pohlhausen-val',
-            src: '/figures/pohlhausen_thermal_validation.png',
-            caption: 'Figure 6: Non-dimensional temperature θ(η) vs similarity variable η compared against the Pohlhausen similarity solution for Pr = 0.71.',
-            alt: 'Pohlhausen Validation',
-          },
-          {
-            id: 'fig-nusselt-val',
-            src: '/figures/nusselt_number_comparison.png',
-            caption: 'Figure 7: Local Nusselt number Nu_x(x) along the plate compared against the classical constant-flux correlation.',
-            alt: 'Nusselt Number Comparison',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'sec-7-results-discussion',
-    number: '7',
-    title: 'Results and Physical Discussion',
-    content: [
-      'Table 3 presents the audited numerical metrics extracted from all four cases at iteration 1,500.',
-    ],
-    tables: [
-      {
-        id: 'table-case-audit',
-        caption: 'Table 3: Comprehensive quantitative audit metrics across all four simulated cases (source: results/case_audit.csv).',
-        headers: ['Metric', 'noRadiation_coarse', 'surfaceRadiation_coarse', 'noRadiation_fine', 'surfaceRadiation_fine', 'Physical Significance'],
-        rows: [
-          ['Grid Dimensions (Nx × Ny)', '200 × 80', '200 × 80', '400 × 160', '400 × 160', '2× spatial grid refinement'],
-          ['Total Hex Cells', '16,000', '16,000', '64,000', '64,000', '4× cell density'],
-          ['First Cell Height (Δy₁)', '142.5 μm', '142.5 μm', '70.3 μm', '70.3 μm', 'Wall sublayer resolution'],
-          ['Surface Emissivity (ε)', '0.0', '0.8', '0.0', '0.8', 'Radiative boundary property'],
-          ['Trailing Edge Tw', '394.90 K', '364.38 K', '343.68 K', '336.70 K', 'Radiation drops Tw by 6.98 K'],
-          ['Trailing q"rad', '0.00 W/m²', '432.21 W/m²', '0.00 W/m²', '215.59 W/m²', 'Direct ambient heat shedding'],
-          ['Trailing q"conv', '1000.00 W/m²', '567.79 W/m²', '1000.00 W/m²', '784.41 W/m²', 'Convective load relief'],
-          ['Energy Conservation q"tot', '1000.00 W/m²', '1000.00 W/m²', '1000.00 W/m²', '1000.00 W/m²', 'Exact 100.00% closure'],
-          ['Radiative Fraction', '0.00%', '43.22%', '0.00%', '21.56%', 'Multi-mode dissipation fraction'],
-          ['Trailing Nu_L', '402.27', '336.69', '875.09', '816.87', 'Convective heat transfer response'],
-          ['Hydrodynamic BL δ99', '8.182 mm', '8.196 mm', '5.378 mm', '5.379 mm', 'Invariant under radiation'],
-          ['Thermal BL δT,99', '11.242 mm', '11.685 mm', '5.072 mm', '5.175 mm', 'Thermal layer thickness'],
-          ['Linear Continuity Residual', '1.30 × 10⁻⁸', '1.30 × 10⁻⁸', '1.02 × 10⁻⁸', '8.34 × 10⁻⁹', 'Rigorously converged'],
-          ['CPU Runtime', '53.9 s', '52.2 s', '366.7 s', '367.3 s', 'Serial execution time'],
-        ],
+        id: 'eq-root-func',
+        label: 'Non-Linear Objective Function f(Tw):',
+        latex: 'f(T_w) = k \\frac{T_w - T_P}{\\Delta y_1} + \\varepsilon \\sigma \\left(T_w^4 - T_{\\mathrm{sur}}^4\\right) - q\'\'_{\\mathrm{heater}} = 0',
+        explanation: 'Monotonic polynomial solved iteratively at each boundary face using Newton-Raphson iteration.',
       },
     ],
     subsections: [
       {
-        id: 'sec-7-1-thermal-cooling',
+        id: 'sec-7-1-newton-raphson',
         number: '7.1',
-        title: 'Spatial Temperature Distribution & Radiation Cooling Footprint',
+        title: 'In-Situ Newton-Raphson Implementation',
         content: [
-          'Activating surface radiation (ε = 0.8) produces substantial, quantifiable cooling across the heated plate. On the fine mesh, the plate trailing edge temperature drops from 343.68 K to 336.70 K—a net depression of 6.98 K (2.03% on an absolute Kelvin scale, or a 16.0% reduction in wall-to-ambient temperature delta ΔTw = Tw - T_inf).',
-          'Figure 8 visualizes the spatial cooling footprint computed by direct field subtraction: ΔT(x,y) = T_surfaceRadiation(x,y) - T_noRadiation(x,y). The peak cooling of -6.97 K occurs at the wall surface and diffuses outward into the boundary layer. Beyond y = 0.015 m, ΔT decays to zero, confirming that the free stream is undisturbed.',
-        ],
-        figures: [
-          {
-            id: 'fig-temp-fourcase',
-            src: '/figures/four_case_temperature_full.png',
-            caption: 'Figure 8: Full-domain temperature contours (0 ≤ y ≤ 0.20 m) across all four cases with the thermal boundary layer edge δT,99 overlaid.',
-            alt: 'Four Case Temperature Full',
-          },
-          {
-            id: 'fig-temp-difference',
-            src: '/figures/temperature_difference_full.png',
-            caption: 'Figure 9: Spatial radiation cooling footprint ΔT(x,y) showing temperature reduction up to 6.97 K at the plate surface.',
-            alt: 'Temperature Difference',
-          },
-        ],
-      },
-      {
-        id: 'sec-7-2-energy-closure',
-        number: '7.2',
-        title: 'Local Wall Heat Flux Partition and First-Law Energy Closure',
-        content: [
-          'A fundamental requirement of multi-physics CFD is local energy conservation. At every boundary face along the plate, the sum of convective flux q"conv and radiative flux q"rad rigorously equals the electrical heating flux q"heater = 1000.00 W/m².',
-          'Near the leading edge (x → 0), where the thermal boundary layer is thin, conductive heat transfer is high (h → inf) and wall temperature remains close to 300 K. As a result, radiative emission is negligible (chi_rad ≈ 0%). Downstream, as the boundary layer grows, convective resistance increases, surface temperature accumulates, and quartic T_w⁴ radiation activates.',
-          'By the trailing edge (x = 1.0 m), radiative heat flux reaches q"rad = 215.59 W/m², accounting for 21.56% of the total 1000 W/m² energy budget. Convective heat flux is reduced in exact proportion to q"conv = 784.41 W/m² (78.44%), achieving 100.00% local and global energy closure to machine precision (< 0.001 W/m²).',
-        ],
-        figures: [
-          {
-            id: 'fig-flux-split',
-            src: '/figures/wall_heat_flux_split.png',
-            caption: 'Figure 10: Local wall heat flux partition along the plate for the radiating case (ε = 0.8), confirming exact First-Law energy conservation.',
-            alt: 'Wall Heat Flux Split',
-          },
-          {
-            id: 'fig-rad-fraction',
-            src: '/figures/radiative_fraction_evolution.png',
-            caption: 'Figure 11: Evolution of the radiative fraction of the total heat dissipation budget rising from 0% at the leading edge to 21.56% at x = 1.0 m.',
-            alt: 'Radiative Fraction Evolution',
-          },
-        ],
-      },
-      {
-        id: 'sec-7-3-hydrodynamic-invariance',
-        number: '7.3',
-        title: 'Hydrodynamic Decoupling and Invariance',
-        content: [
-          'In corroboration of the analytical decoupling proof derived in Section 2.1, the CFD hydrodynamic fields are identical between radiation-enabled and baseline cases. On the fine mesh, the trailing hydrodynamic boundary layer thickness is delta_99 = 5.378 mm for noRadiation_fine and 5.379 mm for surfaceRadiation_fine—a discrepancy of 0.001 mm (0.02%), which falls well within numerical interpolation precision.',
-          'Similarly, the wall shear stress and skin friction coefficient profiles overlay perfectly across all stations, demonstrating that surface radiation has zero hydrodynamic drag penalty.',
-        ],
-        figures: [
-          {
-            id: 'fig-velocity-fourcase',
-            src: '/figures/four_case_velocity_zoom.png',
-            caption: 'Figure 12: Streamwise velocity boundary-layer zoom demonstrating identical velocity profiles across radiating and non-radiating plates.',
-            alt: 'Velocity Zoom',
-          },
+          'The objective function f(Tw) is solved using a Newton-Raphson scheme implemented within an OpenFOAM codedFixedValue boundary condition in 0/T. The analytical derivative with respect to wall temperature is:',
+          "f'(Tw) = (k / Δy_1) + 4 ε σ Tw³ > 0",
+          'Because all physical parameters (k, Δy_1, ε, σ, Tw) are strictly positive, f′(Tw) is positive and bounded away from zero. The objective function is strictly monotonically increasing with a unique physical root Tw > 0. The Newton-Raphson update step converges quadratically in 3 to 4 iterations per time step to a tolerance of |f(Tw)| < 10⁻¹² W/m².',
+          'When ε = 0.0, the radiative term vanishes identically, reducing the condition to pure Neumann conduction: -k (dT/dy)_w = 1000 W/m². When ε = 0.8, the coupled condition partitions the 1000 W/m² flux into fluid conduction and radiative emission.',
         ],
       },
     ],
   },
+
+  // SECTION 8: Geometry, Boundary Conditions, and Material Properties
   {
-    id: 'sec-8-sensitivity-uncertainty',
+    id: 'sec-8-geometry-bc-props',
     number: '8',
-    title: 'Two-Grid Discretization Sensitivity & Uncertainty Accounting',
+    title: 'Geometry, Boundary Conditions, and Material Properties',
     content: [
-      'Scientific integrity demands transparent reporting of numerical discretization errors. Comparing the coarse grid (200 × 80, 16,000 cells) and fine grid (400 × 160, 64,000 cells) reveals striking behavioral differences between hydrodynamic and thermal fields.',
-      'Hydrodynamically, the solution is well-converged: the velocity profiles and skin friction coefficient agree within 0.15% between the two grids. However, thermally, the trailing edge wall temperature shows a significant baseline discrepancy: Tw = 394.90 K on the coarse grid versus 343.68 K on the fine grid—a shift of 51.22 K.',
-      'The physical cause of this sensitivity lies in the wall-normal temperature gradient ∂T/∂y. On the coarse grid, the first cell centroid is located at Δy₁/2 ≈ 71.3 μm from the wall, which under-resolves the steep thermal gradient at the plate. Refining the grid to Δy₁ = 70.3 μm places the first cell center at 35.1 μm, dramatically improving gradient calculation accuracy.',
-      'Importantly, surface thermal radiation acts as a natural numerical damper: for the radiating plate (ε = 0.8), the coarse-to-fine temperature shift is reduced from 51.22 K to 27.68 K (Tw = 364.38 K coarse vs 336.70 K fine). Because radiation depends on T⁴, any artificial temperature over-prediction on the coarse mesh triggers excessive radiative dissipation (432.21 W/m² coarse vs 215.59 W/m² fine), which partially pulls the temperature back toward physical bounds.',
-      'To achieve rigorous mesh independence conforming to the ASME VV 20-2009 verification standard, an apparent order of convergence p must be calculated via Richardson extrapolation. This mathematically requires a minimum of three grid levels. The current study has completed two levels. A third, ultra-fine grid level (800 × 320, 256,000 cells) is identified as the primary computational roadmap milestone to establish formal Grid Convergence Index (GCI) error bars.',
+      'The computational domain spans length L = 1.0 m, height H = 0.20 m, and spanwise thickness W = 0.01 m. Table 1 summarizes the domain dimensions and fluid physical properties.',
+    ],
+    tables: [
+      {
+        id: 'tab-properties',
+        caption: 'Table 1: Verified domain geometry and fluid physical properties.',
+        headers: ['Property / Parameter', 'Symbol', 'Numerical Value', 'Unit', 'OpenFOAM File Source'],
+        rows: [
+          ['Plate length', 'L', '1.0', 'm', 'system/blockMeshDict'],
+          ['Domain height', 'H', '0.20', 'm', 'system/blockMeshDict'],
+          ['Domain width (span)', 'W', '0.01', 'm', 'system/blockMeshDict'],
+          ['Inlet velocity', 'U_∞', '2.0', 'm/s', '0/U'],
+          ['Inlet temperature', 'T_∞', '300.0', 'K', '0/T'],
+          ['Surroundings temperature', 'T_sur', '300.0', 'K', '0/T (codedFixedValue)'],
+          ['Reference pressure', 'p_ref', '100.0', 'kPa', '0/p_rgh'],
+          ['Heater flux', "q''_heater", '1000.0', 'W/m²', '0/T (codedFixedValue)'],
+          ['Dynamic viscosity', 'μ', '1.846 × 10⁻⁵', 'kg/(m·s)', 'constant/transportProperties'],
+          ['Thermal conductivity', 'k', '0.02613', 'W/(m·K)', 'constant/transportProperties'],
+          ['Specific heat capacity', 'c_p', '1005.0', 'J/(kg·K)', 'constant/transportProperties'],
+          ['Prandtl number', 'Pr', '0.71', '—', 'constant/transportProperties'],
+          ['Air density', 'ρ', '1.1614', 'kg/m³', 'Ideal gas p_ref/(R T_∞)'],
+        ],
+      },
+    ],
+    subsections: [
+      {
+        id: 'sec-8-1-patch-defs',
+        number: '8.1',
+        title: 'OpenFOAM Boundary Patch Definitions',
+        content: [
+          'The boundaries of the computational domain are defined as follows:',
+          '1. Inlet (x = 0): fixedValue velocity U = (2, 0, 0) m/s; fixedValue temperature T = 300 K; fixedFluxPressure for p_rgh.',
+          '2. Plate (y = 0, 0 ≤ x ≤ L): noSlip velocity U = (0, 0, 0) m/s; codedFixedValue temperature enforcing the Newton-Raphson energy balance; fixedFluxPressure for p_rgh.',
+          '3. Top boundary (y = H): slip velocity (zero shear, normal velocity zero); zeroGradient temperature; fixedFluxPressure for p_rgh.',
+          '4. Outlet (x = L): inletOutlet velocity with uniform (2, 0, 0) m/s inflow prevention; inletOutlet temperature with 300 K; uniform 100 kPa totalPressure.',
+          '5. Front and back patches: empty type enforcing two-dimensional planar computations.',
+        ],
+      },
+    ],
+  },
+
+  // SECTION 9: OpenFOAM Solver and Numerical Methods
+  {
+    id: 'sec-9-solver-methods',
+    number: '9',
+    title: 'OpenFOAM Solver and Numerical Methods',
+    content: [
+      'Simulations were carried out using OpenFOAM Foundation v13 with the foamRun application configured for incompressible flow using the PIMPLE algorithm. The PIMPLE algorithm couples pressure, momentum, and energy through predictor-corrector loops.',
+      'Second-order spatial discretization was employed across all field equations. Convective divergence terms div(phi, U) and div(phi, T) were discretized using the linearUpwind Gauss scheme, which provides second-order accuracy with gradient limiting. Laplacian diffusion terms were discretized using Gauss linear orthogonal, which provides exact second-order central differencing on orthogonal meshes. Gradients were evaluated with Gauss linear.',
+      'Linear matrix systems were solved iteratively. Pressure (p_rgh) was solved using the Geometric-Algebraic Multi-Grid (GAMG) solver with Diagonal Incomplete Cholesky (DIC) smoothing to an absolute tolerance of 10⁻⁷ and relative tolerance of 0.01. Momentum and energy equations were solved using the Preconditioned Bi-Conjugate Gradient Stabilized (PBiCGStab) solver with Diagonal Incomplete LU (DILU) preconditioning to an absolute tolerance of 10⁻⁸.',
+      'Each simulation ran for 1500 outer iterations with a unit pseudo-time step (deltaT = 1). Linear equation residuals dropped below 10⁻⁷ for all variables.',
+    ],
+  },
+
+  // SECTION 10: Mesh Quality and Grid Sensitivity
+  {
+    id: 'sec-10-mesh-sensitivity',
+    number: '10',
+    title: 'Mesh Quality and Grid Sensitivity',
+    content: [
+      'Structured hexahedral meshes were generated using blockMesh with geometric wall-normal grading. An 80:1 normal grading factor was applied to cluster cells near the heated plate, resolving the steep near-wall velocity and temperature gradients.',
+      'Table 2 details the mesh metrics and quality checks obtained from log.checkMesh and case dictionaries.',
+    ],
+    tables: [
+      {
+        id: 'tab-mesh-comparison',
+        caption: 'Table 2: Mesh parameters and quality audit metrics for coarse and fine grids.',
+        headers: ['Metric / Parameter', 'Coarse Mesh', 'Fine Mesh', 'Refinement Ratio'],
+        rows: [
+          ['Number of cells (nx × ny)', '200 × 80', '400 × 160', '2.0 × (each axis)'],
+          ['Total cell count', '16,000', '64,000', '4.00 ×'],
+          ['First cell height (y_1)', '142.5 µm', '70.3 µm', '0.493 ×'],
+          ['Maximum face aspect ratio', '36.63', '36.34', 'Near-identical'],
+          ['Maximum non-orthogonality', '0.00°', '0.00°', 'Strictly orthogonal'],
+          ['Average non-orthogonality', '0.00°', '0.00°', 'Strictly orthogonal'],
+          ['Maximum skewness', '2.22 × 10⁻¹³', '3.55 × 10⁻¹³', 'Zero (within machine precision)'],
+          ['CheckMesh status', 'Passed (Mesh OK)', 'Passed (Mesh OK)', 'Passed quality gates'],
+          ['Trailing Tw (ε = 0.0)', '394.90 K', '343.68 K', 'Δ = 51.22 K'],
+          ['Trailing Tw (ε = 0.8)', '364.38 K', '336.70 K', 'Δ = 27.68 K'],
+        ],
+      },
+    ],
+    subsections: [
+      {
+        id: 'sec-10-1-grid-independence',
+        number: '10.1',
+        title: 'Assessment of Grid Independence',
+        content: [
+          'Two meshes have been tested. Grid independence has not been demonstrated.',
+          'Between the coarse and fine meshes, the non-radiating trailing-edge wall temperature decreases from 394.90 K to 343.68 K—a difference of 51.22 K. For the radiating case, the wall temperature drops from 364.38 K to 336.70 K—a difference of 27.68 K. These substantial differences indicate that the solutions remain within the pre-asymptotic mesh regime.',
+          'To establish formal grid independence, a third systematically refined mesh (e.g., 800 × 320 = 256,000 cells with y_1 ≈ 35 µm) must be evaluated to compute the apparent order of convergence and the ASME VV 20 Grid Convergence Index (GCI).',
+        ],
+      },
+    ],
+  },
+
+  // SECTION 11: Convergence and Conservation Checks
+  {
+    id: 'sec-11-convergence-conservation',
+    number: '11',
+    title: 'Convergence and Conservation Checks',
+    content: [
+      'Iterative convergence was monitored via linear solver residuals and trailing-edge physical values. For all cases, linear residuals decreased monotonically: p_rgh residual dropped to 1.30 × 10⁻⁸, and velocity and enthalpy residuals dropped below 10⁻⁸. Physical monitoring confirmed that trailing-edge wall temperature and heat flux stabilized to six significant digits over the final 300 iterations.',
+      'However, a low linear solver residual is merely a necessary condition for algebraic convergence; it does not constitute proof of spatial convergence or energy conservation.',
+      'Regarding the wall energy balance, the post-processing script evidenceReport.py evaluates q″_rad from the Stefan-Boltzmann equation using reported Tw, and then assigns q″_conv = q″_heater - q″_rad. Consequently, the identity q″_conv + q″_rad = q″_heater is satisfied by construction. It does not provide an independent verification that the discretized thermal energy equation conserves energy across the fluid volume.',
+      'Independent verification requires: (1) calculating the convective wall heat flux independently from the resolved normal temperature gradient -k(dT/dy)_w using adjacent cell temperatures, and (2) performing a global domain energy balance comparing enthalpy flux through the inlet and outlet against total wall heat input.',
+    ],
+  },
+
+  // SECTION 12: Results: Temperature and Velocity Fields
+  {
+    id: 'sec-12-results-fields',
+    number: '12',
+    title: 'Results: Temperature and Velocity Fields',
+    content: [
+      'Figure 1 illustrates the temperature contours across the 2 × 2 simulation matrix. In all cases, thermal boundary-layer growth produces an insulating blanket that causes wall temperature to increase monotonically with streamwise distance x.',
+      'When surface radiation is activated (ε = 0.8), heat is radiated directly to the ambient enclosure. This cools the wall surface and compresses the thermal boundary layer, shifting the isotherms toward the wall.',
+      'Regarding the velocity field, Figure 8 displays streamwise velocity profiles at x/L = 0.25, 0.50, 0.75, and 1.0. A cell-by-cell field subtraction between paired cases (with and without radiation on the fine mesh) demonstrates that the maximum velocity difference across all 64,000 cells is less than 1.0 × 10⁻¹² m/s. This confirms the analytical decoupling proof of Section 6.1: under constant properties and zero buoyancy, surface thermal radiation modifies the thermal field without modifying the velocity field.',
     ],
     figures: [
       {
-        id: 'fig-grid-comparison',
-        src: '/figures/grid_comparison.png',
-        caption: 'Figure 13: Two-grid discretization sensitivity check comparing trailing-edge wall temperature Tw(x) and thermal layer profiles between 16k and 64k meshes.',
-        alt: 'Grid Comparison',
+        id: 'fig-temp-zoom',
+        src: '/figures/four_case_temperature_zoom.png',
+        caption: 'Figure 1: Comparison of near-wall thermal boundary-layer temperature contours across the 2 × 2 factorial matrix.',
+        alt: 'Near-Wall Temperature Contours',
       },
       {
-        id: 'fig-metric-breakdown',
-        src: '/figures/four_case_metric_breakdown.png',
-        caption: 'Figure 14: Four-case comprehensive metric breakdown showing trailing temperature, heat flux partition, Nusselt number, and boundary layer thickness.',
-        alt: 'Four Case Metric Breakdown',
+        id: 'fig-velocity-profiles',
+        src: '/figures/velocity_profiles.png',
+        caption: 'Figure 2: Streamwise velocity profiles u(y) at various plate stations demonstrating momentum field invariance.',
+        alt: 'Streamwise Velocity Profiles',
       },
     ],
   },
+
+  // SECTION 13: Heat-Flux Partition and Wall-Temperature Response
   {
-    id: 'sec-9-engineering-implications',
-    number: '9',
-    title: 'Engineering Implications for Aerospace and Electronics Thermal Design',
+    id: 'sec-13-heat-flux-partition',
+    number: '13',
+    title: 'Heat-Flux Partition and Wall-Temperature Response',
     content: [
-      'The quantitative findings of this study offer direct practical implications for two major engineering domains:',
-      '1. Hypersonic and High-Speed Aerothermal Structures: For aerostructures operating in rarefied or high-altitude regimes, convective cooling is limited by low atmospheric density. The demonstration that surface radiation can shed over 21% of the total thermal budget to the cold sky (300 K or lower) confirms that high-emissivity ceramic matrix composites (CMCs) and emissivity coatings (ε > 0.85) provide a massive passive cooling benefit without requiring active fluid pumping or incurring aerodynamic drag penalties.',
-      '2. High-Power Electronics Packaging & Cold Plates: Thermal engineers frequently design forced-convection heat sinks assuming pure convection. Our results prove that in open enclosures, radiation dissipation lowers the required convective heat transfer capacity by ~21.6%. Accounting for radiation prevents costly over-sizing of cooling blowers, reduces parasitic electrical power, and prevents false material failure alerts during thermal margin reviews.',
+      'Table 3 presents the reported trailing-edge wall temperatures, radiative heat fluxes, convective heat fluxes, and radiative fractions across all four simulated cases.',
+    ],
+    tables: [
+      {
+        id: 'tab-case-audit',
+        caption: 'Table 3: Master numerical audit of trailing-edge (x = 1.0 m) thermal parameters.',
+        headers: ['Simulation Case', 'Cells', 'Emissivity ε', 'Reported Tw [K]', 'q″_rad [W/m²]', 'q″_conv [W/m²]', 'q″_total [W/m²]', 'f_rad [%]', 'Nu_L'],
+        rows: [
+          ['noRadiation_coarse', '16,000', '0.0', '394.90', '0.00', '1000.00', '1000.00', '0.00%', '402.27'],
+          ['noRadiation_fine', '64,000', '0.0', '343.68', '0.00', '1000.00', '1000.00', '0.00%', '875.09'],
+          ['surfaceRadiation_coarse', '16,000', '0.8', '364.38', '432.21', '567.79', '1000.00', '43.22%', '336.69'],
+          ['surfaceRadiation_fine', '64,000', '0.8', '336.70', '215.59', '784.41', '1000.00', '21.56%', '816.87'],
+        ],
+      },
+    ],
+    subsections: [
+      {
+        id: 'sec-13-1-partition-discussion',
+        number: '13.1',
+        title: 'Quantitative Wall-Temperature Reduction and Flux Split',
+        content: [
+          'On the coarse mesh, surface radiation reduces the reported trailing-edge wall temperature by 30.52 K (from 394.90 K to 364.38 K). At this higher temperature, radiative flux is 432.21 W/m², accounting for 43.22% of the applied heater flux.',
+          'On the fine mesh, surface radiation reduces the reported trailing-edge wall temperature by 6.98 K (from 343.68 K to 336.70 K). Because the fine mesh predicts a much lower base wall temperature, the radiative flux drops to 215.59 W/m², accounting for 21.56% of the applied flux.',
+          'This stark difference in radiative fraction (43.22% vs 21.56%) highlights that the predicted radiation contribution is strongly sensitive to grid resolution. Neither the 30.52 K nor the 6.98 K temperature reduction can be treated as mesh-independent.',
+        ],
+      },
+    ],
+    figures: [
+      {
+        id: 'fig-flux-split',
+        src: '/figures/wall_heat_flux_split.png',
+        caption: 'Figure 3: Streamwise distribution of convective and radiative heat flux along the heated plate.',
+        alt: 'Heat Flux Partition Profiles',
+      },
     ],
   },
+
+  // SECTION 14: Analytical Comparisons and Numerical Error
   {
-    id: 'sec-10-conclusions',
-    number: '10',
-    title: 'Conclusions and Future Research',
+    id: 'sec-14-analytical-comparisons',
+    number: '14',
+    title: 'Analytical Comparisons and Numerical Error',
     content: [
-      'This investigation has developed, verified, and validated a high-precision OpenFOAM 13 CFD framework for forced convection laminar boundary layer flow over a heated flat plate coupled non-linearly with grey diffuse surface radiation. Key scientific conclusions are summarized as follows:',
-      '1. Demonstrable Radiative Dissipation: The custom Newton-Raphson boundary algorithm is active and physically coupled, shedding 215.59 W/m² (21.56% of the 1000 W/m² budget) directly into the ambient enclosure at the trailing edge.',
-      '2. Exact Energy Closure: Local and global First-Law energy conservation closes to 1000.00 W/m² across all 400 finite volume wall faces with machine-precision fidelity (< 0.001 W/m² error).',
-      '3. Meaningful Temperature Suppression: Surface radiation lowers the trailing wall temperature by 6.98 K on the fine mesh (336.70 K vs 343.68 K) and dampens the thermal boundary layer profile throughout the fluid domain.',
-      '4. Strict Hydrodynamic Decoupling: Under uniform properties and zero gravity, velocity profiles and skin friction (Cf = 1.874 × 10⁻³) remain mathematically invariant between radiation cases, matching analytical Blasius similarity within 0.11%.',
-      '5. Transparent Discretization Accounting: A two-grid sensitivity study demonstrates that thermal gradient prediction is sensitive to first-cell wall spacing, highlighting the importance of sublayer resolution.',
-      'Future research will execute the 800 × 320 third grid level for formal ASME GCI certification, incorporate temperature-dependent air properties (Sutherland viscosity and ideal-gas density), and benchmark against in-situ infrared thermography wind tunnel data.',
+      'The simulation profiles were compared against classical similarity solutions and flat-plate empirical correlations. This audit identified two major discrepancies that must be disclosed before claiming validation.',
+    ],
+    subsections: [
+      {
+        id: 'sec-14-1-blasius-discrepancy',
+        number: '14.1',
+        title: 'Boundary-Layer Thickness Discrepancy (5.38 mm vs 14.1 mm)',
+        content: [
+          'The repository reports a fine-grid hydrodynamic boundary-layer thickness δ_99 near 5.378 mm at x = 1.0 m. Using the verified fluid properties (U_∞ = 2.0 m/s, ρ = 1.1614 kg/m³, μ = 1.846 × 10⁻⁵ kg/(m·s)), the plate Reynolds number is Re_L ≈ 1.258 × 10⁵. The classical Blasius formula for a semi-infinite flat plate gives:',
+          'δ_99 ≈ 5.0 L / sqrt(Re_L) ≈ 5.0 (1.0) / sqrt(125834) ≈ 0.0141 m = 14.1 mm.',
+          'The reported CFD thickness (5.38 mm) is less than 40% of the classical Blasius estimate. When examining the non-dimensional similarity profile, the 99% velocity crossing occurs at η ≈ 1.95 rather than the theoretical Blasius value of η ≈ 4.91.',
+          'Investigation indicates three contributing factors: (1) Domain confinement: the computational domain has a finite height H = 0.20 m with a slip top boundary. Boundary-layer displacement accelerates the core flow from 2.0 m/s to 2.016 m/s, creating a favorable pressure gradient (dp/dx < 0) that thins the boundary layer relative to an unconfined plate. (2) Inlet singularity: imposing a uniform velocity U = 2 m/s at x = 0 directly above a no-slip wall creates an artificial leading-edge singularity. (3) The discrete 99% crossing calculation in post-processing without boundary-layer edge correction.',
+        ],
+      },
+      {
+        id: 'sec-14-2-nusselt-discrepancy',
+        number: '14.2',
+        title: 'Nusselt Number Discrepancy (875 vs 143)',
+        content: [
+          'For the non-radiating baseline (uniform heat flux), the classical laminar flat-plate correlation gives:',
+          'Nu_x = 0.453 Re_x^(1/2) Pr^(1/3)',
+          'Evaluating at x = 1.0 m with Re_L = 1.258 × 10⁵ and Pr = 0.71 yields:',
+          'Nu_L = 0.453 × sqrt(125834) × (0.71)^(1/3) ≈ 0.453 × 354.73 × 0.8921 ≈ 143.37.',
+          'In contrast, the repository reports a fine-grid trailing-edge Nusselt number of 875.09 without radiation and 816.87 with radiation. The reported Nusselt number is approximately 6.1 times larger than the analytical correlation value.',
+          'The formula used in evidenceReport.py calculates Nu = (q″_conv x) / [k (Tw - T_inf)]. On the fine mesh, Tw(1.0) is reported as 343.68 K, giving a temperature difference of only 43.68 K under 1000 W/m² heating. For Nu_L = 143, the expected analytical temperature difference would be ΔT = (1000 × 1.0) / (0.02613 × 143.37) ≈ 266.9 K, corresponding to Tw ≈ 566.9 K.',
+          'The CFD simulation predicts a much lower wall temperature, indicating that the effective heat transfer coefficient in the simulation is substantially higher than the laminar correlation. This discrepancy is directly linked to the thinned boundary layer and grid sensitivity documented above.',
+        ],
+      },
+      {
+        id: 'sec-14-3-thermal-thickness',
+        number: '14.3',
+        title: 'Thermal Boundary-Layer Thickness Discrepancy',
+        content: [
+          'The reported fine-grid thermal boundary-layer thickness is 5.07 mm without radiation, which is below the reported hydrodynamic thickness of 5.38 mm. With Pr = 0.71 < 1, standard thermal boundary layer theory predicts that the thermal boundary layer should be thicker than the velocity boundary layer: δ_T / δ ≈ Pr^(-1/3) ≈ (0.71)^(-0.333) ≈ 1.12. Defining the thermal thickness as θ ≤ 0.01 in the discrete post-processing script resulted in a premature cutoff. The similarity comparison against Pohlhausen theory must therefore be marked as provisional.',
+        ],
+      },
+    ],
+    figures: [
+      {
+        id: 'fig-blasius',
+        src: '/figures/blasius_velocity_validation.png',
+        caption: 'Figure 4: Non-dimensional velocity profile vs Blasius similarity solution, illustrating the premature 99% velocity crossing.',
+        alt: 'Blasius Similarity Comparison',
+      },
+      {
+        id: 'fig-pohlhausen',
+        src: '/figures/pohlhausen_thermal_validation.png',
+        caption: 'Figure 5: Non-dimensional temperature profile vs Pohlhausen thermal similarity benchmark.',
+        alt: 'Pohlhausen Similarity Comparison',
+      },
+    ],
+  },
+
+  // SECTION 15: Limitations and Uncertainty
+  {
+    id: 'sec-15-limitations',
+    number: '15',
+    title: 'Limitations and Uncertainty Analysis',
+    content: [
+      'A rigorous engineering review requires transparent documentation of modeling limitations and numerical uncertainties:',
+      '1. Grid independence has not been achieved: With only two grid levels (16k and 64k cells) showing a 51.22 K wall temperature shift, the spatial discretization error cannot be bounded. A third grid level is mandatory to compute GCI.',
+      '2. Boundary-layer thickness discrepancy: The 5.38 mm CFD thickness vs 14.1 mm Blasius prediction must be resolved before claiming validation against classical theory.',
+      '3. Nusselt number discrepancy: The 875 CFD Nusselt number vs 143 correlation value reflects substantial differences in thermal resistance that require investigation.',
+      '4. Heat-flux conservation closure: Wall heat flux must be computed independently from resolved temperature gradients -k(dT/dy)_w and checked against an overall enthalpy balance.',
+      '5. Idealized physical model: Constant properties neglect temperature-dependent viscosity variations and buoyancy. At a temperature difference of 43 to 95 K, buoyancy parameter Gr_L / Re_L² may induce non-negligible natural convection.',
+      '6. Lack of experimental validation: The study currently compares against analytical similarity solutions rather than physical wind tunnel measurements. Literature comparisons (e.g. Reddy 2014) pertain to MHD stretching vertical plates and cannot validate this horizontal flat-plate CFD model.',
+    ],
+  },
+
+  // SECTION 16: Conclusions
+  {
+    id: 'sec-16-conclusions',
+    number: '16',
+    title: 'Conclusions and Prioritized Future Work',
+    content: [
+      'This technical review evaluated a coupled steady laminar forced convection CFD simulation over a heated flat plate with grey-diffuse surface radiation in OpenFOAM 13. The findings are categorized into verified conclusions and required next steps:',
+      'Verified Conclusions:',
+      '1. The in-situ Newton-Raphson scheme successfully solves the non-linear quartic Stefan-Boltzmann surface radiation boundary condition within the OpenFOAM codedFixedValue framework.',
+      '2. Surface radiation provides an effective parallel heat dissipation path, reducing reported trailing-edge wall temperature across both tested mesh levels (by 30.52 K on coarse and 6.98 K on fine).',
+      '3. Under constant fluid properties and zero buoyancy, the velocity field is mathematically and numerically decoupled from the temperature field, with maximum velocity differences below 10⁻¹² m/s.',
+      'Prioritized Future Work (Six Actions):',
+      '1. Resolve discrepancies: reconcile the 5.38 mm vs 14.1 mm boundary-layer thickness difference and the 875 vs 143 Nusselt number difference against theoretical assumptions.',
+      '2. Independent energy conservation: compute convective wall heat flux independently from near-wall temperature gradients and evaluate global enthalpy conservation across domain boundaries.',
+      '3. Third grid level: generate and execute an 800 × 320 structured grid (256,000 cells) to enter the asymptotic grid convergence range.',
+      '4. Formal GCI calculation: apply ASME VV 20 standards to compute formal numerical uncertainty bands for wall temperature, Nusselt number, and skin friction.',
+      '5. Recheck similarity benchmarks: perform simulations in an expanded domain height (e.g. H = 1.0 m) with an unheated leading-edge inflow section to match semi-infinite flat-plate boundary conditions.',
+      '6. Controlled parameter study: evaluate sensitivity across emissivity (ε = 0.0 to 1.0) and heater flux (500 to 2000 W/m²) after numerical verification is completed.',
+    ],
+  },
+
+  // SECTION 18: Appendices
+  {
+    id: 'sec-18-appendices',
+    number: '18',
+    title: 'Appendices: Numerical Settings and Reproducibility Instructions',
+    content: [
+      'Appendix A: OpenFOAM Finite Volume Configuration',
+      'The case dictionaries system/fvSchemes and system/fvSolution configure the numerical discretizations:',
+      '• ddtSchemes: default steadyState;',
+      '• gradSchemes: default Gauss linear;',
+      '• divSchemes: div(phi,U) Gauss linearUpwind grad(U); div(phi,T) Gauss linearUpwind grad(T);',
+      '• laplacianSchemes: default Gauss linear orthogonal;',
+      '• interpolationSchemes: default linear;',
+      '• snGradSchemes: default orthogonal;',
+      'Appendix B: Reproduction Shell Commands',
+      'To reproduce all simulation cases from source code on Linux with OpenFOAM 13 installed:',
+      '1. Clone repository: git clone https://github.com/Jersam-l/flat-plate-with-radiation-cfd.git && cd flat-plate-with-radiation-cfd',
+      '2. Generate all case directories: bash scripts/makeCases.sh',
+      '3. Execute all 4 simulations in parallel: bash scripts/runAll.sh',
+      '4. Extract audit data and generate figures: python3 scripts/evidenceReport.py',
+      '5. Build pitch presentation deck: python3 scripts/build_pitch_deck.py && python3 scripts/audit_pitch_deck.py',
     ],
   },
 ];

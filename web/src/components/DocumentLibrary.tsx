@@ -93,6 +93,8 @@ export default function DocumentLibrary() {
                   className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-medium flex items-center gap-1 ${
                     doc.status === 'VERIFIED'
                       ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300'
+                      : doc.status === 'PROVISIONAL'
+                      ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800'
                       : doc.status === 'THEORETICAL'
                       ? 'bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300'
                       : doc.status === 'ASSUMPTION'
@@ -101,6 +103,7 @@ export default function DocumentLibrary() {
                   }`}
                 >
                   {doc.status === 'VERIFIED' && <CheckCircle2 className="w-3 h-3" />}
+                  {doc.status === 'PROVISIONAL' && <AlertTriangle className="w-3 h-3 text-amber-600 dark:text-amber-400" />}
                   {doc.status === 'THEORETICAL' && <Code className="w-3 h-3" />}
                   {doc.status === 'ASSUMPTION' && <AlertTriangle className="w-3 h-3" />}
                   {doc.status === 'ROADMAP' && <Clock className="w-3 h-3" />}

@@ -124,6 +124,15 @@ export default function ResearchPaper() {
           <div><span className="font-semibold text-technical-steel dark:text-slate-300">Journal:</span> {PAPER_METADATA.journal}</div>
           <div><span className="font-semibold text-technical-steel dark:text-slate-300">DOI:</span> {PAPER_METADATA.doi}</div>
         </div>
+
+        <a
+          href="/downloads/Flat_Plate_Thermal_Radiation_Research_Paper.pdf"
+          download="Flat_Plate_Thermal_Radiation_Research_Paper.pdf"
+          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-aeroblue-600 hover:bg-aeroblue-700 text-white rounded-xl font-semibold text-xs transition-colors shadow-xs"
+        >
+          <Download className="w-4 h-4" />
+          <span>Download Paper PDF</span>
+        </a>
       </aside>
 
       {/* Main Continuous Research Paper Body */}
@@ -132,7 +141,17 @@ export default function ResearchPaper() {
         <header className="border-b-2 border-technical-slate dark:border-slate-700 pb-8 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-technical-muted uppercase tracking-wider">
             <span>{PAPER_METADATA.journal}</span>
-            <span>{PAPER_METADATA.date}</span>
+            <div className="flex items-center gap-3">
+              <span>{PAPER_METADATA.date}</span>
+              <a
+                href="/downloads/Flat_Plate_Thermal_Radiation_Research_Paper.pdf"
+                download="Flat_Plate_Thermal_Radiation_Research_Paper.pdf"
+                className="no-print inline-flex items-center gap-1.5 px-3 py-1 bg-aeroblue-50 dark:bg-aeroblue-950/60 border border-aeroblue-200 dark:border-aeroblue-800 text-aeroblue-700 dark:text-aeroblue-300 rounded-lg text-xs font-semibold hover:bg-aeroblue-100 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>PDF Paper</span>
+              </a>
+            </div>
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-technical-slate dark:text-white leading-tight font-serif">
