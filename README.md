@@ -45,11 +45,9 @@ By implementing a rigorous, non-linear **grey diffuse surface-to-large-enclosure
 
 ## Spoon-Fed Thermal Radiation & CFD Fundamentals (Demystifying Technical Jargon)
 
-To make this study accessible to every engineer, student, and auditor, here is a straightforward explanation of terms that are often misunderstood:
-
 ### 1. What Does "Grey" Mean? (Hint: It is NOT the Visual Color Grey!)
 - In everyday language, "grey" refers to a visual shade between black and white.
-- **In thermal radiation physics, "GREY" HAS NOTHING TO DO WITH VISUAL COLOR!**
+- **In thermal radiation physics, "GREY" HAS NOTHING TO DO WITH VISUAL COLOR.**
 - A surface can be painted jet black, mirror white, shiny silver, or bright red, and still be classified as a "grey surface".
 - **The Physical Meaning**:
   - An ideal **blackbody** absorbs and emits 100% of all thermal radiation at every wavelength (emissivity ε = 1.0).
@@ -159,17 +157,6 @@ The structured computational meshes are generated parametrically using OpenFOAM'
                        HEATED PLATE: noSlip, q"heater = 1000 W/m² (y = 0 m)
 ```
 
-### Visual Mesh Evidence
-
-![Complete Fine Structured Mesh](results/figures/mesh_full_domain.png)
-*Figure 1: Complete structured hexahedral mesh (400 × 160 = 64,000 cells) covering the full 1.0 m × 0.20 m fluid domain. Mesh configuration file: [`cases/noRadiation_fine/system/blockMeshDict`](cases/noRadiation_fine/system/blockMeshDict).*
-
-![Near-Wall Inflation Detail](results/figures/mesh_inflation_detail.png)
-*Figure 2: Near-wall inflation detail showing the 80:1 wall-normal expansion. First cell height is Δy₁ ≈ 70.3 μm, fully resolving the viscous and thermal sublayers.*
-
-![Leading Edge Mesh Ultra-Zoom](results/figures/mesh_leading_edge_zoom.png)
-*Figure 3: Ultra-zoom at the leading edge (x ≤ 0.05 m, y ≤ 0.005 m) resolving the boundary layer inception at the stagnation point.*
-
 ---
 
 ## Complete Boundary Conditions for All 4 Cases
@@ -243,154 +230,236 @@ The formulation, physical assumptions, and response trends directly reference th
 
 ---
 
-## Visual Evidence Gallery: Full Domain vs Boundary-Layer Zoom
+## Complete Results & Figures Gallery (All 61 Evidence Images)
 
-### 1. Temperature Contours: All 4 Cases
+Every single result image from [`results/figures/`](results/figures) is rendered below, accompanied by its direct repository file link for instant tracking.
 
-![Four Cases: Full Fluid Domain Temperature](results/figures/four_case_temperature_full.png)
-*Figure 4: Full-domain temperature distribution (0 ≤ y ≤ 0.20 m) across all 4 cases. The white dashed line marks the 99% thermal boundary layer edge δT,99(x). Notice that 97.5% of the domain is active free-stream fluid at 300 K.*
+### Section 1: Mesh & Spatial Discretization Evidence
 
-![Four Cases: Boundary-Layer Zoom Temperature](results/figures/four_case_temperature_zoom.png)
-*Figure 5: Boundary-layer zoom (0 ≤ y ≤ 0.015 m) across all 4 cases with white isotherms. Clearly resolves the thermal boundary layer growth and the pronounced temperature depression caused by surface radiation (ε = 0.8).*
+![Complete Fine Structured Mesh](results/figures/mesh_full_domain.png)  
+📁 **File Path**: [results/figures/mesh_full_domain.png](results/figures/mesh_full_domain.png)  
+*Figure 1: Complete structured hexahedral mesh (400 × 160 = 64,000 cells) covering the full 1.0 m × 0.20 m fluid domain.*
 
----
+![Near-Wall Inflation Detail](results/figures/mesh_inflation_detail.png)  
+📁 **File Path**: [results/figures/mesh_inflation_detail.png](results/figures/mesh_inflation_detail.png)  
+*Figure 2: Near-wall inflation detail showing 80:1 geometric expansion grading (first cell height Δy₁ ≈ 70.3 μm).*
 
-### 2. Direct Radiation Footprint: Temperature Difference Contours (ΔT)
+![Leading Edge Mesh Ultra-Zoom](results/figures/mesh_leading_edge_zoom.png)  
+📁 **File Path**: [results/figures/mesh_leading_edge_zoom.png](results/figures/mesh_leading_edge_zoom.png)  
+*Figure 3: Ultra-zoom at the leading edge (x ≤ 0.05 m, y ≤ 0.005 m) resolving boundary layer inception at the stagnation point.*
 
-![Temperature Difference Full Domain](results/figures/temperature_difference_full.png)
-*Figure 6: Spatial cooling footprint ΔT(x, y) = T_surfaceRadiation - T_noRadiation across the full domain on the fine mesh (64,000 cells).*
-
-![Temperature Difference Zoom](results/figures/temperature_difference_zoom.png)
-*Figure 7: Near-wall zoom of temperature difference (0 ≤ y ≤ 0.015 m) with explicit isotherm contours showing progressive cooling from -1.0 K up to -6.97 K at the trailing edge wall.*
-
----
-
-### 3. Velocity Contours: Momentum Invariance Under Radiation
-
-![Four Cases: Full Fluid Domain Velocity](results/figures/four_case_velocity_full.png)
-*Figure 8: Streamwise velocity field u / U∞ across all 4 cases (0 ≤ y ≤ 0.20 m). Overlaid white dashed line denotes the hydrodynamic boundary layer thickness δ99(x).*
-
-![Four Cases: Boundary-Layer Velocity Zoom](results/figures/four_case_velocity_zoom.png)
-*Figure 9: Boundary-layer velocity zoom (0 ≤ y ≤ 0.025 m) with isolines at u/U∞ = 0.5, 0.9, 0.99. Demonstrates complete momentum decoupling from radiation.*
+![Mesh Comparison](results/figures/mesh_comparison.png)  
+📁 **File Path**: [results/figures/mesh_comparison.png](results/figures/mesh_comparison.png)  
+*Figure 4: Mesh resolution comparison between coarse (200 × 80) and fine (400 × 160) grids.*
 
 ---
 
-### 4. Pressure Contours: Leading-Edge Stagnation & Displacement Gradient
+### Section 2: Numerical Convergence & Grid Independence
 
-![Four Cases: Full Domain Pressure Deviation](results/figures/four_case_pressure_full.png)
-*Figure 10: Full domain pressure deviation (p - pRef) / Pa scaled between -0.01 Pa and +0.08 Pa. Captures the leading-edge stagnation and subsequent downstream recovery.*
+![Residual Convergence Histories](results/figures/convergence_histories.png)  
+📁 **File Path**: [results/figures/convergence_histories.png](results/figures/convergence_histories.png)  
+*Figure 5: Linear solver initial residual histories for Ux, Uy, h, p_rgh across 1500 outer PIMPLE iterations (Fine cases).*
 
-![Four Cases: Boundary-Layer Pressure Zoom](results/figures/four_case_pressure_zoom.png)
-*Figure 11: Boundary-layer pressure zoom (0 ≤ y ≤ 0.015 m) resolving the mild displacement-induced pressure gradient.*
+![All 4 Cases Residual Tracking](results/figures/convergence_histories_all4.png)  
+📁 **File Path**: [results/figures/convergence_histories_all4.png](results/figures/convergence_histories_all4.png)  
+*Figure 6: 4-panel comparison of residual convergence for all 4 simulated cases.*
 
----
-
-## Classical Boundary Layer & Literature Benchmarks
-
-### 1. Velocity Validation vs Exact Blasius Similarity Solution
-The boundary layer equation f''' + 0.5 · f · f'' = 0 is solved numerically via shooting method to machine precision (f''(0) = 0.332057). CFD velocity profiles extracted at x/L = 0.25, 0.50, 0.75, 1.0 collapse onto the Blasius similarity variable η = y · √(U∞ / (ν · x)):
-
-![Blasius Velocity Validation](results/figures/blasius_velocity_validation.png)
-*Figure 12: Non-dimensional streamwise velocity u / U∞ vs similarity variable η. OpenFOAM fine-mesh CFD results (markers) show excellent agreement with the analytical Blasius curve (solid black line).*
+![Two-Grid Sensitivity Check](results/figures/grid_comparison.png)  
+📁 **File Path**: [results/figures/grid_comparison.png](results/figures/grid_comparison.png)  
+*Figure 7: Two-grid discretization sensitivity check comparing trailing-edge wall temperature and thermal layer thickness between coarse and fine meshes.*
 
 ---
 
-### 2. Thermal Validation vs Pohlhausen Similarity Solution
-The energy equation θ'' + 0.5 · Pr · f · θ' = 0 is solved for Pr = 0.71, providing the fundamental benchmark for laminar thermal boundary layers:
+### Section 3: Four-Case Composite Overview Contours
 
-![Pohlhausen Thermal Validation](results/figures/pohlhausen_thermal_validation.png)
-*Figure 13: Non-dimensional temperature θ(η) = (T - T∞)/(Tw - T∞) vs similarity variable η. Demonstrates self-similarity of the thermal boundary layer across all streamwise stations.*
+![Four Cases: Full Fluid Domain Temperature](results/figures/four_case_temperature_full.png)  
+📁 **File Path**: [results/figures/four_case_temperature_full.png](results/figures/four_case_temperature_full.png)  
+*Figure 8: Full-domain temperature distribution (0 ≤ y ≤ 0.20 m) across all 4 cases with overlaid δT,99 thermal boundary layer line.*
 
----
+![Four Cases: Boundary-Layer Zoom Temperature](results/figures/four_case_temperature_zoom.png)  
+📁 **File Path**: [results/figures/four_case_temperature_zoom.png](results/figures/four_case_temperature_zoom.png)  
+*Figure 9: Boundary-layer zoom (0 ≤ y ≤ 0.015 m) across all 4 cases with white isotherms.*
 
-### 3. Absolute Temperature Profiles in Kelvin
-Direct visualization of the thermal boundary layer in absolute physical units (Kelvin), displaying the ~7 K temperature drop across four streamwise stations:
+![Four Cases: Full Fluid Domain Velocity](results/figures/four_case_velocity_full.png)  
+📁 **File Path**: [results/figures/four_case_velocity_full.png](results/figures/four_case_velocity_full.png)  
+*Figure 10: Streamwise velocity field u / U∞ across all 4 cases (0 ≤ y ≤ 0.20 m) with overlaid hydrodynamic boundary layer line δ99.*
 
-![Absolute Temperature Profiles](results/figures/absolute_temperature_profiles.png)
-*Figure 14: Dimensional temperature profiles T(y) across the boundary layer at x/L = 0.25, 0.50, 0.75, 1.00 comparing baseline No Radiation (blue) vs Surface Radiation (red).*
+![Four Cases: Boundary-Layer Velocity Zoom](results/figures/four_case_velocity_zoom.png)  
+📁 **File Path**: [results/figures/four_case_velocity_zoom.png](results/figures/four_case_velocity_zoom.png)  
+*Figure 11: Boundary-layer velocity zoom (0 ≤ y ≤ 0.025 m) demonstrating momentum decoupling from radiation.*
 
----
+![Four Cases: Full Domain Pressure Deviation](results/figures/four_case_pressure_full.png)  
+📁 **File Path**: [results/figures/four_case_pressure_full.png](results/figures/four_case_pressure_full.png)  
+*Figure 12: Full-domain pressure deviation (p - pRef) / Pa scaled between -0.01 Pa and +0.08 Pa.*
 
-### 4. Boundary Layer Growth & Skin Friction vs Theory
-
-![Boundary Layer Growth](results/figures/boundary_layer_growth.png)
-*Figure 15: Hydrodynamic and thermal boundary layer thickness growth along the 1.0 m plate compared against theoretical scaling laws (δ = 5.0 · x / √Re_x and δT = δ · Pr⁻¹/³).*
-
-![Skin Friction Comparison](results/figures/skin_friction_comparison.png)
-*Figure 16: Local skin friction coefficient Cf(x) for all 4 cases compared directly with the classical Blasius correlation Cf = 0.664 / √Re_x.*
-
----
-
-### 5. Wall Heat Flux Split & Exact Energy Conservation
-
-![Wall Heat Flux Split](results/figures/wall_heat_flux_split.png)
-*Figure 17: Local wall heat flux partition for the radiating plate (ε = 0.8). The sum q"conv + q"rad (black dashed line) rigorously equals the imposed 1000 W/m² heater flux everywhere.*
-
-![Radiative Fraction Evolution](results/figures/radiative_fraction_evolution.png)
-*Figure 18: Spatial evolution of the radiative dissipation fraction q"rad / q"total along the plate, rising from 0% at the leading edge to 21.56% at the trailing edge.*
+![Four Cases: Boundary-Layer Pressure Zoom](results/figures/four_case_pressure_zoom.png)  
+📁 **File Path**: [results/figures/four_case_pressure_zoom.png](results/figures/four_case_pressure_zoom.png)  
+*Figure 13: Boundary-layer pressure zoom (0 ≤ y ≤ 0.015 m) resolving the displacement-induced pressure gradient.*
 
 ---
 
-### 6. Heat Transfer Coefficient & Nusselt Number Comparison
+### Section 4: Direct Radiation Cooling Footprint (ΔT)
 
-![Heat Transfer Coefficient Comparison](results/figures/heat_transfer_coefficient_comparison.png)
-*Figure 19: Local convective heat transfer coefficient h(x) = q"conv / (Tw - T∞) along the plate for all 4 cases.*
+![Temperature Difference Full Domain](results/figures/temperature_difference_full.png)  
+📁 **File Path**: [results/figures/temperature_difference_full.png](results/figures/temperature_difference_full.png)  
+*Figure 14: Spatial cooling footprint ΔT(x, y) = T_surfaceRadiation - T_noRadiation across the full domain on the fine mesh (64,000 cells).*
 
-![Nusselt Number Comparison](results/figures/nusselt_number_comparison.png)
-*Figure 20: Local Nusselt number Nu_x(x) across all 4 cases compared against the classical uniform heat flux correlation Nu_x = 0.453 · Re_x¹/² · Pr¹/³.*
+![Temperature Difference Zoom](results/figures/temperature_difference_zoom.png)  
+📁 **File Path**: [results/figures/temperature_difference_zoom.png](results/figures/temperature_difference_zoom.png)  
+*Figure 15: Near-wall zoom of temperature difference (0 ≤ y ≤ 0.015 m) with explicit isotherm contours showing cooling up to -6.97 K at the wall.*
+
+![Fine Temperature Contours Full](results/figures/temperature_contours.png)  
+📁 **File Path**: [results/figures/temperature_contours.png](results/figures/temperature_contours.png)  
+*Figure 16: Fine-mesh full-domain temperature comparison between baseline No Radiation and Surface Radiation.*
+
+![Fine Temperature Contours Zoom](results/figures/temperature_contours_boundary_layer_zoom.png)  
+📁 **File Path**: [results/figures/temperature_contours_boundary_layer_zoom.png](results/figures/temperature_contours_boundary_layer_zoom.png)  
+*Figure 17: Fine-mesh near-wall temperature zoom (0 ≤ y ≤ 0.015 m) comparing baseline No Radiation and Surface Radiation.*
 
 ---
 
-### 7. Comprehensive 4-Case Performance Breakdown & Literature Analogy
+### Section 5: Fine-Mesh Velocity and Pressure Contours
 
-![Four Case Metric Breakdown](results/figures/four_case_metric_breakdown.png)
-*Figure 21: Comprehensive 4-panel comparison bar chart detailing (A) Trailing Edge Wall Temperature, (B) Convective vs Radiative Heat Flux Split, (C) Trailing Local Nusselt Number, and (D) Hydrodynamic vs Thermal Boundary Layer Thickness across all 4 cases.*
+![Fine Velocity Contours Full](results/figures/velocity_contours_full.png)  
+📁 **File Path**: [results/figures/velocity_contours_full.png](results/figures/velocity_contours_full.png)  
+*Figure 18: Fine-mesh full-domain streamwise velocity contours comparing No Radiation and Surface Radiation.*
 
-![Research Paper Radiation Analogy](results/figures/research_paper_radiation_analogy.png)
-*Figure 22: Comparison with academic literature trends from Reddy (2014) and Raju et al. (2026). Panel 1 demonstrates that thermal radiation dampens the dimensionless fluid temperature profile across the boundary layer. Panel 2 summarizes trailing-edge temperature and radiative flux across all cases.*
+![Fine Velocity Contours Zoom](results/figures/velocity_contours.png)  
+📁 **File Path**: [results/figures/velocity_contours.png](results/figures/velocity_contours.png)  
+*Figure 19: Fine-mesh boundary-layer velocity zoom (0 ≤ y ≤ 0.025 m) with isolines at u/U∞ = 0.5, 0.9, 0.99.*
+
+![Fine Pressure Contours Zoom](results/figures/pressure_contours.png)  
+📁 **File Path**: [results/figures/pressure_contours.png](results/figures/pressure_contours.png)  
+*Figure 20: Fine-mesh boundary-layer pressure deviation zoom (0 ≤ y ≤ 0.015 m).*
 
 ---
 
-## Individual Rendered Contours Gallery (All 4 Cases)
+### Section 6: Analytical Boundary Layer Benchmarks (Blasius & Pohlhausen)
 
-For auditing each individual simulation case separately, the table below provides direct clickable links to the repository files alongside the embedded high-resolution rendered contours:
+![Blasius Velocity Validation](results/figures/blasius_velocity_validation.png)  
+📁 **File Path**: [results/figures/blasius_velocity_validation.png](results/figures/blasius_velocity_validation.png)  
+*Figure 21: Non-dimensional streamwise velocity u / U∞ vs similarity variable η. OpenFOAM CFD results (markers) collapse onto the analytical Blasius curve.*
 
-### 1. Temperature Field Contours (T / K)
+![Pohlhausen Thermal Validation](results/figures/pohlhausen_thermal_validation.png)  
+📁 **File Path**: [results/figures/pohlhausen_thermal_validation.png](results/figures/pohlhausen_thermal_validation.png)  
+*Figure 22: Non-dimensional temperature θ(η) vs similarity variable η compared against the Pohlhausen similarity solution for Pr = 0.71.*
+
+![Boundary Layer Growth](results/figures/boundary_layer_growth.png)  
+📁 **File Path**: [results/figures/boundary_layer_growth.png](results/figures/boundary_layer_growth.png)  
+*Figure 23: Hydrodynamic and thermal boundary layer thickness growth along the 1.0 m plate compared against theoretical scaling laws (δ = 5.0 · x / √Re_x and δT = δ · Pr⁻¹/³).*
+
+![Skin Friction vs Blasius Theory](results/figures/skin_friction_comparison.png)  
+📁 **File Path**: [results/figures/skin_friction_comparison.png](results/figures/skin_friction_comparison.png)  
+*Figure 24: Local skin friction coefficient Cf(x) for all 4 cases compared directly with the classical Blasius correlation Cf = 0.664 / √Re_x.*
+
+---
+
+### Section 7: Boundary Layer Profiles (Absolute Kelvin & Normalized)
+
+![Absolute Temperature Profiles](results/figures/absolute_temperature_profiles.png)  
+📁 **File Path**: [results/figures/absolute_temperature_profiles.png](results/figures/absolute_temperature_profiles.png)  
+*Figure 25: Dimensional temperature profiles T(y) in Kelvin across the boundary layer at x/L = 0.25, 0.50, 0.75, 1.00.*
+
+![Thermal Profiles](results/figures/thermal_profiles.png)  
+📁 **File Path**: [results/figures/thermal_profiles.png](results/figures/thermal_profiles.png)  
+*Figure 26: Normalized temperature profiles (T - T∞)/(Tw - T∞) at x/L = 0.25, 0.50, 0.75.*
+
+![Velocity Profiles](results/figures/velocity_profiles.png)  
+📁 **File Path**: [results/figures/velocity_profiles.png](results/figures/velocity_profiles.png)  
+*Figure 27: Streamwise velocity profiles u/U∞ across the boundary layer at x/L = 0.25, 0.50, 0.75.*
+
+---
+
+### Section 8: Wall Heat Balance, Heat Flux Partition & Nusselt Number
+
+![Wall Heat Flux Split](results/figures/wall_heat_flux_split.png)  
+📁 **File Path**: [results/figures/wall_heat_flux_split.png](results/figures/wall_heat_flux_split.png)  
+*Figure 28: Local wall heat flux partition for the radiating plate (ε = 0.8). The sum q"conv + q"rad rigorously equals the imposed 1000 W/m² heater flux everywhere.*
+
+![Radiative Fraction Evolution](results/figures/radiative_fraction_evolution.png)  
+📁 **File Path**: [results/figures/radiative_fraction_evolution.png](results/figures/radiative_fraction_evolution.png)  
+*Figure 29: Spatial evolution of the radiative dissipation fraction q"rad / q"total along the plate, rising from 0% at the leading edge to 21.56% at the trailing edge.*
+
+![Wall Heat Balance and Nusselt](results/figures/wall_heat_balance_and_nusselt.png)  
+📁 **File Path**: [results/figures/wall_heat_balance_and_nusselt.png](results/figures/wall_heat_balance_and_nusselt.png)  
+*Figure 30: 3-panel summary of wall temperature Tw, radiative heat flux q"rad, and local Nusselt number Nu_x along the plate.*
+
+![Wall Temperature Across All Cases](results/figures/wall_temperature_all_cases.png)  
+📁 **File Path**: [results/figures/wall_temperature_all_cases.png](results/figures/wall_temperature_all_cases.png)  
+*Figure 31: Wall temperature distribution Tw(x) across all 4 simulated cases.*
+
+![Wall Temperature Distribution](results/figures/wall_temperature.png)  
+📁 **File Path**: [results/figures/wall_temperature.png](results/figures/wall_temperature.png)  
+*Figure 32: Direct comparative wall temperature curve showing radiation-induced surface cooling.*
+
+![Heat Transfer Coefficient Comparison](results/figures/heat_transfer_coefficient_comparison.png)  
+📁 **File Path**: [results/figures/heat_transfer_coefficient_comparison.png](results/figures/heat_transfer_coefficient_comparison.png)  
+*Figure 33: Local convective heat transfer coefficient h(x) = q"conv / (Tw - T∞) along the plate for all 4 cases.*
+
+![Nusselt Number Comparison](results/figures/nusselt_number_comparison.png)  
+📁 **File Path**: [results/figures/nusselt_number_comparison.png](results/figures/nusselt_number_comparison.png)  
+*Figure 34: Local Nusselt number Nu_x(x) across all 4 cases compared against the classical uniform heat flux correlation Nu_x = 0.453 · Re_x¹/² · Pr¹/³.*
+
+---
+
+### Section 9: Multi-Case Metric Breakdown & Academic Literature Analogy
+
+![Four Case Metric Breakdown](results/figures/four_case_metric_breakdown.png)  
+📁 **File Path**: [results/figures/four_case_metric_breakdown.png](results/figures/four_case_metric_breakdown.png)  
+*Figure 35: Comprehensive 4-panel comparison bar chart detailing (A) Trailing Edge Wall Temperature, (B) Convective vs Radiative Heat Flux Split, (C) Trailing Local Nusselt Number, and (D) Hydrodynamic vs Thermal Boundary Layer Thickness across all 4 cases.*
+
+![Research Paper Radiation Analogy](results/figures/research_paper_radiation_analogy.png)  
+📁 **File Path**: [results/figures/research_paper_radiation_analogy.png](results/figures/research_paper_radiation_analogy.png)  
+*Figure 36: Comparison with academic literature trends from Reddy (2014) and Raju et al. (2026). Panel 1 demonstrates that thermal radiation dampens the dimensionless fluid temperature profile across the boundary layer. Panel 2 summarizes trailing-edge temperature and radiative flux across all cases.*
+
+![Skin Friction and Pressure Response](results/figures/skin_friction_and_pressure.png)  
+📁 **File Path**: [results/figures/skin_friction_and_pressure.png](results/figures/skin_friction_and_pressure.png)  
+*Figure 37: Wall shear stress response (Cf) and near-wall pressure coefficient (Cp) along the flat plate.*
+
+---
+
+### Section 10: Individual Single-Case Contours Gallery (24 Figures)
+
+For auditing each individual simulation case separately without composite panels, the table below provides direct clickable links to the repository files alongside the embedded high-resolution rendered contours:
+
+#### 1. Temperature Field Contours (T / K)
 
 | Case Name & Emissivity | Full Fluid Domain (0 ≤ y ≤ 0.20 m) | Boundary-Layer Zoom (0 ≤ y ≤ 0.015 m) |
 |---|---|---|
-| **No Radiation, Coarse**<br>File Links: [Full Domain](results/figures/noRadiation_coarse_temperature_full_domain.png) \| [BL Zoom](results/figures/noRadiation_coarse_temperature_boundary_layer_zoom.png) | ![NoRad Coarse T Full](results/figures/noRadiation_coarse_temperature_full_domain.png) | ![NoRad Coarse T Zoom](results/figures/noRadiation_coarse_temperature_boundary_layer_zoom.png) |
-| **Surface Radiation, Coarse**<br>File Links: [Full Domain](results/figures/surfaceRadiation_coarse_temperature_full_domain.png) \| [BL Zoom](results/figures/surfaceRadiation_coarse_temperature_boundary_layer_zoom.png) | ![Rad Coarse T Full](results/figures/surfaceRadiation_coarse_temperature_full_domain.png) | ![Rad Coarse T Zoom](results/figures/surfaceRadiation_coarse_temperature_boundary_layer_zoom.png) |
-| **No Radiation, Fine**<br>File Links: [Full Domain](results/figures/noRadiation_fine_temperature_full_domain.png) \| [BL Zoom](results/figures/noRadiation_fine_temperature_boundary_layer_zoom.png) | ![NoRad Fine T Full](results/figures/noRadiation_fine_temperature_full_domain.png) | ![NoRad Fine T Zoom](results/figures/noRadiation_fine_temperature_boundary_layer_zoom.png) |
-| **Surface Radiation, Fine**<br>File Links: [Full Domain](results/figures/surfaceRadiation_fine_temperature_full_domain.png) \| [BL Zoom](results/figures/surfaceRadiation_fine_temperature_boundary_layer_zoom.png) | ![Rad Fine T Full](results/figures/surfaceRadiation_fine_temperature_full_domain.png) | ![Rad Fine T Zoom](results/figures/surfaceRadiation_fine_temperature_boundary_layer_zoom.png) |
+| **No Radiation, Coarse**<br>📁 Full Domain: [results/figures/noRadiation_coarse_temperature_full_domain.png](results/figures/noRadiation_coarse_temperature_full_domain.png)<br>📁 BL Zoom: [results/figures/noRadiation_coarse_temperature_boundary_layer_zoom.png](results/figures/noRadiation_coarse_temperature_boundary_layer_zoom.png) | ![NoRad Coarse T Full](results/figures/noRadiation_coarse_temperature_full_domain.png) | ![NoRad Coarse T Zoom](results/figures/noRadiation_coarse_temperature_boundary_layer_zoom.png) |
+| **Surface Radiation, Coarse**<br>📁 Full Domain: [results/figures/surfaceRadiation_coarse_temperature_full_domain.png](results/figures/surfaceRadiation_coarse_temperature_full_domain.png)<br>📁 BL Zoom: [results/figures/surfaceRadiation_coarse_temperature_boundary_layer_zoom.png](results/figures/surfaceRadiation_coarse_temperature_boundary_layer_zoom.png) | ![Rad Coarse T Full](results/figures/surfaceRadiation_coarse_temperature_full_domain.png) | ![Rad Coarse T Zoom](results/figures/surfaceRadiation_coarse_temperature_boundary_layer_zoom.png) |
+| **No Radiation, Fine**<br>📁 Full Domain: [results/figures/noRadiation_fine_temperature_full_domain.png](results/figures/noRadiation_fine_temperature_full_domain.png)<br>📁 BL Zoom: [results/figures/noRadiation_fine_temperature_boundary_layer_zoom.png](results/figures/noRadiation_fine_temperature_boundary_layer_zoom.png) | ![NoRad Fine T Full](results/figures/noRadiation_fine_temperature_full_domain.png) | ![NoRad Fine T Zoom](results/figures/noRadiation_fine_temperature_boundary_layer_zoom.png) |
+| **Surface Radiation, Fine**<br>📁 Full Domain: [results/figures/surfaceRadiation_fine_temperature_full_domain.png](results/figures/surfaceRadiation_fine_temperature_full_domain.png)<br>📁 BL Zoom: [results/figures/surfaceRadiation_fine_temperature_boundary_layer_zoom.png](results/figures/surfaceRadiation_fine_temperature_boundary_layer_zoom.png) | ![Rad Fine T Full](results/figures/surfaceRadiation_fine_temperature_full_domain.png) | ![Rad Fine T Zoom](results/figures/surfaceRadiation_fine_temperature_boundary_layer_zoom.png) |
 
 ---
 
-### 2. Streamwise Velocity Field Contours (u / U∞)
+#### 2. Streamwise Velocity Field Contours (u / U∞)
 
 | Case Name & Emissivity | Full Fluid Domain (0 ≤ y ≤ 0.20 m) | Boundary-Layer Zoom (0 ≤ y ≤ 0.015 m) |
 |---|---|---|
-| **No Radiation, Coarse**<br>File Links: [Full Domain](results/figures/noRadiation_coarse_velocity_full_domain.png) \| [BL Zoom](results/figures/noRadiation_coarse_velocity_boundary_layer_zoom.png) | ![NoRad Coarse U Full](results/figures/noRadiation_coarse_velocity_full_domain.png) | ![NoRad Coarse U Zoom](results/figures/noRadiation_coarse_velocity_boundary_layer_zoom.png) |
-| **Surface Radiation, Coarse**<br>File Links: [Full Domain](results/figures/surfaceRadiation_coarse_velocity_full_domain.png) \| [BL Zoom](results/figures/surfaceRadiation_coarse_velocity_boundary_layer_zoom.png) | ![Rad Coarse U Full](results/figures/surfaceRadiation_coarse_velocity_full_domain.png) | ![Rad Coarse U Zoom](results/figures/surfaceRadiation_coarse_velocity_boundary_layer_zoom.png) |
-| **No Radiation, Fine**<br>File Links: [Full Domain](results/figures/noRadiation_fine_velocity_full_domain.png) \| [BL Zoom](results/figures/noRadiation_fine_velocity_boundary_layer_zoom.png) | ![NoRad Fine U Full](results/figures/noRadiation_fine_velocity_full_domain.png) | ![NoRad Fine U Zoom](results/figures/noRadiation_fine_velocity_boundary_layer_zoom.png) |
-| **Surface Radiation, Fine**<br>File Links: [Full Domain](results/figures/surfaceRadiation_fine_velocity_full_domain.png) \| [BL Zoom](results/figures/surfaceRadiation_fine_velocity_boundary_layer_zoom.png) | ![Rad Fine U Full](results/figures/surfaceRadiation_fine_velocity_full_domain.png) | ![Rad Fine U Zoom](results/figures/surfaceRadiation_fine_velocity_boundary_layer_zoom.png) |
+| **No Radiation, Coarse**<br>📁 Full Domain: [results/figures/noRadiation_coarse_velocity_full_domain.png](results/figures/noRadiation_coarse_velocity_full_domain.png)<br>📁 BL Zoom: [results/figures/noRadiation_coarse_velocity_boundary_layer_zoom.png](results/figures/noRadiation_coarse_velocity_boundary_layer_zoom.png) | ![NoRad Coarse U Full](results/figures/noRadiation_coarse_velocity_full_domain.png) | ![NoRad Coarse U Zoom](results/figures/noRadiation_coarse_velocity_boundary_layer_zoom.png) |
+| **Surface Radiation, Coarse**<br>📁 Full Domain: [results/figures/surfaceRadiation_coarse_velocity_full_domain.png](results/figures/surfaceRadiation_coarse_velocity_full_domain.png)<br>📁 BL Zoom: [results/figures/surfaceRadiation_coarse_velocity_boundary_layer_zoom.png](results/figures/surfaceRadiation_coarse_velocity_boundary_layer_zoom.png) | ![Rad Coarse U Full](results/figures/surfaceRadiation_coarse_velocity_full_domain.png) | ![Rad Coarse U Zoom](results/figures/surfaceRadiation_coarse_velocity_boundary_layer_zoom.png) |
+| **No Radiation, Fine**<br>📁 Full Domain: [results/figures/noRadiation_fine_velocity_full_domain.png](results/figures/noRadiation_fine_velocity_full_domain.png)<br>📁 BL Zoom: [results/figures/noRadiation_fine_velocity_boundary_layer_zoom.png](results/figures/noRadiation_fine_velocity_boundary_layer_zoom.png) | ![NoRad Fine U Full](results/figures/noRadiation_fine_velocity_full_domain.png) | ![NoRad Fine U Zoom](results/figures/noRadiation_fine_velocity_boundary_layer_zoom.png) |
+| **Surface Radiation, Fine**<br>📁 Full Domain: [results/figures/surfaceRadiation_fine_velocity_full_domain.png](results/figures/surfaceRadiation_fine_velocity_full_domain.png)<br>📁 BL Zoom: [results/figures/surfaceRadiation_fine_velocity_boundary_layer_zoom.png](results/figures/surfaceRadiation_fine_velocity_boundary_layer_zoom.png) | ![Rad Fine U Full](results/figures/surfaceRadiation_fine_velocity_full_domain.png) | ![Rad Fine U Zoom](results/figures/surfaceRadiation_fine_velocity_boundary_layer_zoom.png) |
 
 ---
 
-### 3. Pressure Deviation Field Contours ((p - pRef) / Pa)
+#### 3. Pressure Deviation Field Contours ((p - pRef) / Pa)
 
 | Case Name & Emissivity | Full Fluid Domain (0 ≤ y ≤ 0.20 m) | Boundary-Layer Zoom (0 ≤ y ≤ 0.015 m) |
 |---|---|---|
-| **No Radiation, Coarse**<br>File Links: [Full Domain](results/figures/noRadiation_coarse_pressure_deviation_full_domain.png) \| [BL Zoom](results/figures/noRadiation_coarse_pressure_deviation_boundary_layer_zoom.png) | ![NoRad Coarse p Full](results/figures/noRadiation_coarse_pressure_deviation_full_domain.png) | ![NoRad Coarse p Zoom](results/figures/noRadiation_coarse_pressure_deviation_boundary_layer_zoom.png) |
-| **Surface Radiation, Coarse**<br>File Links: [Full Domain](results/figures/surfaceRadiation_coarse_pressure_deviation_full_domain.png) \| [BL Zoom](results/figures/surfaceRadiation_coarse_pressure_deviation_boundary_layer_zoom.png) | ![Rad Coarse p Full](results/figures/surfaceRadiation_coarse_pressure_deviation_full_domain.png) | ![Rad Coarse p Zoom](results/figures/surfaceRadiation_coarse_pressure_deviation_boundary_layer_zoom.png) |
-| **No Radiation, Fine**<br>File Links: [Full Domain](results/figures/noRadiation_fine_pressure_deviation_full_domain.png) \| [BL Zoom](results/figures/noRadiation_fine_pressure_deviation_boundary_layer_zoom.png) | ![NoRad Fine p Full](results/figures/noRadiation_fine_pressure_deviation_full_domain.png) | ![NoRad Fine p Zoom](results/figures/noRadiation_fine_pressure_deviation_boundary_layer_zoom.png) |
-| **Surface Radiation, Fine**<br>File Links: [Full Domain](results/figures/surfaceRadiation_fine_pressure_deviation_full_domain.png) \| [BL Zoom](results/figures/surfaceRadiation_fine_pressure_deviation_boundary_layer_zoom.png) | ![Rad Fine p Full](results/figures/surfaceRadiation_fine_pressure_deviation_full_domain.png) | ![Rad Fine p Zoom](results/figures/surfaceRadiation_fine_pressure_deviation_boundary_layer_zoom.png) |
+| **No Radiation, Coarse**<br>📁 Full Domain: [results/figures/noRadiation_coarse_pressure_deviation_full_domain.png](results/figures/noRadiation_coarse_pressure_deviation_full_domain.png)<br>📁 BL Zoom: [results/figures/noRadiation_coarse_pressure_deviation_boundary_layer_zoom.png](results/figures/noRadiation_coarse_pressure_deviation_boundary_layer_zoom.png) | ![NoRad Coarse p Full](results/figures/noRadiation_coarse_pressure_deviation_full_domain.png) | ![NoRad Coarse p Zoom](results/figures/noRadiation_coarse_pressure_deviation_boundary_layer_zoom.png) |
+| **Surface Radiation, Coarse**<br>📁 Full Domain: [results/figures/surfaceRadiation_coarse_pressure_deviation_full_domain.png](results/figures/surfaceRadiation_coarse_pressure_deviation_full_domain.png)<br>📁 BL Zoom: [results/figures/surfaceRadiation_coarse_pressure_deviation_boundary_layer_zoom.png](results/figures/surfaceRadiation_coarse_pressure_deviation_boundary_layer_zoom.png) | ![Rad Coarse p Full](results/figures/surfaceRadiation_coarse_pressure_deviation_full_domain.png) | ![Rad Coarse p Zoom](results/figures/surfaceRadiation_coarse_pressure_deviation_boundary_layer_zoom.png) |
+| **No Radiation, Fine**<br>📁 Full Domain: [results/figures/noRadiation_fine_pressure_deviation_full_domain.png](results/figures/noRadiation_fine_pressure_deviation_full_domain.png)<br>📁 BL Zoom: [results/figures/noRadiation_fine_pressure_deviation_boundary_layer_zoom.png](results/figures/noRadiation_fine_pressure_deviation_boundary_layer_zoom.png) | ![NoRad Fine p Full](results/figures/noRadiation_fine_pressure_deviation_full_domain.png) | ![NoRad Fine p Zoom](results/figures/noRadiation_fine_pressure_deviation_boundary_layer_zoom.png) |
+| **Surface Radiation, Fine**<br>📁 Full Domain: [results/figures/surfaceRadiation_fine_pressure_deviation_full_domain.png](results/figures/surfaceRadiation_fine_pressure_deviation_full_domain.png)<br>📁 BL Zoom: [results/figures/surfaceRadiation_fine_pressure_deviation_boundary_layer_zoom.png](results/figures/surfaceRadiation_fine_pressure_deviation_boundary_layer_zoom.png) | ![Rad Fine p Full](results/figures/surfaceRadiation_fine_pressure_deviation_full_domain.png) | ![Rad Fine p Zoom](results/figures/surfaceRadiation_fine_pressure_deviation_boundary_layer_zoom.png) |
 
 ---
 
 ## Quantitative Audit Table Across All 4 Cases
 
 Extracted directly from the converged OpenFOAM fields at iteration 1500 and exported to [`results/case_audit.csv`](results/case_audit.csv):
+
+📁 **Source CSV File**: [`results/case_audit.csv`](results/case_audit.csv)
 
 | Metric | `noRadiation_coarse` | `surfaceRadiation_coarse` | `noRadiation_fine` | `surfaceRadiation_fine` | Physical Significance |
 |---|---:|---:|---:|---:|---|
@@ -429,8 +498,8 @@ Extracted directly from the converged OpenFOAM fields at iteration 1500 and expo
 - **Raw Solution Dictionaries**: `cases/{case_name}/{0, 250, 500, 750, 1000, 1250, 1500}/`
 - **Exported VTK Datasets**: `cases/{case_name}/VTK/{case_name}_1500.vtk`
 - **Solver Execution Logs**: `cases/{case_name}/log.foamRun`, `log.blockMesh`, `log.checkMesh`
-- **Publication Figures**: `results/figures/` (61 PNG files, fully indexed in [FIGURE_INDEX.md](FIGURE_INDEX.md))
-- **Audited Metric CSV**: `results/case_audit.csv`
+- **Publication Figures**: [`results/figures/`](results/figures) (61 PNG files, fully indexed in [FIGURE_INDEX.md](FIGURE_INDEX.md))
+- **Audited Metric CSV**: [`results/case_audit.csv`](results/case_audit.csv)
 
 ---
 
