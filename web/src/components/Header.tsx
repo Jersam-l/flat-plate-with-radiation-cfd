@@ -62,14 +62,14 @@ export default function Header({ currentMode, setMode, onExportPdf }: HeaderProp
           <div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-sm sm:text-base text-technical-slate dark:text-white tracking-tight">
-                Boundary Layer Thermal CFD
+                Boundary Layer on a Flat Plate with Radiation
               </span>
               <span className="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-aeroblue-50 dark:bg-aeroblue-950 text-aeroblue-700 dark:text-aeroblue-300 border border-aeroblue-200 dark:border-aeroblue-800">
                 OpenFOAM 13
               </span>
             </div>
             <p className="hidden md:block text-[11px] text-technical-muted font-mono">
-              Re_L = 1.258 × 10⁵ • Grey Diffuse Surface Radiation (ε = 0.8)
+              Jersam Lithin L (URK24AE1026) • Karunya • Boundary Layer Theory
             </p>
           </div>
         </div>
@@ -144,15 +144,15 @@ export default function Header({ currentMode, setMode, onExportPdf }: HeaderProp
                 onMouseLeave={() => setShowExportMenu(false)}
               >
                 <a
-                  href="/downloads/Flat_Plate_Thermal_Radiation_Pitch_Deck.pdf"
-                  download="Flat_Plate_Thermal_Radiation_Pitch_Deck.pdf"
+                  href="/downloads/Flat_Plate_Radiation_CFD_Pitch.pdf"
+                  download="Flat_Plate_Radiation_CFD_Pitch.pdf"
                   onClick={() => setShowExportMenu(false)}
                   className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-technical-slate dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 text-left"
                 >
-                  <Presentation className="w-4 h-4 text-aeroblue-600" />
+                  <Presentation className="w-4 h-4 text-orange-500" />
                   <div>
                     <div className="font-semibold">Download Pitch Deck (PDF)</div>
-                    <div className="text-[10px] text-technical-muted">16:9 Landscape (16 Publication Slides)</div>
+                    <div className="text-[10px] text-technical-muted">16:9 Landscape (8 Minimal Slides)</div>
                   </div>
                 </a>
 

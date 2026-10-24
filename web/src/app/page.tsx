@@ -56,18 +56,18 @@ export default function HomePage() {
                 </span>
               </div>
               <h1 className="text-base sm:text-lg font-bold text-technical-slate dark:text-white">
-                Forced Convection Boundary Layer Over an Emitting Flat Plate Coupled with Surface Thermal Radiation
+                Boundary Layer on a Flat Plate with Radiation
               </h1>
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
               <a
-                href="/downloads/Flat_Plate_Thermal_Radiation_Pitch_Deck.pdf"
-                download="Flat_Plate_Thermal_Radiation_Pitch_Deck.pdf"
+                href="/downloads/Flat_Plate_Radiation_CFD_Pitch.pdf"
+                download="Flat_Plate_Radiation_CFD_Pitch.pdf"
                 className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-technical-slate dark:text-white border border-technical-border dark:border-technical-darkBorder hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-xs flex items-center gap-1.5"
               >
-                <Presentation className="w-3.5 h-3.5 text-aeroblue-600" />
-                Download Pitch PDF
+                <Presentation className="w-3.5 h-3.5 text-orange-500" />
+                Download Pitch PDF (8 Slides)
               </a>
 
               <a
@@ -95,10 +95,10 @@ export default function HomePage() {
           <div className="space-y-1 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2 text-technical-slate dark:text-white font-semibold">
               <ShieldCheck className="w-4 h-4 text-emerald-500" />
-              <span>Flat-Plate Thermal Boundary Layer CFD Multiphysics Package</span>
+              <span>Boundary Layer on a Flat Plate with Radiation</span>
             </div>
             <p className="font-mono text-[11px]">
-              OpenFOAM 13 • Re_L = 1.258 × 10⁵ • Stefan-Boltzmann ε = 0.8 • First-Law Energy Balance Closed
+              OpenFOAM 13 • Re_L = 1.258 × 10⁵ • Stefan-Boltzmann ε = 0.8 • 3rd Year B.Tech Aerospace • Karunya
             </p>
           </div>
 
@@ -113,9 +113,9 @@ export default function HomePage() {
               GitHub Repository
             </a>
             <span>•</span>
-            <span>License: MIT</span>
+            <span>Presenter: Jersam Lithin L (URK24AE1026)</span>
             <span>•</span>
-            <span>Author: Jerlin S. (2026)</span>
+            <span>Karunya Institute of Technology and Sciences</span>
           </div>
         </div>
       </footer>
