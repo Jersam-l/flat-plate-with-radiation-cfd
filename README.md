@@ -2,8 +2,11 @@
 
 [![OpenFOAM 13](https://img.shields.io/badge/OpenFOAM-v13-blue.svg)](https://openfoam.org)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12%20%7C%20VTK%20%7C%20SciPy-green.svg)](https://python.org)
+[![Next.js 14 Web App](https://img.shields.io/badge/Web%20App-Next.js%2014%20%7C%20TypeScript-purple.svg)](web/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Visual Evidence: 61 Publication Plots](https://img.shields.io/badge/Visual%20Evidence-61%20Publication--Grade%20Plots-orange.svg)](FIGURE_INDEX.md)
+
+> **Interactive Presentation & Formal Research Paper Web App**: A production Next.js research website featuring an interactive 16:9 pitch presentation, continuous research paper, 9-point scientific audit comparator, and dual-mode PDF exports is located in the [`web/`](web/) directory (configured for seamless Vercel deployment with Root Directory `web`).
 
 ---
 

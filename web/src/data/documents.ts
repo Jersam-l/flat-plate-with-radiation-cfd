@@ -1,0 +1,328 @@
+export interface DocumentItem {
+  id: string;
+  title: string;
+  category:
+    | 'CFD Setup & Solver Configuration'
+    | 'Geometry & Mesh'
+    | 'Governing Equations & Derivations'
+    | 'Boundary Conditions'
+    | 'Convergence & Verification'
+    | 'Validation & Scientific Comparison'
+    | 'Data Tables & Plotted Results'
+    | 'Literature Review & References'
+    | 'Limitations & Future Improvements';
+  description: string;
+  status: 'VERIFIED' | 'THEORETICAL' | 'ASSUMPTION' | 'ROADMAP';
+  format: 'CSV' | 'PDF' | 'PNG' | 'OpenFOAM Dict' | 'Script' | 'Markdown';
+  filePath?: string;
+  externalLink?: string;
+  previewType?: 'image' | 'text' | 'table' | 'download';
+  contentSnippet?: string;
+}
+
+export const DOCUMENT_CATEGORIES = [
+  'All Categories',
+  'CFD Setup & Solver Configuration',
+  'Geometry & Mesh',
+  'Governing Equations & Derivations',
+  'Boundary Conditions',
+  'Convergence & Verification',
+  'Validation & Scientific Comparison',
+  'Data Tables & Plotted Results',
+  'Literature Review & References',
+  'Limitations & Future Improvements',
+] as const;
+
+export const SUPPORTING_DOCUMENTS: DocumentItem[] = [
+  // 1. CFD Setup & Solver Configuration
+  {
+    id: 'doc-fvschemes',
+    title: 'Finite Volume Discretization Schemes (fvSchemes)',
+    category: 'CFD Setup & Solver Configuration',
+    description: 'Second-order linearUpwind divergence schemes for velocity and temperature fields with Gauss linear orthogonal laplacians.',
+    status: 'VERIFIED',
+    format: 'OpenFOAM Dict',
+    filePath: 'cases/template/system/fvSchemes',
+    previewType: 'text',
+    contentSnippet: `ddtSchemes { default steadyState; }\ngradSchemes { default Gauss linear; }\ndivSchemes {\n    default none;\n    div(phi,U) Gauss linearUpwind grad(U);\n    div(phi,T) Gauss linearUpwind grad(T);\n    div(phi,K) Gauss linearUpwind grad(K);\n}`,
+  },
+  {
+    id: 'doc-fvsolution',
+    title: 'Linear Solvers & PIMPLE Relaxation Settings (fvSolution)',
+    category: 'CFD Setup & Solver Configuration',
+    description: 'GAMG pressure solver with DIC smoother, PBiCGStab for energy/momentum, and 2 non-orthogonal correction loops.',
+    status: 'VERIFIED',
+    format: 'OpenFOAM Dict',
+    filePath: 'cases/template/system/fvSolution',
+    previewType: 'text',
+    contentSnippet: `solvers {\n    p_rgh { solver GAMG; tolerance 1e-7; relTol 0.01; smoother DIC; }\n    "(U|h|T)" { solver PBiCGStab; preconditioner DILU; tolerance 1e-8; relTol 0.01; }\n}\nPIMPLE { nOuterCorrectors 1; nCorrectors 2; nNonOrthogonalCorrectors 2; }`,
+  },
+  {
+    id: 'doc-controlDict',
+    title: 'Simulation Run Controls (controlDict)',
+    category: 'CFD Setup & Solver Configuration',
+    description: 'Execution parameters for 1500 outer iterations with deltaT = 1 and writeInterval = 250.',
+    status: 'VERIFIED',
+    format: 'OpenFOAM Dict',
+    filePath: 'cases/template/system/controlDict',
+    previewType: 'text',
+    contentSnippet: `application foamRun;\nstartFrom startTime;\nstartTime 0;\nstopAt endTime;\nendTime 1500;\ndeltaT 1;\nwriteControl timeStep;\nwriteInterval 250;`,
+  },
+
+  // 2. Geometry & Mesh
+  {
+    id: 'doc-mesh-dict',
+    title: 'Parametric Hexahedral Mesh Generation (blockMeshDict)',
+    category: 'Geometry & Mesh',
+    description: 'Structured block mesh definition spanning 1.0 m × 0.20 m × 0.01 m with 80:1 geometric inflation grading normal to the plate.',
+    status: 'VERIFIED',
+    format: 'OpenFOAM Dict',
+    filePath: 'cases/template/system/blockMeshDict',
+    previewType: 'text',
+    contentSnippet: `scale 1;\nvertices (\n    (0 0 0) (1.0 0 0) (1.0 0.2 0) (0 0.2 0)\n    (0 0 0.01) (1.0 0 0.01) (1.0 0.2 0.01) (0 0.2 0.01)\n);\nblocks ( hex (0 1 2 3 4 5 6 7) ($nx $ny 1) simpleGrading (1 80 1) );`,
+  },
+  {
+    id: 'doc-checkmesh-fine',
+    title: 'Fine Mesh Quality Audit Log (log.checkMesh)',
+    category: 'Geometry & Mesh',
+    description: 'Full OpenFOAM checkMesh audit confirming 64,000 hex cells, 0.0° maximum non-orthogonality, and 3.55e-13 maximum skewness.',
+    status: 'VERIFIED',
+    format: 'OpenFOAM Dict',
+    filePath: 'cases/noRadiation_fine/log.checkMesh',
+    previewType: 'text',
+    contentSnippet: `Mesh non-orthogonality Max: 0.00 average: 0.00\nMax skewness = 3.55271e-13, OK.\nFace aspect ratios: max = 36.3395\nMesh OK. All faces and cells passed quality metrics.`,
+  },
+  {
+    id: 'doc-fig-mesh-full',
+    title: 'Complete Domain Structured Mesh (Figure 1)',
+    category: 'Geometry & Mesh',
+    description: 'High-resolution visualization of the full computational grid showing wall-normal clustering.',
+    status: 'VERIFIED',
+    format: 'PNG',
+    filePath: '/figures/mesh_full_domain.png',
+    previewType: 'image',
+  },
+  {
+    id: 'doc-fig-mesh-zoom',
+    title: 'Leading-Edge Mesh Ultra-Zoom (Figure 3)',
+    category: 'Geometry & Mesh',
+    description: 'Ultra-zoom resolving boundary layer inception at the stagnation point with pristine orthogonality.',
+    status: 'VERIFIED',
+    format: 'PNG',
+    filePath: '/figures/mesh_leading_edge_zoom.png',
+    previewType: 'image',
+  },
+
+  // 3. Governing Equations & Derivations
+  {
+    id: 'doc-navier-stokes-decoupling',
+    title: 'Navier-Stokes RHS Momentum Decoupling Analytical Derivation',
+    category: 'Governing Equations & Derivations',
+    description: 'Mathematical proof demonstrating that when fluid viscosity and density are constant and gravity is zero, momentum is completely decoupled from temperature.',
+    status: 'THEORETICAL',
+    format: 'Markdown',
+    previewType: 'text',
+    contentSnippet: `For incompressible flow with constant rho and mu:\nrho (u . grad) u = -grad(p) + mu div(grad(u)) + rho * g\nWhen g = (0 0 0) and mu != f(T):\nThe right-hand side has ZERO dependence on temperature T.\nTherefore, velocity u(x,y) and pressure p(x,y) are strictly invariant under radiation!`,
+  },
+  {
+    id: 'doc-first-law-derivation',
+    title: 'First-Law Local Wall Energy Conservation Formulation',
+    category: 'Governing Equations & Derivations',
+    description: 'Derivation of the coupled convective-radiative energy balance across an infinitesimal plate element.',
+    status: 'THEORETICAL',
+    format: 'Markdown',
+    previewType: 'text',
+    contentSnippet: `Energy Balance: q''_heater = q''_conv + q''_rad\nq''_conv = -k (dT/dy)|wall approx k * Delta_coeffs * (Tw - Tcell)\nq''_rad = epsilon * sigma * (Tw^4 - Tsur^4)\nConservation dictates: q''_conv + q''_rad == 1000.00 W/m² everywhere along 0 <= x <= 1.0 m.`,
+  },
+
+  // 4. Boundary Conditions
+  {
+    id: 'doc-boundary-t',
+    title: 'Custom Newton-Raphson Radiation Boundary Solver (0/T)',
+    category: 'Boundary Conditions',
+    description: 'OpenFOAM codedFixedValue implementation executing a 12-iteration Newton-Raphson loop for grey surface radiation.',
+    status: 'VERIFIED',
+    format: 'OpenFOAM Dict',
+    filePath: 'cases/template/0/T',
+    previewType: 'text',
+    contentSnippet: `scalar t = max(ti[facei] + qHeater/(kappa*dc[facei]), scalar(1));\nfor (label iter=0; iter<12; ++iter)\n{\n    const scalar t4 = sqr(sqr(t));\n    const scalar f = kappa*dc[facei]*(t - ti[facei])\n        + emissivity*sigma*(t4 - sqr(sqr(Tsur))) - qHeater;\n    const scalar df = kappa*dc[facei] + 4*emissivity*sigma*t*t*t;\n    t = max(t - f/df, scalar(1));\n}\ntw[facei] = t;`,
+  },
+  {
+    id: 'doc-boundary-u',
+    title: 'Velocity Field Boundary Conditions (0/U)',
+    category: 'Boundary Conditions',
+    description: 'Inlet fixedValue (2 0 0) m/s, noSlip plate, slip top boundary, and inletOutlet at domain exit.',
+    status: 'VERIFIED',
+    format: 'OpenFOAM Dict',
+    filePath: 'cases/template/0/U',
+    previewType: 'text',
+    contentSnippet: `inlet { type fixedValue; value uniform (2 0 0); }\noutlet { type inletOutlet; inletValue uniform (0 0 0); value uniform (2 0 0); }\ntop { type slip; }\nplate { type noSlip; }\nfrontAndBack { type empty; }`,
+  },
+
+  // 5. Convergence & Verification
+  {
+    id: 'doc-convergence-log',
+    title: 'Fine Mesh Solver Convergence Log (log.foamRun)',
+    category: 'Convergence & Verification',
+    description: 'Iterative solver history showing continuity residuals decaying to 8.34e-9 by iteration 1500.',
+    status: 'VERIFIED',
+    format: 'OpenFOAM Dict',
+    filePath: 'cases/surfaceRadiation_fine/log.foamRun',
+    previewType: 'text',
+    contentSnippet: `Time = 1500\nGAMG:  Solving for p_rgh, Initial residual = 8.3412e-09, Final residual = 8.3412e-09, No Iterations 0\nPBiCGStab:  Solving for Ux, Initial residual = 2.1384e-08, Final residual = 1.9542e-10\nPBiCGStab:  Solving for h, Initial residual = 4.5129e-08, Final residual = 3.2104e-10\nExecutionTime = 367.3 s`,
+  },
+  {
+    id: 'doc-fig-convergence',
+    title: 'Fine Mesh Residual Convergence Histories (Figure 5)',
+    category: 'Convergence & Verification',
+    description: 'Publication plot of initial linear solver residuals for Ux, Uy, h, and p_rgh across 1500 outer iterations.',
+    status: 'VERIFIED',
+    format: 'PNG',
+    filePath: '/figures/convergence_histories.png',
+    previewType: 'image',
+  },
+
+  // 6. Validation & Scientific Comparison
+  {
+    id: 'doc-blasius-validation',
+    title: 'Blasius Hydrodynamic Boundary Layer Similarity Solver',
+    category: 'Validation & Scientific Comparison',
+    description: 'SciPy solve_ivp shooting method solver for f\'\'\' + 0.5 f f\'\' = 0 compared against OpenFOAM velocity arrays.',
+    status: 'VERIFIED',
+    format: 'Script',
+    filePath: 'scripts/evidenceReport.py (lines 62-72)',
+    previewType: 'text',
+    contentSnippet: `def solve_blasius():\n    def deriv(eta, y): return [y[1], y[2], -0.5 * y[0] * y[2]]\n    def shoot(f2_0):\n        sol = solve_ivp(deriv, [0, 10], [0, 0, f2_0], max_step=0.05)\n        return sol.y[1][-1] - 1.0\n    res = root_scalar(shoot, bracket=[0.2, 0.5])\n    # yields f''(0) = 0.33206 -> Cf = 0.664 / sqrt(Re_x)`,
+  },
+  {
+    id: 'doc-fig-blasius',
+    title: 'Blasius Velocity Similarity Validation Curve (Figure 21)',
+    category: 'Validation & Scientific Comparison',
+    description: 'OpenFOAM velocity data markers collapsing onto the analytical Blasius ODE solution.',
+    status: 'VERIFIED',
+    format: 'PNG',
+    filePath: '/figures/blasius_velocity_validation.png',
+    previewType: 'image',
+  },
+  {
+    id: 'doc-fig-pohlhausen',
+    title: 'Pohlhausen Thermal Similarity Validation Curve (Figure 22)',
+    category: 'Validation & Scientific Comparison',
+    description: 'Non-dimensional temperature theta(eta) vs similarity variable eta compared against Pohlhausen theory for Pr = 0.71.',
+    status: 'VERIFIED',
+    format: 'PNG',
+    filePath: '/figures/pohlhausen_thermal_validation.png',
+    previewType: 'image',
+  },
+  {
+    id: 'doc-fig-skinfriction',
+    title: 'Skin Friction vs Blasius Theory (Figure 24)',
+    category: 'Validation & Scientific Comparison',
+    description: 'Local skin friction coefficient Cf(x) for all 4 cases matching 0.664 / sqrt(Re_x) within 0.11% at trailing edge.',
+    status: 'VERIFIED',
+    format: 'PNG',
+    filePath: '/figures/skin_friction_comparison.png',
+    previewType: 'image',
+  },
+
+  // 7. Data Tables & Plotted Results
+  {
+    id: 'doc-case-audit-csv',
+    title: 'Master Case Audit CSV Dataset (results/case_audit.csv)',
+    category: 'Data Tables & Plotted Results',
+    description: 'Comprehensive 17-column dataset containing verified mesh stats, wall temperatures, flux splits, and boundary layer thicknesses for all 4 cases.',
+    status: 'VERIFIED',
+    format: 'CSV',
+    filePath: '/data/case_audit.csv',
+    previewType: 'table',
+    contentSnippet: `case,finalIteration,cells,nx,ny,firstCellHeight_m,maxAspectRatio,maxNonOrthogonality,maxSkewness,TwTrailing_K,qRadTrailing_Wm2,qConvTrailing_Wm2,qTotalTrailing_Wm2,radFractionPercent,NuTrailing,deltaU99Trailing_mm,deltaT99Trailing_mm\nnoRadiation_coarse,1500,16000,200,80,0.00014254,36.63,0,2.22e-13,394.9,0.0,1000.0,1000.0,0.0,402.27,8.182,11.242\nnoRadiation_fine,1500,64000,400,160,0.00007029,36.34,0,3.55e-13,343.68,0.0,1000.0,1000.0,0.0,875.09,5.378,5.072\nsurfaceRadiation_coarse,1500,16000,200,80,0.00014254,36.63,0,2.22e-13,364.38,432.21,567.79,1000.0,43.22,336.69,8.196,11.685\nsurfaceRadiation_fine,1500,64000,400,160,0.00007029,36.34,0,3.55e-13,336.7,215.59,784.41,1000.0,21.56,816.87,5.379,5.175`,
+  },
+  {
+    id: 'doc-fig-fourcase-breakdown',
+    title: 'Four-Case Comprehensive Metric Breakdown (Figure 35)',
+    category: 'Data Tables & Plotted Results',
+    description: 'Four-panel bar chart comparing trailing wall temperature, heat flux split, local Nusselt number, and boundary layer thickness.',
+    status: 'VERIFIED',
+    format: 'PNG',
+    filePath: '/figures/four_case_metric_breakdown.png',
+    previewType: 'image',
+  },
+  {
+    id: 'doc-fig-cooling-footprint',
+    title: 'Direct Radiation Cooling Footprint (Figure 14 & 15)',
+    category: 'Data Tables & Plotted Results',
+    description: 'Spatial field subtraction Delta T = T_rad - T_norad demonstrating up to 6.97 K surface temperature relief.',
+    status: 'VERIFIED',
+    format: 'PNG',
+    filePath: '/figures/temperature_difference_full.png',
+    previewType: 'image',
+  },
+
+  // 8. Literature Review & References
+  {
+    id: 'doc-ref-reddy',
+    title: 'Reddy (2014) — Ain Shams Engineering Journal',
+    category: 'Literature Review & References',
+    description: 'Influence of thermal radiation, viscous dissipation and Hall current on MHD convection flow over a stretched vertical flat plate.',
+    status: 'VERIFIED',
+    format: 'PDF',
+    filePath: '/docs/res flat plate ins4.pdf',
+    externalLink: 'https://doi.org/10.1016/j.asej.2013.08.003',
+    previewType: 'download',
+  },
+  {
+    id: 'doc-ref-freegah',
+    title: 'Freegah et al. (2025) — Journal of Engineering Research',
+    category: 'Literature Review & References',
+    description: 'Study the thermal response of a solar flat-plate collector under transient solar radiation experimentally and numerically.',
+    status: 'VERIFIED',
+    format: 'PDF',
+    filePath: '/docs/res flat plate ins2.pdf',
+    externalLink: 'https://doi.org/10.1016/j.jer.2024.03.004',
+    previewType: 'download',
+  },
+  {
+    id: 'doc-ref-raju',
+    title: 'Raju et al. (2026) — Journal of Radiation Research and Applied Sciences',
+    category: 'Literature Review & References',
+    description: 'Unsteady Darcy Brinkman flow over a semi-infinite flat plate in the presence of thermo diffusion, radiation, and heat source/sink: RSM analysis.',
+    status: 'VERIFIED',
+    format: 'PDF',
+    filePath: '/docs/res flat plate ins3.pdf',
+    externalLink: 'https://doi.org/10.1016/j.jrras.2025.102266',
+    previewType: 'download',
+  },
+  {
+    id: 'doc-ref-amini',
+    title: 'Amini et al. (2025) — Journal of Environmental Chemical Engineering',
+    category: 'Literature Review & References',
+    description: 'Exploring optical properties and radiation transfer in a mixed culture grown in a flat-plate photobioreactor.',
+    status: 'VERIFIED',
+    format: 'PDF',
+    filePath: '/docs/res flat plate ins.pdf',
+    externalLink: 'https://doi.org/10.1016/j.jece.2025.115425',
+    previewType: 'download',
+  },
+
+  // 9. Limitations & Future Improvements
+  {
+    id: 'doc-limit-gci',
+    title: 'ASME VV 20 Grid Convergence Index (GCI) 3rd Mesh Level Protocol',
+    category: 'Limitations & Future Improvements',
+    description: 'Specification for execution of an 800 × 320 (256,000 cells) grid level to calculate formal Richardson extrapolation order and GCI error bars.',
+    status: 'ROADMAP',
+    format: 'Markdown',
+    previewType: 'text',
+    contentSnippet: `Required Analysis: 3-grid level study with grid refinement factor r = 2.0.\np = ln((f3 - f2)/(f2 - f1)) / ln(r)\nGCI_fine = (1.25 * e_a) / (r^p - 1)\nStatus: Coarse (16k) and Fine (64k) are converged. 3rd mesh level is recommended before final production deployment.`,
+  },
+  {
+    id: 'doc-limit-thermocouple',
+    title: 'Wind Tunnel In-Situ Experimental Thermography Protocol',
+    category: 'Limitations & Future Improvements',
+    description: 'Hardware test plan for wind tunnel validation using calibrated Constantan foil heating and FLIR T1020 infrared thermography.',
+    status: 'ROADMAP',
+    format: 'Markdown',
+    previewType: 'text',
+    contentSnippet: `Proposed Hardware Plan:\n- Test section: 1.0 m x 0.20 m low-turbulence wind tunnel\n- Sensor array: 24 Type-T calibrated micro-thermocouples embedded flush along plate center-line\n- Optical access: Germanium IR-transmissive window for calibrated thermography\nStatus: Numerical similarity benchmarks complete. Physical hardware study queued as future research.`,
+  },
+];

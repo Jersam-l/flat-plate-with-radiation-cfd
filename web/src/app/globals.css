@@ -1,0 +1,121 @@
+@import 'katex/dist/katex.min.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #fcfbf9;
+  --foreground: #0f172a;
+}
+
+.dark {
+  --background: #090d16;
+  --foreground: #f8fafc;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar for scientific data tables and code */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}
+
+/* ========================================================
+   PRINT SPECIFIC RULES FOR DUAL-MODE PDF EXPORT
+   ======================================================== */
+@media print {
+  /* Hide all website chrome, headers, controls, and TOC */
+  .no-print, header, nav, button, aside {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt !important;
+  }
+
+  /* When printing in Pitch Mode */
+  body.printing-pitch {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.printing-pitch @page {
+    size: 11in 6.1875in landscape;
+    margin: 0;
+  }
+
+  body.printing-pitch .pitch-print-container {
+    display: block !important;
+  }
+
+  body.printing-pitch .slide-canvas-wrapper {
+    display: none !important;
+  }
+
+  .pitch-print-page {
+    width: 100vw !important;
+    height: 100vh !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    box-sizing: border-box !important;
+    padding: 0.5in !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
+  /* When printing in Research Paper Mode */
+  body.printing-paper @page {
+    size: letter portrait;
+    margin: 15mm 15mm 20mm 15mm;
+  }
+
+  body.printing-paper .research-paper-body {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    background: transparent !important;
+  }
+
+  body.printing-paper h1,
+  body.printing-paper h2,
+  body.printing-paper h3 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  body.printing-paper figure,
+  body.printing-paper table,
+  body.printing-paper .space-y-4 {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  body.printing-paper img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
