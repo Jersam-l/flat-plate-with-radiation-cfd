@@ -53,15 +53,19 @@ export default function PitchPresentation() {
       });
   }, []);
 
-  // Handle mouse wheel scrolling: cursor over gallery scrolls horizontally
+  // Handle mouse wheel/trackpad scrolling: cursor over gallery scrolls horizontally fast and smooth
   useEffect(() => {
     const el = galleryScrollRef.current;
     if (!el || viewMode !== 'results') return;
 
     const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) > 0) {
+      // Pick the active scroll axis (vertical trackpad or mousewheel, or horizontal trackpad swipe)
+      const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(delta) > 0) {
         e.preventDefault();
-        el.scrollLeft += e.deltaY * 2;
+        // Dynamic multiplier: fast & responsive for trackpads, stepped for mouse wheels
+        const multiplier = e.deltaMode === 1 ? 40 : 2.6;
+        el.scrollLeft += delta * multiplier;
       }
     };
 
@@ -285,7 +289,7 @@ export default function PitchPresentation() {
                       </span>
                     </div>
                     <p className="text-xs text-slate-400 mt-0.5">
-                      Source: <code className="text-cyan-400 font-mono">results/figures/</code> • Place cursor over cards & scroll up/down to slide left/right
+                      Source: <code className="text-cyan-400 font-mono">results/figures/</code> ({figures.length} total publication plots)
                     </p>
                   </div>
 
@@ -337,10 +341,10 @@ export default function PitchPresentation() {
                 </div>
               </div>
 
-              {/* Horizontal Scrollable Row (Cursor up/down scrolls left/right) */}
+              {/* Horizontal Scrollable Row (Cursor up/down scrolls left/right instantly and smoothly) */}
               <div
                 ref={galleryScrollRef}
-                className="flex-1 w-full flex items-center gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden py-3 px-1 scroll-smooth"
+                className="flex-1 w-full flex items-center gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden py-3 px-1 overscroll-x-contain"
                 style={{ scrollbarWidth: 'thin', scrollbarColor: '#FF7A1A #16264A' }}
               >
                 {filteredFigures.map((fig, idx) => (
@@ -386,7 +390,6 @@ export default function PitchPresentation() {
               {/* Gallery Footer Bar */}
               <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-mono shrink-0">
                 <span>Showing {filteredFigures.length} figures from results/figures/</span>
-                <span className="text-[#FF7A1A]">Mouse wheel over cards slides left / right</span>
               </div>
             </div>
           ) : (
