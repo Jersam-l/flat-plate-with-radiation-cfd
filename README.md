@@ -87,6 +87,49 @@ Values are from final **fine-mesh** fields at `x/L = 1`. Local `Nu_x` is `q''con
 
 Radiation removes part of the heater input directly to the 300 K enclosure. The air receives less heat, so wall temperature, convective flux, and Nusselt number decrease. The 99%-thickness difference is below this mesh output criterion; do **not** claim that radiation significantly thins the thermal layer from these two grids.
 
+### Four-case comparison matrix
+
+The study has four distinct solved cases, not just two images: two mesh levels × two surface-emissivity conditions.
+
+| Case | Cells | Emissivity | Purpose | Trailing-edge Tw | Trailing-edge qrad |
+|---|---:|---:|---|---:|---:|
+| `noRadiation_coarse` | 16,000 | 0.0 | Baseline / coarse grid | 394.90 K | 0 W/m2 |
+| `surfaceRadiation_coarse` | 16,000 | 0.8 | Radiation effect / coarse grid | 364.38 K | 432.21 W/m2 |
+| `noRadiation_fine` | 64,000 | 0.0 | Baseline / fine grid | 343.68 K | 0 W/m2 |
+| `surfaceRadiation_fine` | 64,000 | 0.8 | Radiation effect / fine grid | 336.70 K | 215.59 W/m2 |
+
+The coarse/fine difference is large, which is exactly why the grid plot is included and why the fine result is preferred. It also means that a third mesh is needed before publishing a grid-independent numerical value.
+
+#### Temperature contours: all four cases
+
+The full-domain plot is intentionally dominated by the 300 K free stream. That is correct: it is fluid, not blank or missing data. The zoom uses the same colour scale and shows the near-wall thermal boundary layer clearly.
+
+![Four cases: full fluid-domain temperature](/home/jerlin/Documents/projects/blt/results/figures/four_case_temperature_full.png)
+
+![Four cases: boundary-layer temperature zoom](/home/jerlin/Documents/projects/blt/results/figures/four_case_temperature_zoom.png)
+
+#### Velocity and pressure contours: all four cases
+
+Because density, viscosity, and velocity boundary conditions are held constant, and buoyancy is disabled (`g = 0`), radiation acts only in the energy balance. Therefore the velocity contours, skin friction, and pressure show virtually no physics change between emissivity cases. This is the expected model behaviour, not a plotting failure. Temperature and heat-flux quantities are where the radiation effect appears.
+
+![Four cases: full fluid-domain velocity](/home/jerlin/Documents/projects/blt/results/figures/four_case_velocity_full.png)
+
+![Four cases: boundary-layer velocity zoom](/home/jerlin/Documents/projects/blt/results/figures/four_case_velocity_zoom.png)
+
+![Four cases: full fluid-domain pressure deviation](/home/jerlin/Documents/projects/blt/results/figures/four_case_pressure_full.png)
+
+![Four cases: boundary-layer pressure zoom](/home/jerlin/Documents/projects/blt/results/figures/four_case_pressure_zoom.png)
+
+### How radiation emission is verified
+
+The radiation condition is working if all three checks hold:
+
+1. The radiation-case plate has `ε = 0.8`; its solved wall temperature is above 300 K.
+2. The postprocessor evaluates `qrad = εσ(Tw^4 - Tsur^4)` from that actual final wall-temperature field and obtains a positive flux (215.59 W/m2 at the fine trailing edge).
+3. The wall energy balance closes locally: `qconv = 1000 - qrad`. At the fine trailing edge, `215.59 + 784.41 = 1000.00 W/m2` within rounding. The non-radiating cases have `ε = 0`, hence `qrad = 0` exactly.
+
+This is why a lower `Tw`, lower `qconv`, and lower `Nu` are the valid radiation-effect observations. Under the present constant-property, no-buoyancy model, a change in `U` or pressure is not expected.
+
 ![Fine-mesh temperature contours](/home/jerlin/Documents/projects/blt/results/figures/temperature_contours.png)
 
 ![Fine-mesh temperature contours: boundary-layer zoom](/home/jerlin/Documents/projects/blt/results/figures/temperature_contours_boundary_layer_zoom.png)
@@ -102,6 +145,17 @@ Radiation removes part of the heater input directly to the 300 K enclosure. The 
 ![Skin friction and pressure response](/home/jerlin/Documents/projects/blt/results/figures/skin_friction_and_pressure.png)
 
 The exact data source, command, colormap treatment, and interpretation for every figure are in [PLOT_GUIDE.md](/home/jerlin/Documents/projects/blt/PLOT_GUIDE.md). `temperature_contours.png` reads the `T` cell array from OpenFOAM's own VTK export, the same geometry used by ParaView. It colours the **complete fluid domain** with absolute temperature; `temperature_contours_boundary_layer_zoom.png` is the separate near-wall view using the identical colour scale.
+
+## Reference papers and why they were used
+
+The attached literature was used for **method and reporting guidance**, not as numerical data to copy. The present geometry and radiation mechanism are different, so each cited paper is used only where its assumptions match the discussion.
+
+| Reference | What it contributed | Why it is not direct validation |
+|---|---|---|
+| M. Gnaneswara Reddy, “Influence of thermal radiation, viscous dissipation and Hall current on MHD convection flow,” *Ain Shams Engineering Journal* (2014), [DOI link](https://doi.org/10.1016/j.asej.2013.08.003) | Reports radiation assumptions, temperature/velocity profiles, skin friction, and Nusselt number. It motivated including these response plots. | It is an MHD, mixed-convection, Rosseland optically thick model, unlike this forced transparent-air surface-emission case. |
+| B. Freegah et al., solar flat-plate collector CFD study, *Journal of Engineering Research* (2025), [DOI link](https://doi.org/10.1016/j.jer.2024.03.004) | Demonstrates mesh-independence, mesh figure, temperature contours, and numerical/experimental comparison reporting. | Its solar collector geometry and transient solar flux are not this flat-plate external-flow problem. |
+
+The other attached papers address photobioreactor radiation transport and MHD/nanofluid boundary layers; their plots cannot be recreated truthfully from this four-case air-flow model. The valid analogue plots delivered here are mesh views, residuals, temperature, velocity, pressure, skin friction, Nusselt number, wall heat balance, profiles, and grid sensitivity.
 
 ## What is validated and what is not
 

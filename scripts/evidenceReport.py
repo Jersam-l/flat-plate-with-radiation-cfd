@@ -130,6 +130,34 @@ axs[1].set(xlabel='x / m',ylabel='Pressure coefficient, Cp',title='Near-wall pre
 for ax in axs: ax.grid(alpha=.25); ax.legend(fontsize=8)
 fig.savefig(FIG/'skin_friction_and_pressure.png',dpi=220); plt.close(fig)
 
+# Four-case audit panels. Each panel is a separate solved case, enabling the
+# reader to distinguish mesh effects from the emissivity/radiation effect.
+ordered=[('noRadiation','coarse','No radiation\ncoarse: 16,000 cells'),
+         ('surfaceRadiation','coarse','Grey radiation, ε=0.8\ncoarse: 16,000 cells'),
+         ('noRadiation','fine','No radiation\nfine: 64,000 cells'),
+         ('surfaceRadiation','fine','Grey radiation, ε=0.8\nfine: 64,000 cells')]
+allT=np.concatenate([cases[p,m]['T'].ravel() for p,m,_ in ordered]); allP=np.concatenate([cases[p,m]['p'].ravel() for p,m,_ in ordered])
+def four_case_contours(field, levels, cmap, file_name, color_label, ylimit):
+    fig,axs=plt.subplots(2,2,figsize=(12,6.2),sharex=True,sharey=True,constrained_layout=True)
+    for ax,(p,m,title) in zip(axs.flat,ordered):
+        d=cases[p,m]; X,Y=np.meshgrid(d['x'],d['y']); vals=d[field] if field != 'U' else d['U'][:,:,0]/2
+        h=ax.contourf(X,Y,vals,levels=levels,cmap=cmap,extend='both')
+        ax.contour(X,Y,vals,levels=levels[::max(1,len(levels)//6)],colors='white',linewidths=.35)
+        ax.set(title=title,xlim=(0,1),ylim=ylimit)
+    for ax in axs[:,0]: ax.set_ylabel('y / m')
+    for ax in axs[-1,:]: ax.set_xlabel('x / m')
+    fig.colorbar(h,ax=axs,label=color_label); fig.savefig(FIG/file_name,dpi=220); plt.close(fig)
+four_case_contours('T',np.linspace(299.9,allT.max(),24),'viridis','four_case_temperature_full.png','Temperature, T / K',(0,.2))
+four_case_contours('T',np.linspace(299.9,allT.max(),24),'viridis','four_case_temperature_zoom.png','Temperature, T / K',(0,.015))
+four_case_contours('U',np.linspace(0,1,21),'viridis','four_case_velocity_full.png','u / U∞',(0,.2))
+four_case_contours('U',np.linspace(0,1,21),'viridis','four_case_velocity_zoom.png','u / U∞',(0,.015))
+# Pressure is displayed as p - pRef to make its very small forced-convection
+# variation visible, instead of misleadingly showing 100 kPa as a gradient.
+for d in cases.values(): d['pDeviation']=d['p']-100000
+peak=max(abs(d['pDeviation']).max() for d in cases.values())
+four_case_contours('pDeviation',np.linspace(-peak,peak,23),'coolwarm','four_case_pressure_full.png','p - pRef / Pa',(0,.2))
+four_case_contours('pDeviation',np.linspace(-peak,peak,23),'coolwarm','four_case_pressure_zoom.png','p - pRef / Pa',(0,.015))
+
 # heat balance, Nu and wall temperature
 fig,axs=plt.subplots(1,3,figsize=(14,3.8),constrained_layout=True)
 for label,d in [('No radiation',fine0),('Surface radiation',fineR)]:

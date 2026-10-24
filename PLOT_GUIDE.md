@@ -32,6 +32,9 @@ The script uses `vtkDataSetReader` to read these exact files:
 | `mesh_inflation_detail.png` | blockMesh coordinates | Fine near-wall mesh; demonstrates grading. |
 | `mesh_full_domain.png` | blockMesh coordinates | Complete 400 × 160 fine mesh, including inlet, outlet, top, and plate extent. |
 | `skin_friction_and_pressure.png` | VTK `U`, VTK `p` | Estimated skin-friction and near-wall pressure response. |
+| `four_case_temperature_full.png` / `four_case_temperature_zoom.png` | All four final VTK `T` fields | 2 × 2 matrix separating mesh and radiation effects; full domain and zoom. |
+| `four_case_velocity_full.png` / `four_case_velocity_zoom.png` | All four final VTK `U` fields | Velocity comparison, full domain and boundary-layer zoom. |
+| `four_case_pressure_full.png` / `four_case_pressure_zoom.png` | All four final VTK `p` fields | Pressure deviation from `pRef = 100000 Pa`; full domain and zoom. |
 | `grid_comparison.png` | Final coarse/fine fields | Sensitivity check, not a formal GCI. |
 | `convergence_histories.png` | `log.foamRun` | Initial residuals for Ux, Uy, h, and p_rgh per outer iteration. |
 
@@ -39,4 +42,4 @@ The script uses `vtkDataSetReader` to read these exact files:
 
 For a direct visual cross-check, run `paraFoam -builtin` inside either fine case. Use latest time 1500, color by `T`, and apply the same absolute range (299.9 to 342.62 K) to both cases. The full-domain contour contains no blank/hidden region: the large low-temperature region is still fluid at approximately 300 K.
 
-The paper figures are literature evidence, not data to copy. Their radiation models and geometries differ from this transparent-air, surface-to-enclosure case. The figures reproduced here are only those that can be truthfully obtained from this case: mesh, convergence, temperature, velocity, wall heat balance, Nusselt response, and grid sensitivity.
+The paper figures are literature evidence, not data to copy. Their radiation models and geometries differ from this transparent-air, surface-to-enclosure case. The figures reproduced here are only those that can be truthfully obtained from this case: mesh, convergence, temperature, velocity, pressure, skin friction, wall heat balance, Nusselt response, and grid sensitivity.
