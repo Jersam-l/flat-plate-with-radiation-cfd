@@ -733,6 +733,112 @@ fig.savefig(FIG / 'research_paper_radiation_analogy.png', dpi=240)
 plt.close(fig)
 
 # ---------------------------------------------------------
+# Figure 32: Absolute Temperature Profiles in Kelvin
+# ---------------------------------------------------------
+print("Generating absolute temperature profiles (Kelvin scale)...")
+fig, axs = plt.subplots(1, 4, figsize=(14, 3.8), sharey=True)
+stations = [0.25, 0.50, 0.75, 1.00]
+for ax, xx in zip(axs, stations):
+    j0 = np.argmin(abs(fine0['x'] - xx))
+    jR = np.argmin(abs(fineR['x'] - xx))
+    ax.plot(fine0['T'][:, j0], fine0['y'] * 1000, '#1f77b4', lw=2.0, label='No radiation (Baseline)')
+    ax.plot(fineR['T'][:, jR], fineR['y'] * 1000, '#d62728', lw=2.0, label='Surface radiation (ε=0.8)')
+    ax.set(title=f'Station x/L = {xx}', xlabel='Temperature, T / K', xlim=(299, 346), ylim=(0, 20))
+    ax.grid(True)
+axs[0].set_ylabel('Wall-normal coordinate, y / mm')
+axs[-1].legend(loc='upper right', fontsize=8.0, framealpha=0.9)
+fig.suptitle('Absolute Temperature Profiles T(y) Across the Boundary Layer (Showing ~7 K Radiation Cooling)', y=1.02)
+fig.savefig(FIG / 'absolute_temperature_profiles.png', dpi=240)
+plt.close(fig)
+
+# ---------------------------------------------------------
+# Figure 33: Convective Heat Transfer Coefficient h(x)
+# ---------------------------------------------------------
+print("Generating heat transfer coefficient comparison...")
+fig, ax = plt.subplots(figsize=(9, 4.2))
+for p, m, label in ordered:
+    d = cases[p, m]
+    # h = qconv / (Tw - Tinf)
+    h_conv = d['qconv'] / np.maximum(d['Tw'] - TINF, 1e-6)
+    lw = 2.0 if 'fine' in m else 1.4
+    ls = '-' if 'fine' in m else '--'
+    ax.plot(d['x'][5:], h_conv[5:], label=label, lw=lw, linestyle=ls)
+ax.set(xlabel='Streamwise coordinate, x / m', ylabel='Heat Transfer Coefficient, h / (W m⁻² K⁻¹)',
+       xlim=(0, 1), ylim=(0, 60), title='Local Convective Heat Transfer Coefficient h(x) Across All 4 Cases')
+ax.legend(loc='upper right', framealpha=0.9)
+ax.grid(True)
+fig.savefig(FIG / 'heat_transfer_coefficient_comparison.png', dpi=240)
+plt.close(fig)
+
+# ---------------------------------------------------------
+# Figure 34: 4-Case Comprehensive Metric Breakdown Bar Chart
+# ---------------------------------------------------------
+print("Generating 4-case comprehensive metric breakdown...")
+fig, axs = plt.subplots(2, 2, figsize=(11, 7.0))
+case_names = ['NoRad\nCoarse', 'Rad (ε=0.8)\nCoarse', 'NoRad\nFine', 'Rad (ε=0.8)\nFine']
+c_colors = ['#4a7bb0', '#e06666', '#2b5c8f', '#cc0000']
+
+# Panel A: Trailing Tw
+tw_list = [cases[p, m]['Tw'][-1] for p, m, _ in ordered]
+axs[0, 0].bar(case_names, tw_list, color=c_colors, width=0.55, edgecolor='black', lw=0.6)
+axs[0, 0].set(ylabel='Trailing Tw / K', ylim=(300, 410), title='(A) Trailing Edge Wall Temperature')
+for i, v in enumerate(tw_list):
+    axs[0, 0].text(i, v + 2, f'{v:.1f} K', ha='center', fontsize=8.5, fontweight='bold')
+axs[0, 0].grid(True, axis='y', alpha=0.3)
+
+# Panel B: Heat Flux Partition (Convection vs Radiation)
+qconv_list = [cases[p, m]['qconv'][-1] for p, m, _ in ordered]
+qrad_list = [cases[p, m]['qrad'][-1] for p, m, _ in ordered]
+x_pos = np.arange(4)
+axs[0, 1].bar(x_pos - 0.18, qconv_list, width=0.35, label='Convection (q"conv)', color='#386cb0', edgecolor='black', lw=0.6)
+axs[0, 1].bar(x_pos + 0.18, qrad_list, width=0.35, label='Radiation (q"rad)', color='#d95f02', edgecolor='black', lw=0.6)
+axs[0, 1].set_xticks(x_pos)
+axs[0, 1].set_xticklabels(case_names)
+axs[0, 1].set(ylabel='Heat Flux / (W m⁻²)', ylim=(0, 1150), title='(B) Trailing Heat Flux Split (Total = 1000 W/m²)')
+axs[0, 1].legend(loc='upper right', fontsize=8.0)
+axs[0, 1].grid(True, axis='y', alpha=0.3)
+
+# Panel C: Local Nusselt Number
+nu_list = [cases[p, m]['Nu'][-1] for p, m, _ in ordered]
+axs[1, 0].bar(case_names, nu_list, color=c_colors, width=0.55, edgecolor='black', lw=0.6)
+axs[1, 0].set(ylabel='Trailing Nu_x', ylim=(0, 1000), title='(C) Trailing Local Nusselt Number')
+for i, v in enumerate(nu_list):
+    axs[1, 0].text(i, v + 15, f'{v:.1f}', ha='center', fontsize=8.5, fontweight='bold')
+axs[1, 0].grid(True, axis='y', alpha=0.3)
+
+# Panel D: Boundary Layer Thickness (Hydrodynamic vs Thermal)
+del_u_list = [cases[p, m]['delta_u'][-1] * 1000 for p, m, _ in ordered]
+del_t_list = [cases[p, m]['delta_t'][-1] * 1000 for p, m, _ in ordered]
+axs[1, 1].bar(x_pos - 0.18, del_u_list, width=0.35, label='Hydrodynamic δ99', color='#7570b3', edgecolor='black', lw=0.6)
+axs[1, 1].bar(x_pos + 0.18, del_t_list, width=0.35, label='Thermal δT,99', color='#e7298a', edgecolor='black', lw=0.6)
+axs[1, 1].set_xticks(x_pos)
+axs[1, 1].set_xticklabels(case_names)
+axs[1, 1].set(ylabel='BL Thickness / mm', ylim=(0, 14), title='(D) Trailing Boundary Layer Thickness')
+axs[1, 1].legend(loc='upper right', fontsize=8.0)
+axs[1, 1].grid(True, axis='y', alpha=0.3)
+
+fig.suptitle('Comprehensive Performance & Response Breakdown Across All 4 Simulated Cases', y=0.99)
+fig.savefig(FIG / 'four_case_metric_breakdown.png', dpi=240)
+plt.close(fig)
+
+# ---------------------------------------------------------
+# Figure 35: Leading Edge Mesh Ultra-Zoom
+# ---------------------------------------------------------
+print("Generating leading edge mesh ultra-zoom...")
+fig, ax = plt.subplots(figsize=(9, 4.0))
+for yy in fine0['y'][:45]:
+    ax.plot([0, 0.05], [yy, yy], color='#2b5c8f', lw=0.5)
+for xx in fine0['x'][:21]:
+    ax.plot([xx, xx], [0, fine0['y'][44]], color='#2b5c8f', lw=0.5)
+ax.set(xlim=(0, 0.05), ylim=(0, 0.005), xlabel='Streamwise coordinate, x / m', ylabel='Wall-normal coordinate, y / m',
+       title='Leading-Edge Mesh Ultra-Zoom: Resolving Boundary Layer Inception (x ≤ 0.05 m, y ≤ 0.005 m)')
+ax.annotate('Leading Edge Stagnation Cell\nΔx = 2.5 mm, Δy₁ ≈ 70.3 μm',
+            xy=(0.005, 0.001), fontsize=8.5, bbox=dict(boxstyle='round,pad=0.3', facecolor='#ffffcc', alpha=0.95))
+ax.grid(True, alpha=0.2)
+fig.savefig(FIG / 'mesh_leading_edge_zoom.png', dpi=260)
+plt.close(fig)
+
+# ---------------------------------------------------------
 # Figures 32 to 55: 24 Individual Field Contours (4 Cases x 3 Fields x 2 Views)
 # ---------------------------------------------------------
 print("Generating 24 individual high-resolution case contours...")
