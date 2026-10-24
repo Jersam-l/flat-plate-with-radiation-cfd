@@ -54,11 +54,11 @@ The solver is `foamRun` with `solver fluid` and PIMPLE coupling. Convective term
 
 Every case passed `checkMesh -allGeometry -allTopology` with `Mesh OK`; full reports are `cases/*/log.checkMesh`. Mesh geometry is clean. However, the two-grid result below shows it is **not yet grid independent**. The fine mesh is only the best available estimate, not a mesh-converged truth.
 
-![Fine near-wall mesh](/home/jerlin/Documents/projects/blt/results/figures/mesh_inflation_detail.png)
+![Fine near-wall mesh](results/figures/mesh_inflation_detail.png)
 
-![Complete fine mesh](/home/jerlin/Documents/projects/blt/results/figures/mesh_full_domain.png)
+![Complete fine mesh](results/figures/mesh_full_domain.png)
 
-![Actual two-grid comparison](/home/jerlin/Documents/projects/blt/results/figures/grid_comparison.png)
+![Actual two-grid comparison](results/figures/grid_comparison.png)
 
 ## Solver completion and convergence evidence
 
@@ -71,7 +71,7 @@ Every case passed `checkMesh -allGeometry -allTopology` with `Mesh OK`; full rep
 
 The figure plots initial residuals of the linear equations at every outer iteration, parsed directly from `log.foamRun`. This proves iterative reduction, but does not itself prove mesh independence.
 
-![Fine-mesh residual histories](/home/jerlin/Documents/projects/blt/results/figures/convergence_histories.png)
+![Fine-mesh residual histories](results/figures/convergence_histories.png)
 
 ## Results: what radiation changed
 
@@ -100,25 +100,29 @@ The study has four distinct solved cases, not just two images: two mesh levels �
 
 The coarse/fine difference is large, which is exactly why the grid plot is included and why the fine result is preferred. It also means that a third mesh is needed before publishing a grid-independent numerical value.
 
+### Git-visible 43-figure evidence gallery
+
+All figure links in this README are repository-relative paths, so they render both on GitHub and in a local clone; no image depends on `/home/jerlin/...`. The committed `results/figures/` folder contains 43 PNG figures: 19 report/comparison figures plus 24 individual contours (four cases × temperature/velocity/pressure × full-domain/zoom). The individual-file index is [FIGURE_INDEX.md](FIGURE_INDEX.md), so every case can be inspected separately as well as in the four-case comparison panels below.
+
 #### Temperature contours: all four cases
 
 The full-domain plot is intentionally dominated by the 300 K free stream. That is correct: it is fluid, not blank or missing data. The zoom uses the same colour scale and shows the near-wall thermal boundary layer clearly.
 
-![Four cases: full fluid-domain temperature](/home/jerlin/Documents/projects/blt/results/figures/four_case_temperature_full.png)
+![Four cases: full fluid-domain temperature](results/figures/four_case_temperature_full.png)
 
-![Four cases: boundary-layer temperature zoom](/home/jerlin/Documents/projects/blt/results/figures/four_case_temperature_zoom.png)
+![Four cases: boundary-layer temperature zoom](results/figures/four_case_temperature_zoom.png)
 
 #### Velocity and pressure contours: all four cases
 
 Because density, viscosity, and velocity boundary conditions are held constant, and buoyancy is disabled (`g = 0`), radiation acts only in the energy balance. Therefore the velocity contours, skin friction, and pressure show virtually no physics change between emissivity cases. This is the expected model behaviour, not a plotting failure. Temperature and heat-flux quantities are where the radiation effect appears.
 
-![Four cases: full fluid-domain velocity](/home/jerlin/Documents/projects/blt/results/figures/four_case_velocity_full.png)
+![Four cases: full fluid-domain velocity](results/figures/four_case_velocity_full.png)
 
-![Four cases: boundary-layer velocity zoom](/home/jerlin/Documents/projects/blt/results/figures/four_case_velocity_zoom.png)
+![Four cases: boundary-layer velocity zoom](results/figures/four_case_velocity_zoom.png)
 
-![Four cases: full fluid-domain pressure deviation](/home/jerlin/Documents/projects/blt/results/figures/four_case_pressure_full.png)
+![Four cases: full fluid-domain pressure deviation](results/figures/four_case_pressure_full.png)
 
-![Four cases: boundary-layer pressure zoom](/home/jerlin/Documents/projects/blt/results/figures/four_case_pressure_zoom.png)
+![Four cases: boundary-layer pressure zoom](results/figures/four_case_pressure_zoom.png)
 
 ### How radiation emission is verified
 
@@ -130,21 +134,21 @@ The radiation condition is working if all three checks hold:
 
 This is why a lower `Tw`, lower `qconv`, and lower `Nu` are the valid radiation-effect observations. Under the present constant-property, no-buoyancy model, a change in `U` or pressure is not expected.
 
-![Fine-mesh temperature contours](/home/jerlin/Documents/projects/blt/results/figures/temperature_contours.png)
+![Fine-mesh temperature contours](results/figures/temperature_contours.png)
 
-![Fine-mesh temperature contours: boundary-layer zoom](/home/jerlin/Documents/projects/blt/results/figures/temperature_contours_boundary_layer_zoom.png)
+![Fine-mesh temperature contours: boundary-layer zoom](results/figures/temperature_contours_boundary_layer_zoom.png)
 
-![Fine-mesh thermal profiles](/home/jerlin/Documents/projects/blt/results/figures/thermal_profiles.png)
+![Fine-mesh thermal profiles](results/figures/thermal_profiles.png)
 
-![Fine-mesh velocity contours](/home/jerlin/Documents/projects/blt/results/figures/velocity_contours.png)
+![Fine-mesh velocity contours](results/figures/velocity_contours.png)
 
-![Fine-mesh velocity profiles](/home/jerlin/Documents/projects/blt/results/figures/velocity_profiles.png)
+![Fine-mesh velocity profiles](results/figures/velocity_profiles.png)
 
-![Wall temperature, radiative flux, and Nusselt number](/home/jerlin/Documents/projects/blt/results/figures/wall_heat_balance_and_nusselt.png)
+![Wall temperature, radiative flux, and Nusselt number](results/figures/wall_heat_balance_and_nusselt.png)
 
-![Skin friction and pressure response](/home/jerlin/Documents/projects/blt/results/figures/skin_friction_and_pressure.png)
+![Skin friction and pressure response](results/figures/skin_friction_and_pressure.png)
 
-The exact data source, command, colormap treatment, and interpretation for every figure are in [PLOT_GUIDE.md](/home/jerlin/Documents/projects/blt/PLOT_GUIDE.md). `temperature_contours.png` reads the `T` cell array from OpenFOAM's own VTK export, the same geometry used by ParaView. It colours the **complete fluid domain** with absolute temperature; `temperature_contours_boundary_layer_zoom.png` is the separate near-wall view using the identical colour scale.
+The exact data source, command, colormap treatment, and interpretation for every figure are in [PLOT_GUIDE.md](PLOT_GUIDE.md). `temperature_contours.png` reads the `T` cell array from OpenFOAM's own VTK export, the same geometry used by ParaView. It colours the **complete fluid domain** with absolute temperature; `temperature_contours_boundary_layer_zoom.png` is the separate near-wall view using the identical colour scale.
 
 ## Reference papers and why they were used
 
@@ -174,7 +178,7 @@ source /opt/openfoam13/etc/bashrc
 
 `makeCases.sh` creates and checks the four cases. `runAll.sh` solves them serially. `evidenceReport.py` reads final OpenFOAM fields, plate values, and logs; it writes all evidence figures and `results/case_audit.csv`.
 
-Do not use the older `scripts/postProcess.py` for the report: it was an early analytical/reference plotting attempt. The authoritative workflow is `foamToVTK` plus `scripts/evidenceReport.py`, documented in [PLOT_GUIDE.md](/home/jerlin/Documents/projects/blt/PLOT_GUIDE.md).
+Do not use the older `scripts/postProcess.py` for the report: it was an early analytical/reference plotting attempt. The authoritative workflow is `foamToVTK` plus `scripts/evidenceReport.py`, documented in [PLOT_GUIDE.md](PLOT_GUIDE.md).
 
 ## View in ParaView
 
@@ -212,3 +216,11 @@ Repeat for `noRadiation_fine`, and set the same temperature color range in both 
 6. Heat-flux split and Nusselt response.
 7. Two-grid sensitivity and the honest limitation: not mesh independent or externally validated yet.
 8. Conclusion: at the fine trailing edge, radiation removes about 216 W/m2, lowers wall temperature by about 7 K, and reduces convective heat rate/Nusselt response.
+
+## Final comparison and observations
+
+- The controlled difference between each no-radiation/radiation pair is surface emissivity: `ε = 0` versus `ε = 0.8`. The added model is called **grey diffuse surface-to-large-enclosure thermal radiation**.
+- The radiation case is demonstrably emitting: `qrad` is positive when the solved plate temperature is above the 300 K enclosure temperature, and the locally evaluated energy balance closes to the imposed 1000 W/m2 heater flux.
+- On the fine grid, surface radiation diverts 215.59 W/m2 from convection at the trailing edge. This decreases the wall temperature by 6.97 K and local Nusselt number by 6.65% relative to the matching no-radiation case.
+- Velocity and pressure do not meaningfully change because the model fixes material properties and disables buoyancy. A momentum change would require temperature-dependent properties and/or buoyancy, which are deliberately outside this verification case.
+- The fine grid is more credible than the coarse grid, but the two mesh levels differ substantially. Treat these values as a reproducible sensitivity study, not a grid-independent or externally validated prediction.

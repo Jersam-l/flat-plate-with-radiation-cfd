@@ -158,6 +158,33 @@ peak=max(abs(d['pDeviation']).max() for d in cases.values())
 four_case_contours('pDeviation',np.linspace(-peak,peak,23),'coolwarm','four_case_pressure_full.png','p - pRef / Pa',(0,.2))
 four_case_contours('pDeviation',np.linspace(-peak,peak,23),'coolwarm','four_case_pressure_zoom.png','p - pRef / Pa',(0,.015))
 
+# Individual, Git-friendly contour set.  The comparison panels above make it
+# easy to compare the four cases at a glance; these 24 files let a reader
+# inspect every solved case on its own without cropping a composite image.
+# Every full-domain/zoom pair uses the same field scale, so the zoom is an
+# enlargement of the same result rather than a separately normalised picture.
+individual_fields=[
+    ('T', 'temperature', np.linspace(299.9,allT.max(),24), 'viridis', 'Temperature, T / K'),
+    ('U', 'velocity', np.linspace(0,1,21), 'viridis', 'u / U∞'),
+    ('pDeviation', 'pressure_deviation', np.linspace(-peak,peak,23), 'coolwarm', 'p - pRef / Pa'),
+]
+def individual_case_contour(d, title, field, tag, levels, cmap, color_label, view, ylimit):
+    fig,ax=plt.subplots(figsize=(10,3.8),constrained_layout=True)
+    X,Y=np.meshgrid(d['x'],d['y'])
+    vals=d[field] if field != 'U' else d['U'][:,:,0]/2
+    h=ax.contourf(X,Y,vals,levels=levels,cmap=cmap,extend='both')
+    ax.contour(X,Y,vals,levels=levels[::max(1,len(levels)//6)],colors='white',linewidths=.4)
+    ax.set(title=f'{title}: {tag.replace("_", " ")} ({view.replace("_", " ")})',
+           xlabel='x / m',ylabel='y / m',xlim=(0,1),ylim=ylimit)
+    fig.colorbar(h,ax=ax,label=color_label)
+    fig.savefig(FIG/f'{d["case"].name}_{tag}_{view}.png',dpi=220)
+    plt.close(fig)
+for p,m,title in ordered:
+    d=cases[p,m]
+    for field,tag,levels,cmap,color_label in individual_fields:
+        individual_case_contour(d,title,field,tag,levels,cmap,color_label,'full_domain',(0,.2))
+        individual_case_contour(d,title,field,tag,levels,cmap,color_label,'boundary_layer_zoom',(0,.015))
+
 # heat balance, Nu and wall temperature
 fig,axs=plt.subplots(1,3,figsize=(14,3.8),constrained_layout=True)
 for label,d in [('No radiation',fine0),('Surface radiation',fineR)]:

@@ -21,6 +21,12 @@ The script uses `vtkDataSetReader` to read these exact files:
 
 ## Figures and inputs
 
+The committed `results/figures/` directory has **43 PNGs**. Six all-case panels provide direct comparisons, while 24 individually named contours provide a one-case-at-a-time audit. Their names follow:
+
+`{noRadiation|surfaceRadiation}_{coarse|fine}_{temperature|velocity|pressure_deviation}_{full_domain|boundary_layer_zoom}.png`
+
+Each full/zoom pair uses the same color limits for that physical field across all four cases. This makes the zoom a geometric enlargement, not a visual exaggeration. See [FIGURE_INDEX.md](FIGURE_INDEX.md) for links to each committed individual contour.
+
 | Figure | Direct OpenFOAM/derived input | Purpose |
 |---|---|---|
 | `temperature_contours.png` | VTK cell array `T` | Complete 1.0 m × 0.20 m fluid-domain contour. Every fluid cell is coloured using absolute temperature. |
