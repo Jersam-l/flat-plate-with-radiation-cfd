@@ -310,15 +310,6 @@ export default function ResearchPaper() {
               </div>
             )}
 
-            {/* Content After Figures / Tables */}
-            {sec.content_after && (
-              <div className="space-y-3 font-serif text-sm sm:text-base text-technical-slate dark:text-slate-200 leading-relaxed text-justify">
-                {sec.content_after.map((p, paidx) => (
-                  <p key={paidx}>{p}</p>
-                ))}
-              </div>
-            )}
-
             {/* Subsections */}
             {sec.subsections && (
               <div className="space-y-6 pl-0 sm:pl-4 border-l-0 sm:border-l-2 border-slate-200 dark:border-slate-800">

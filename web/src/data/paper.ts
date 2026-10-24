@@ -19,7 +19,6 @@ export interface PaperSection {
     tables?: { id: string; caption: string; headers: string[]; rows: string[][] }[];
   }[];
   content?: string[];
-  content_after?: string[];
   equations?: { id: string; label: string; latex: string; explanation?: string }[];
   figures?: { id: string; src: string; caption: string; alt: string }[];
   tables?: { id: string; caption: string; headers: string[]; rows: string[][] }[];
@@ -188,6 +187,7 @@ export const RESEARCH_PAPER_SECTIONS: PaperSection[] = [
     title: 'Computational Domain, Boundary Discretization, and Mesh Topology',
     content: [
       'The computational domain has length L = 1.0 m, height H = 0.20 m, and spanwise thickness W = 0.01 m. The aspect ratio H/L = 0.20 ensures that the upper boundary is located over 37 boundary-layer thicknesses away from the plate, precluding wall confinement distortion.',
+      'The structured hexahedral grids were generated using `blockMesh` with an 80:1 wall-normal geometric expansion grading (`simpleGrading (1 80 1)`). On the fine mesh (64,000 cells), the first cell height is Δy₁ = 70.3 μm, placing over 18 cells within the 5.0 mm boundary layer. The rigorous `checkMesh` audit confirms that all cells are strictly orthogonal (0.00° max non-orthogonality), eliminating grid-induced cross-diffusion.',
     ],
     tables: [
       {
@@ -225,9 +225,6 @@ export const RESEARCH_PAPER_SECTIONS: PaperSection[] = [
         caption: 'Figure 2: Leading-edge ultra-zoom (x ≤ 0.05 m, y ≤ 0.005 m) resolving the inception singularity with zero non-orthogonality.',
         alt: 'Leading Edge Mesh',
       },
-    ],
-    content_after: [
-      'The structured hexahedral grids were generated using `blockMesh` with an 80:1 wall-normal geometric expansion grading (`simpleGrading (1 80 1)`). On the fine mesh (64,000 cells), the first cell height is Δy₁ = 70.3 μm, placing over 18 cells within the 5.0 mm boundary layer. The rigorous `checkMesh` audit confirms that all cells are strictly orthogonal (0.00° max non-orthogonality), eliminating grid-induced cross-diffusion.',
     ],
   },
   {
@@ -426,6 +423,7 @@ export const RESEARCH_PAPER_SECTIONS: PaperSection[] = [
       'Hydrodynamically, the solution is well-converged: the velocity profiles and skin friction coefficient agree within 0.15% between the two grids. However, thermally, the trailing edge wall temperature shows a significant baseline discrepancy: Tw = 394.90 K on the coarse grid versus 343.68 K on the fine grid—a shift of 51.22 K.',
       'The physical cause of this sensitivity lies in the wall-normal temperature gradient ∂T/∂y. On the coarse grid, the first cell centroid is located at Δy₁/2 ≈ 71.3 μm from the wall, which under-resolves the steep thermal gradient at the plate. Refining the grid to Δy₁ = 70.3 μm places the first cell center at 35.1 μm, dramatically improving gradient calculation accuracy.',
       'Importantly, surface thermal radiation acts as a natural numerical damper: for the radiating plate (ε = 0.8), the coarse-to-fine temperature shift is reduced from 51.22 K to 27.68 K (Tw = 364.38 K coarse vs 336.70 K fine). Because radiation depends on T⁴, any artificial temperature over-prediction on the coarse mesh triggers excessive radiative dissipation (432.21 W/m² coarse vs 215.59 W/m² fine), which partially pulls the temperature back toward physical bounds.',
+      'To achieve rigorous mesh independence conforming to the ASME VV 20-2009 verification standard, an apparent order of convergence p must be calculated via Richardson extrapolation. This mathematically requires a minimum of three grid levels. The current study has completed two levels. A third, ultra-fine grid level (800 × 320, 256,000 cells) is identified as the primary computational roadmap milestone to establish formal Grid Convergence Index (GCI) error bars.',
     ],
     figures: [
       {
@@ -440,9 +438,6 @@ export const RESEARCH_PAPER_SECTIONS: PaperSection[] = [
         caption: 'Figure 14: Four-case comprehensive metric breakdown showing trailing temperature, heat flux partition, Nusselt number, and boundary layer thickness.',
         alt: 'Four Case Metric Breakdown',
       },
-    ],
-    content_after: [
-      'To achieve rigorous mesh independence conforming to the ASME VV 20-2009 verification standard, an apparent order of convergence p must be calculated via Richardson extrapolation. This mathematically requires a minimum of three grid levels. The current study has completed two levels. A third, ultra-fine grid level (800 × 320, 256,000 cells) is identified as the primary computational roadmap milestone to establish formal Grid Convergence Index (GCI) error bars.',
     ],
   },
   {
