@@ -19,8 +19,8 @@ PPTX_PATH = "Flat_Plate_Radiation_CFD_Pitch.pptx"
 def audit():
     prs = pptx.Presentation(PPTX_PATH)
     print(f"=== AUDITING {PPTX_PATH} ===")
-    print(f"Slide count: {len(prs.slides)} (Expected: 14)")
-    assert len(prs.slides) == 14, f"Slide count is {len(prs.slides)}, expected 14!"
+    print(f"Slide count: {len(prs.slides)} (Expected: 8)")
+    assert len(prs.slides) == 8, f"Slide count is {len(prs.slides)}, expected 8!"
 
     placeholders_found = []
     font_issues = []
