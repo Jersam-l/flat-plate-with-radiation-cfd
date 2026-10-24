@@ -135,13 +135,13 @@ export const PRESENTATION_SLIDES: PresentationSlide[] = [
     theme: 'light',
     category: 'DOMAIN GEOMETRY & MATERIAL PROPERTIES',
     title: 'Geometry and Input Parameters',
-    subtitle: 'Physical dimensions and constant air thermophysical properties',
+    subtitle: 'Physical dimensions, flow conditions, and air thermophysical properties',
     primaryTakeaway: 'Standard atmospheric air properties evaluated at 300 K under constant-property laminar flow assumptions.',
     figures: [
       {
         src: '/figures/mesh_full_domain.png',
         alt: 'Domain Schematic',
-        caption: 'Computational domain schematic: L = 1.0 m, H = 0.20 m, span W = 0.01 m.',
+        caption: 'Computational domain schematic: L = 1.0 m, H = 0.20 m, span W = 0.01 m (aspect ratio H/L = 0.20).',
       },
     ],
     table: {
@@ -161,10 +161,36 @@ export const PRESENTATION_SLIDES: PresentationSlide[] = [
         ['Fluid density', 'ρ', '1.1614', 'kg/m³'],
       ],
     },
+    kpis: [
+      {
+        value: '1.258 × 10⁵',
+        label: 'Reynolds Number Re_L',
+        sub: 'Laminar regime (Re_L = ρ U_∞ L / μ < 5 × 10⁵)',
+      },
+      {
+        value: '0.71',
+        label: 'Prandtl Number Pr',
+        sub: 'Air: momentum vs thermal diffusion (μ c_p / k)',
+      },
+      {
+        value: '8.93 × 10⁴',
+        label: 'Péclet Number Pe_L',
+        sub: 'Pe_L = Re_L · Pr (advection strongly dominates)',
+      },
+      {
+        value: '1000 W/m²',
+        label: 'Applied Heater Flux',
+        sub: 'Uniform electrical bottom plate heating',
+      },
+    ],
+    callout: {
+      title: 'Displacement Core Flow Acceleration Effect',
+      desc: 'Because domain height H = 0.20 m is finite with a top slip wall, the growth of boundary-layer displacement thickness δ*(x) constricts the core channel, accelerating free-stream velocity from 2.000 m/s at x = 0 to ~2.016 m/s at the outlet.',
+    },
     keyPoints: [
       'Domain dimensions: length L = 1.0 m, height H = 0.20 m, spanwise thickness W = 0.01 m.',
-      'Heated plate spans the full bottom boundary from x = 0 to x = 1.0 m.',
-      'All thermophysical properties are verified against OpenFOAM transportProperties files.',
+      'Heated plate spans the full bottom boundary from x = 0 to x = 1.0 m under fixed 1000 W/m² flux.',
+      'All thermophysical properties are verified against OpenFOAM cases/template/constant/transportProperties.',
     ],
     presenterNotes: 'Slide 3 details the computational geometry and material properties. The rectangular domain has length 1.0 m and height 0.20 m. Air enters at 2.0 m/s and 300 K. The bottom wall is subjected to a uniform heater flux of 1000 W/m². The fluid properties are constant: dynamic viscosity 1.846e-5 kg/(m s), conductivity 0.02613 W/(m K), density 1.1614 kg/m³, and Prandtl number 0.71.',
     evidenceSource: ['cases/template/constant/transportProperties', 'cases/template/system/blockMeshDict'],
@@ -199,15 +225,19 @@ export const PRESENTATION_SLIDES: PresentationSlide[] = [
         note: 'Constant thermal conductivity k = 0.02613 W/(m·K)',
       },
       {
-        label: 'Reynolds Number Evaluation:',
-        math: 'Re_L = \\frac{\\rho U_\\infty L}{\\mu} = \\frac{1.1614 \\times 2.0 \\times 1.0}{1.846 \\times 10^{-5}} \\approx 1.258 \\times 10^5',
+        label: 'Reynolds & Péclet Numbers:',
+        math: 'Re_L = \\frac{\\rho U_\\infty L}{\\mu} \\approx 1.258 \\times 10^5, \\quad Pe_L = Re_L \\cdot Pr \\approx 8.93 \\times 10^4',
         note: 'Below typical natural transition threshold (Re_crit ~ 5 × 10⁵) for an ideal flat plate',
       },
     ],
+    callout: {
+      title: 'Laminar Transition Limitation',
+      desc: 'While Re_L = 1.258 × 10⁵ is below the ideal flat-plate transition threshold (5 × 10⁵), physical transition on real surfaces depends strongly on free-stream turbulence, acoustic perturbations, and leading-edge geometry.',
+    },
     keyPoints: [
-      'Steady two-dimensional incompressible laminar flow formulation.',
+      'Steady two-dimensional incompressible laminar flow formulation in OpenFOAM 13.',
       'Constant fluid properties: density, dynamic viscosity, specific heat, and thermal conductivity.',
-      'Buoyancy forces are neglected; natural convection effects are omitted.',
+      'Buoyancy forces are neglected (g = 0); natural convection effects are omitted.',
       'No participating-medium radiation in the fluid volume; air is non-absorbing and non-emitting.',
     ],
     presenterNotes: 'The governing equations are the steady incompressible 2D Navier-Stokes and thermal energy equations. The Reynolds number based on plate length is 1.258e5. While this supports using a laminar model for this idealised numerical case, it does not establish the transition behaviour of every physical flat plate, which depends on free-stream turbulence and surface roughness. Assumptions include constant properties, zero buoyancy, and transparent fluid volume.',
@@ -233,6 +263,20 @@ export const PRESENTATION_SLIDES: PresentationSlide[] = [
         caption: 'Domain boundary patches: inlet, heated plate, slip top, pressure outlet, and empty 2D sides.',
       },
     ],
+    table: {
+      headers: ['Patch Name', 'Patch Type', 'Velocity (U)', 'Temperature (T)', 'Pressure (p_rgh)', 'Physical Rationale'],
+      rows: [
+        ['inlet', 'patch', 'fixedValue (2 0 0)', 'fixedValue 300 K', 'zeroGradient', 'Uniform forced convective inflow'],
+        ['plate', 'wall', 'noSlip (0 0 0)', 'codedFixedValue', 'zeroGradient', 'Coupled 1000 W/m² heater & radiation'],
+        ['top', 'patch', 'slip', 'zeroGradient', 'zeroGradient', 'Frictionless far-field symmetry plane'],
+        ['outlet', 'patch', 'inletOutlet (0 0 0)', 'inletOutlet 300 K', 'fixedValue 100 kPa', 'Atmospheric outflow with backflow block'],
+        ['frontAndBack', 'empty', 'empty', 'empty', 'empty', 'Enforces 2D planar flow constraint'],
+      ],
+    },
+    callout: {
+      title: 'Top Slip Boundary Condition Rationale',
+      desc: 'The top boundary at y = 0.20 m enforces zero normal velocity (v = 0) and zero shear stress (∂u/∂y = 0), preventing secondary boundary layer formation while enabling frictionless core flow passage.',
+    },
     keyPoints: [
       'Inlet (x = 0): fixed velocity U = (2, 0, 0) m/s and uniform temperature T = 300 K.',
       'Plate (y = 0): no-slip velocity (U = 0) with imposed electrical heater flux q″_heater = 1000 W/m².',
@@ -258,7 +302,7 @@ export const PRESENTATION_SLIDES: PresentationSlide[] = [
     primaryTakeaway: 'The non-linear wall boundary condition couples fluid conduction with Stefan-Boltzmann grey-body emission to an ambient enclosure.',
     equations: [
       {
-        label: 'Wall Energy Balance:',
+        label: 'Wall Energy Balance (First Law):',
         math: 'q\'\'_{\\mathrm{heater}} = q\'\'_{\\mathrm{conv}} + q\'\'_{\\mathrm{rad}}',
         note: 'Total applied heater flux equals sum of convective conduction and radiative emission',
       },
@@ -268,11 +312,20 @@ export const PRESENTATION_SLIDES: PresentationSlide[] = [
         note: 'σ = 5.670374 × 10⁻⁸ W/(m²·K⁴), ε = 0.8 (radiating) or ε = 0.0 (non-radiating), T_sur = 300 K',
       },
       {
-        label: 'Objective Root Function for Wall Temperature Tw:',
-        math: 'f(T_w) = -k \\left.\\frac{\\partial T}{\\partial y}\\right|_w + \\varepsilon \\sigma \\left(T_w^4 - T_{\\mathrm{sur}}^4\\right) - q\'\'_{\\mathrm{heater}} = 0',
+        label: 'Newton-Raphson Objective Function:',
+        math: 'f(T_w) = k \\frac{T_w - T_{\\mathrm{cell}}}{\\Delta y_c} + \\varepsilon \\sigma \\left(T_w^4 - T_{\\mathrm{sur}}^4\\right) - q\'\'_{\\mathrm{heater}} = 0',
         note: 'Solved at each boundary face using in-situ Newton-Raphson iteration',
       },
+      {
+        label: 'Analytical Jacobian Derivative:',
+        math: 'f\'(T_w) = \\frac{k}{\\Delta y_c} + 4 \\varepsilon \\sigma T_w^3',
+        note: 'Guarantees monotonic quadratic convergence within 12 sub-iterations',
+      },
     ],
+    callout: {
+      title: 'codedFixedValue Implementation Architecture',
+      desc: 'Executed directly inside 0/T at every outer PIMPLE iteration using 12 in-situ Newton-Raphson iterations to solve the non-linear quartic polynomial. Air volume radiation is neglected (optically thin medium).',
+    },
     keyPoints: [
       'Implemented as an OpenFOAM codedFixedValue boundary condition in the temperature field dictionary.',
       'An in-situ Newton-Raphson iteration solves the non-linear quartic polynomial at every time step.',

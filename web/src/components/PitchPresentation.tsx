@@ -44,12 +44,18 @@ export default function PitchPresentation() {
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       containerRef.current?.requestFullscreen?.();
-      setIsFullscreen(true);
     } else {
       document.exitFullscreen?.();
-      setIsFullscreen(false);
     }
   };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -74,13 +80,24 @@ export default function PitchPresentation() {
   const isDark = currentSlide.theme === 'dark';
 
   return (
-    <div ref={containerRef} className="space-y-4 font-sans">
-      {/* Presentation Top Control Bar */}
-      <div className="no-print bg-white dark:bg-[#16264A] border border-slate-200 dark:border-slate-700/80 rounded-xl p-3 sm:p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
+    <div
+      ref={containerRef}
+      className={`font-sans transition-colors ${
+        isFullscreen
+          ? 'fixed inset-0 z-50 bg-[#060B14] p-3 sm:p-5 flex flex-col justify-between overflow-hidden'
+          : 'space-y-4'
+      }`}
+    >
+      {/* Presentation Top Control Bar (Consistent Across All 14 Slides) */}
+      <div className={`no-print border rounded-xl p-3 sm:p-4 shadow-sm flex flex-wrap items-center justify-between gap-3 shrink-0 ${
+        isFullscreen
+          ? 'bg-[#16264A] text-white border-slate-700/80'
+          : 'bg-white dark:bg-[#16264A] border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-200'
+      }`}>
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setShowToc(!showToc)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors shadow-xs"
           >
             <List className="w-4 h-4 text-orange-500" />
             Slide Index ({totalSlides})
@@ -88,7 +105,7 @@ export default function PitchPresentation() {
 
           <button
             onClick={() => setShowNotes(!showNotes)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors shadow-xs ${
               showNotes
                 ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-800'
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -127,7 +144,7 @@ export default function PitchPresentation() {
 
         {/* Progress & Counter */}
         <div className="flex items-center gap-3">
-          <div className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+          <div className="text-xs sm:text-sm font-medium">
             Slide <span className="font-bold text-base sm:text-lg text-orange-500">{currentSlideIndex + 1}</span> of {totalSlides}
           </div>
           <div className="w-24 sm:w-40 h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
@@ -186,458 +203,782 @@ export default function PitchPresentation() {
         </div>
       </div>
 
-      {/* Main 16:9 Presentation Canvas */}
-      <div
-        className={`slide-canvas-wrapper relative w-full aspect-[16/9] min-h-[560px] max-h-[88vh] rounded-2xl shadow-2xl flex flex-col justify-between overflow-hidden transition-colors border ${
-          isDark
-            ? 'bg-[#0B1426] text-white border-slate-800'
-            : 'bg-[#EEF2F7] text-[#0B1426] border-slate-300'
-        }`}
-      >
-        {viewMode === 'rendered' ? (
-          /* Rendered Mode: High-Resolution Exact Slide from PPTX */
-          <div className="relative w-full h-full flex items-center justify-center bg-[#0B1426]">
-            <img
-              src={`/slide_images/slide-${currentSlideIndex + 1}.png`}
-              alt={`Slide ${currentSlideIndex + 1}`}
-              className="w-full h-full object-contain"
-            />
-          </div>
-        ) : (
-          /* Interactive Mode: Large Font, Beautiful Human-Designed Slide */
-          <div className="relative z-10 w-full h-full flex flex-col justify-between p-6 sm:p-10 lg:p-12 overflow-y-auto">
-            {/* Slide Header (Hidden on Title Slide for dedicated hero layout) */}
-            {currentSlide.number !== 1 && (
-              <div className="space-y-1 pb-3 border-b border-black/10 dark:border-white/10 shrink-0">
-                <div className="flex items-center justify-between text-xs sm:text-sm font-mono uppercase tracking-wider">
-                  <span className={isDark ? 'text-cyan-400 font-bold' : 'text-slate-600 font-bold'}>
-                    {currentSlide.category}
-                  </span>
-                  <span className={isDark ? 'text-slate-400 font-medium' : 'text-slate-500 font-medium'}>
-                    SLIDE {String(currentSlide.number).padStart(2, '0')} / {totalSlides}
-                  </span>
-                </div>
-                <h2
-                  className={`text-2xl sm:text-3xl font-bold font-serif leading-tight ${
-                    isDark ? 'text-white' : 'text-[#0B1426]'
-                  }`}
-                  style={{ fontFamily: 'Cambria, Georgia, serif' }}
-                >
-                  {currentSlide.title}
-                </h2>
-                <p className={`text-xs sm:text-sm font-sans ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                  {currentSlide.subtitle}
-                </p>
-              </div>
-            )}
-
-            {/* Slide-Specific Custom Content */}
-            <div className="my-auto py-3">
-              {/* SLIDE 1: Title & Academic Identity */}
-              {currentSlide.number === 1 && (
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center h-full">
-                  <div className="lg:col-span-7 space-y-5">
-                    <div className="text-xs sm:text-sm font-bold tracking-widest text-cyan-400 uppercase font-sans">
+      {/* Main 16:9 Presentation Canvas Container (Letterboxed in Fullscreen & Responsive in Minimal Mode) */}
+      <div className={`w-full flex items-center justify-center ${isFullscreen ? 'flex-1 overflow-hidden py-1' : ''}`}>
+        <div
+          className={`slide-canvas-wrapper relative w-full aspect-[16/9] ${
+            isFullscreen
+              ? 'max-h-[calc(100vh-90px)] max-w-[calc((100vh-90px)*16/9)]'
+              : 'max-w-7xl'
+          } rounded-2xl shadow-2xl flex flex-col justify-between overflow-hidden transition-colors border ${
+            isDark
+              ? 'bg-[#0B1426] text-white border-slate-800'
+              : 'bg-[#EEF2F7] text-[#0B1426] border-slate-300'
+          }`}
+        >
+          {viewMode === 'rendered' ? (
+            /* Rendered Mode: High-Resolution Exact Slide from PPTX */
+            <div className="relative w-full h-full flex items-center justify-center bg-[#0B1426]">
+              <img
+                src={`/slide_images/slide-${currentSlideIndex + 1}.png`}
+                alt={`Slide ${currentSlideIndex + 1}`}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          ) : (
+            /* Interactive Mode: Large Font, Beautiful Human-Designed Slide */
+            <div className="relative z-10 w-full h-full flex flex-col justify-between p-5 sm:p-8 lg:p-10 overflow-y-auto">
+              {/* Slide Header (Hidden on Title Slide for dedicated hero layout) */}
+              {currentSlide.number !== 1 && (
+                <div className={`space-y-1 pb-3 border-b shrink-0 ${isDark ? 'border-white/10' : 'border-black/10'}`}>
+                  <div className="flex items-center justify-between text-xs sm:text-sm font-mono uppercase tracking-wider">
+                    <span className={isDark ? 'text-cyan-400 font-bold' : 'text-slate-700 font-bold'}>
                       {currentSlide.category}
-                    </div>
-
-                    <h1
-                      className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight"
-                      style={{ fontFamily: 'Cambria, Georgia, serif' }}
-                    >
-                      {currentSlide.title}
-                    </h1>
-
-                    <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">
-                      {currentSlide.subtitle}
-                    </p>
-
-                    {/* Official Presenter Block with Clear Typography */}
-                    <div className="pt-5 border-t border-slate-700/80 space-y-2">
-                      <div
-                        className="text-2xl sm:text-3xl font-bold text-[#FF7A1A]"
-                        style={{ fontFamily: 'Cambria, Georgia, serif' }}
-                      >
-                        {currentSlide.student?.name}
-                      </div>
-                      <div className="text-base font-bold text-white font-mono">
-                        Register No: {currentSlide.student?.registerNo}
-                      </div>
-                      <div className="text-sm sm:text-base text-slate-200">
-                        {currentSlide.student?.degree} • {currentSlide.student?.department}
-                      </div>
-                      <div className="text-sm sm:text-base text-[#FFC24B] font-semibold">
-                        {currentSlide.student?.institution}
-                      </div>
-                    </div>
+                    </span>
+                    <span className={isDark ? 'text-slate-400 font-medium' : 'text-slate-500 font-medium'}>
+                      SLIDE {String(currentSlide.number).padStart(2, '0')} / {totalSlides}
+                    </span>
                   </div>
-
-                  {/* Right: Real Legible Temperature Figure */}
-                  <div className="lg:col-span-5 flex flex-col items-center justify-center">
-                    {currentSlide.figures && currentSlide.figures[0] && (
-                      <div
-                        className="relative group rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 shadow-2xl cursor-pointer max-w-lg w-full"
-                        onClick={() => setZoomedImage(currentSlide.figures![0].src)}
-                      >
-                        <img
-                          src={currentSlide.figures[0].src}
-                          alt={currentSlide.figures[0].alt}
-                          className="w-full h-auto max-h-[380px] object-contain group-hover:scale-[1.02] transition-transform"
-                        />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm gap-1.5 font-medium">
-                          <ZoomIn className="w-5 h-5" /> Click to Zoom
-                        </div>
-                        <div className="p-3 bg-slate-950 text-xs sm:text-sm text-slate-300 text-center font-sans border-t border-slate-800">
-                          {currentSlide.figures[0].caption}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  <h2
+                    className={`text-2xl sm:text-3xl font-bold font-serif leading-tight ${
+                      isDark ? 'text-white' : 'text-[#0B1426]'
+                    }`}
+                    style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                  >
+                    {currentSlide.title}
+                  </h2>
+                  <p className={`text-xs sm:text-sm font-sans ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    {currentSlide.subtitle}
+                  </p>
                 </div>
               )}
 
-              {/* SLIDE 4 & 6: Mathematical Equations & Formulations */}
-              {(currentSlide.number === 4 || currentSlide.number === 6) && (
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                  <div className="lg:col-span-7 bg-white dark:bg-[#16264A] border border-[#DCE2EC] dark:border-slate-700 rounded-2xl p-5 sm:p-6 shadow-sm space-y-3.5">
-                    <h3
-                      className="text-lg sm:text-xl font-bold text-[#0B1426] dark:text-white"
-                      style={{ fontFamily: 'Cambria, Georgia, serif' }}
-                    >
-                      {currentSlide.number === 4 ? 'Continuity, Momentum & Thermal Energy' : 'Stefan-Boltzmann Surface Energy Balance'}
-                    </h3>
+              {/* Slide-Specific Custom Content */}
+              <div className="my-auto py-2.5">
+                {/* SLIDE 1: Title & Academic Identity */}
+                {currentSlide.number === 1 && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center h-full">
+                    <div className="lg:col-span-7 space-y-5">
+                      <div className="text-xs sm:text-sm font-bold tracking-widest text-cyan-400 uppercase font-sans">
+                        {currentSlide.category}
+                      </div>
 
-                    <div className="space-y-3">
-                      {currentSlide.equations?.map((eq, eIdx) => (
-                        <div key={eIdx} className="p-3.5 bg-slate-50 dark:bg-black/20 rounded-xl border border-slate-200/70 dark:border-slate-800">
-                          <span className="font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-200 block mb-1">
-                            {eq.label}
-                          </span>
-                          <div className="text-sm sm:text-base font-bold text-[#0B1426] dark:text-white font-serif py-1 overflow-x-auto">
-                            <MathEquation math={eq.math} block={true} />
+                      <h1
+                        className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight"
+                        style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                      >
+                        {currentSlide.title}
+                      </h1>
+
+                      <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">
+                        {currentSlide.subtitle}
+                      </p>
+
+                      {/* Official Presenter Block with Clear Typography */}
+                      <div className="pt-5 border-t border-slate-700/80 space-y-2">
+                        <div
+                          className="text-2xl sm:text-3xl font-bold text-[#FF7A1A]"
+                          style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                        >
+                          {currentSlide.student?.name}
+                        </div>
+                        <div className="text-base font-bold text-white font-mono">
+                          Register No: {currentSlide.student?.registerNo}
+                        </div>
+                        <div className="text-sm sm:text-base text-slate-200">
+                          {currentSlide.student?.degree} • {currentSlide.student?.department}
+                        </div>
+                        <div className="text-sm sm:text-base text-[#FFC24B] font-semibold">
+                          {currentSlide.student?.institution}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right: Real Legible Temperature Figure */}
+                    <div className="lg:col-span-5 flex flex-col items-center justify-center">
+                      {currentSlide.figures && currentSlide.figures[0] && (
+                        <div
+                          className="relative group rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 shadow-2xl cursor-pointer max-w-lg w-full"
+                          onClick={() => setZoomedImage(currentSlide.figures![0].src)}
+                        >
+                          <img
+                            src={currentSlide.figures[0].src}
+                            alt={currentSlide.figures[0].alt}
+                            className="w-full h-auto max-h-[380px] object-contain group-hover:scale-[1.02] transition-transform"
+                          />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm gap-1.5 font-medium">
+                            <ZoomIn className="w-5 h-5" /> Click to Zoom
                           </div>
-                          {eq.note && (
-                            <span className="text-xs text-slate-600 dark:text-slate-400 block mt-1">
-                              {eq.note}
+                          <div className="p-3 bg-slate-950 text-xs sm:text-sm text-slate-300 text-center font-sans border-t border-slate-800">
+                            {currentSlide.figures[0].caption}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* SLIDE 3: Domain Geometry, Thermophysical Parameters & Flow Regimes */}
+                {currentSlide.number === 3 && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    {/* Left: Schematic Figure + 4 KPI chips */}
+                    <div className="lg:col-span-6 space-y-3">
+                      {currentSlide.figures && currentSlide.figures[0] && (
+                        <div
+                          className={`rounded-2xl overflow-hidden p-2.5 cursor-pointer group shadow-md transition-all ${
+                            isDark ? 'bg-[#16264A] border border-slate-700' : 'bg-white border border-[#DCE2EC]'
+                          }`}
+                          onClick={() => setZoomedImage(currentSlide.figures![0].src)}
+                        >
+                          <img
+                            src={currentSlide.figures[0].src}
+                            alt={currentSlide.figures[0].alt}
+                            className="w-full h-auto max-h-[220px] object-contain group-hover:scale-[1.01] transition-transform mx-auto"
+                          />
+                          <p className={`text-xs text-center mt-1.5 font-sans ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                            {currentSlide.figures[0].caption}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* 4 KPI Metric Chips */}
+                      {currentSlide.kpis && (
+                        <div className="grid grid-cols-2 gap-2">
+                          {currentSlide.kpis.map((kpi, idx) => (
+                            <div
+                              key={idx}
+                              className={`p-2.5 rounded-xl border shadow-xs space-y-0.5 ${
+                                isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                              }`}
+                            >
+                              <div
+                                className={`text-base font-bold ${idx === 0 ? 'text-[#FF7A1A]' : 'text-[#23B5D3]'}`}
+                                style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                              >
+                                {kpi.value}
+                              </div>
+                              <div className={`text-xs font-bold ${isDark ? 'text-white' : 'text-[#0B1426]'}`}>
+                                {kpi.label}
+                              </div>
+                              <div className={`text-[11px] leading-tight ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                                {kpi.sub}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right: Clean Properties Table & Acceleration Callout */}
+                    <div className="lg:col-span-6 space-y-3">
+                      {currentSlide.table && (
+                        <div className={`rounded-xl overflow-hidden border shadow-xs ${
+                          isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                        }`}>
+                          <table className="w-full text-xs text-left border-collapse">
+                            <thead>
+                              <tr className="bg-[#0B1426] text-white">
+                                {currentSlide.table.headers.map((h, hIdx) => (
+                                  <th key={hIdx} className="p-2 font-bold">{h}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {currentSlide.table.rows.slice(0, 8).map((row, rIdx) => (
+                                <tr
+                                  key={rIdx}
+                                  className={`border-t font-medium ${
+                                    isDark
+                                      ? rIdx % 2 === 0 ? 'bg-[#16264A] text-slate-100 border-slate-800' : 'bg-[#0F1B35] text-slate-100 border-slate-800'
+                                      : rIdx % 2 === 0 ? 'bg-white text-[#0B1426] border-[#E2E8F0]' : 'bg-[#F8FAFC] text-[#0B1426] border-[#E2E8F0]'
+                                  }`}
+                                >
+                                  {row.map((cell, cIdx) => (
+                                    <td
+                                      key={cIdx}
+                                      className={`p-1.5 ${cIdx === 0 ? 'font-bold' : ''} ${cIdx >= 2 ? 'font-mono' : ''}`}
+                                    >
+                                      {cell}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+
+                      {/* Callout Card */}
+                      {currentSlide.callout && (
+                        <div className={`p-3 rounded-xl border shadow-xs space-y-1 ${
+                          isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                        }`}>
+                          <div className="text-xs font-bold text-[#FF7A1A]" style={{ fontFamily: 'Cambria, Georgia, serif' }}>
+                            {currentSlide.callout.title}
+                          </div>
+                          <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                            {currentSlide.callout.desc}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* SLIDE 4: Mathematical Equations & Assumptions */}
+                {currentSlide.number === 4 && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    {/* Left: Governing Equations Card */}
+                    <div className={`lg:col-span-7 rounded-2xl p-5 shadow-sm space-y-3 border ${
+                      isDark ? 'bg-[#16264A] border-slate-700 text-white' : 'bg-white border-[#DCE2EC] text-[#0B1426]'
+                    }`}>
+                      <h3
+                        className={`text-lg sm:text-xl font-bold ${isDark ? 'text-white' : 'text-[#0B1426]'}`}
+                        style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                      >
+                        Continuity, Momentum & Thermal Energy
+                      </h3>
+
+                      <div className="space-y-2.5">
+                        {currentSlide.equations?.map((eq, eIdx) => (
+                          <div
+                            key={eIdx}
+                            className={`p-3 rounded-xl border ${
+                              isDark ? 'bg-black/30 border-slate-800' : 'bg-[#F4F7FB] border-slate-200'
+                            }`}
+                          >
+                            <span className={`font-bold text-xs block mb-1 ${isDark ? 'text-cyan-400' : 'text-slate-700'}`}>
+                              {eq.label}
                             </span>
-                          )}
+                            <div className={`text-sm sm:text-base font-bold font-serif py-0.5 overflow-x-auto ${
+                              isDark ? 'text-white' : 'text-[#0B1426]'
+                            }`}>
+                              <MathEquation math={eq.math} block={true} />
+                            </div>
+                            {eq.note && (
+                              <span className={`text-[11px] block mt-1 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                                {eq.note}
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Right: Model Assumptions & Details Card (High Contrast Dark Text on Light) */}
+                    <div className="lg:col-span-5 space-y-4">
+                      <div className={`p-5 rounded-2xl shadow-sm border space-y-3 ${
+                        isDark ? 'bg-[#16264A] border-slate-700 text-white' : 'bg-white border-[#DCE2EC] text-[#0B1426]'
+                      }`}>
+                        <h3
+                          className={`text-lg font-bold ${isDark ? 'text-white' : 'text-[#0B1426]'}`}
+                          style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                        >
+                          Model Assumptions & Details
+                        </h3>
+                        <ul className="space-y-2.5 text-xs sm:text-sm leading-relaxed">
+                          {currentSlide.keyPoints.map((pt, idx) => (
+                            <li key={idx} className="flex items-start gap-2.5">
+                              <span className="w-2 h-2 rounded-full bg-orange-500 mt-1.5 shrink-0" />
+                              <span className={isDark ? 'text-slate-200' : 'text-slate-800'}>{pt}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {currentSlide.callout && (
+                        <div className={`p-4 rounded-xl border shadow-xs space-y-1 ${
+                          isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                        }`}>
+                          <div className="text-xs font-bold text-[#FF7A1A]" style={{ fontFamily: 'Cambria, Georgia, serif' }}>
+                            {currentSlide.callout.title}
+                          </div>
+                          <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                            {currentSlide.callout.desc}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* SLIDE 5: OpenFOAM Boundary Conditions */}
+                {currentSlide.number === 5 && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    {/* Left: Schematic Figure & Callout */}
+                    <div className="lg:col-span-5 space-y-3">
+                      {currentSlide.figures && currentSlide.figures[0] && (
+                        <div
+                          className={`rounded-2xl overflow-hidden p-2.5 cursor-pointer group shadow-md transition-all ${
+                            isDark ? 'bg-[#16264A] border border-slate-700' : 'bg-white border border-[#DCE2EC]'
+                          }`}
+                          onClick={() => setZoomedImage(currentSlide.figures![0].src)}
+                        >
+                          <img
+                            src={currentSlide.figures[0].src}
+                            alt={currentSlide.figures[0].alt}
+                            className="w-full h-auto max-h-[240px] object-contain group-hover:scale-[1.01] transition-transform mx-auto"
+                          />
+                          <p className={`text-xs text-center mt-1.5 font-sans ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                            {currentSlide.figures[0].caption}
+                          </p>
+                        </div>
+                      )}
+
+                      {currentSlide.callout && (
+                        <div className={`p-3 rounded-xl border shadow-xs space-y-1 ${
+                          isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                        }`}>
+                          <div className="text-xs font-bold text-[#FF7A1A]" style={{ fontFamily: 'Cambria, Georgia, serif' }}>
+                            {currentSlide.callout.title}
+                          </div>
+                          <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                            {currentSlide.callout.desc}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right: 5-Patch Boundary Conditions Table & Implementation Notes */}
+                    <div className="lg:col-span-7 space-y-3">
+                      {currentSlide.table && (
+                        <div className={`rounded-xl overflow-hidden border shadow-xs ${
+                          isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                        }`}>
+                          <table className="w-full text-xs text-left border-collapse">
+                            <thead>
+                              <tr className="bg-[#0B1426] text-white">
+                                {currentSlide.table.headers.map((h, hIdx) => (
+                                  <th key={hIdx} className="p-2 font-bold">{h}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {currentSlide.table.rows.map((row, rIdx) => (
+                                <tr
+                                  key={rIdx}
+                                  className={`border-t font-medium ${
+                                    isDark
+                                      ? rIdx % 2 === 0 ? 'bg-[#16264A] text-slate-100 border-slate-800' : 'bg-[#0F1B35] text-slate-100 border-slate-800'
+                                      : rIdx % 2 === 0 ? 'bg-white text-[#0B1426] border-[#E2E8F0]' : 'bg-[#F8FAFC] text-[#0B1426] border-[#E2E8F0]'
+                                  }`}
+                                >
+                                  <td className="p-2 font-bold font-mono">{row[0]}</td>
+                                  <td className="p-2 font-mono text-[11px] text-cyan-700 dark:text-cyan-300">{row[1]}</td>
+                                  <td className="p-2 font-mono text-[11px]">{row[2]}</td>
+                                  <td className="p-2 font-mono text-[11px]">{row[3]}</td>
+                                  <td className="p-2 font-mono text-[11px]">{row[4]}</td>
+                                  <td className="p-2 text-[11px]">{row[5]}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+
+                      <div className={`p-3.5 rounded-xl border shadow-xs space-y-2 ${
+                        isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                      }`}>
+                        <div className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-cyan-400' : 'text-slate-700'}`}>
+                          Implementation Notes
+                        </div>
+                        <ul className="space-y-1.5 text-xs leading-relaxed">
+                          {currentSlide.keyPoints.slice(0, 4).map((pt, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-1.5 shrink-0" />
+                              <span className={isDark ? 'text-slate-200' : 'text-slate-800'}>{pt}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* SLIDE 6: Surface Radiation Model & Newton-Raphson */}
+                {currentSlide.number === 6 && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    {/* Left: Stefan-Boltzmann & Newton-Raphson Formulations */}
+                    <div className={`lg:col-span-7 rounded-2xl p-5 shadow-sm space-y-3 border ${
+                      isDark ? 'bg-[#16264A] border-slate-700 text-white' : 'bg-white border-[#DCE2EC] text-[#0B1426]'
+                    }`}>
+                      <h3
+                        className={`text-lg sm:text-xl font-bold ${isDark ? 'text-white' : 'text-[#0B1426]'}`}
+                        style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                      >
+                        Stefan-Boltzmann Surface Energy Balance & Newton-Raphson
+                      </h3>
+
+                      <div className="space-y-2.5">
+                        {currentSlide.equations?.map((eq, eIdx) => (
+                          <div
+                            key={eIdx}
+                            className={`p-3 rounded-xl border ${
+                              isDark ? 'bg-black/30 border-slate-800' : 'bg-[#F4F7FB] border-slate-200'
+                            }`}
+                          >
+                            <span className={`font-bold text-xs block mb-1 ${isDark ? 'text-cyan-400' : 'text-slate-700'}`}>
+                              {eq.label}
+                            </span>
+                            <div className={`text-sm sm:text-base font-bold font-serif py-0.5 overflow-x-auto ${
+                              isDark ? 'text-white' : 'text-[#0B1426]'
+                            }`}>
+                              <MathEquation math={eq.math} block={true} />
+                            </div>
+                            {eq.note && (
+                              <span className={`text-[11px] block mt-1 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                                {eq.note}
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Right: Model Assumptions & Details Card (High Contrast Dark Text on Light) */}
+                    <div className="lg:col-span-5 space-y-4">
+                      <div className={`p-5 rounded-2xl shadow-sm border space-y-3 ${
+                        isDark ? 'bg-[#16264A] border-slate-700 text-white' : 'bg-white border-[#DCE2EC] text-[#0B1426]'
+                      }`}>
+                        <h3
+                          className={`text-lg font-bold ${isDark ? 'text-white' : 'text-[#0B1426]'}`}
+                          style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                        >
+                          Model Assumptions & Details
+                        </h3>
+                        <ul className="space-y-2.5 text-xs sm:text-sm leading-relaxed">
+                          {currentSlide.keyPoints.map((pt, idx) => (
+                            <li key={idx} className="flex items-start gap-2.5">
+                              <span className="w-2 h-2 rounded-full bg-orange-500 mt-1.5 shrink-0" />
+                              <span className={isDark ? 'text-slate-200' : 'text-slate-800'}>{pt}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {currentSlide.callout && (
+                        <div className={`p-4 rounded-xl border shadow-xs space-y-1 ${
+                          isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                        }`}>
+                          <div className="text-xs font-bold text-[#FF7A1A]" style={{ fontFamily: 'Cambria, Georgia, serif' }}>
+                            {currentSlide.callout.title}
+                          </div>
+                          <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                            {currentSlide.callout.desc}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* SLIDE 7: Full-Width Solver & Numerical Setup Table */}
+                {currentSlide.number === 7 && (
+                  <div className="space-y-4">
+                    <div className={`rounded-2xl overflow-hidden border shadow-sm ${
+                      isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                    }`}>
+                      <table className="w-full text-xs sm:text-sm text-left border-collapse">
+                        <thead>
+                          <tr className="bg-[#0B1426] text-white">
+                            <th className="p-3 font-bold">Setting / Parameter</th>
+                            <th className="p-3 font-bold">Implementation</th>
+                            <th className="p-3 font-bold">Details / Numerical Values</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {currentSlide.table?.rows.map((row, rIdx) => (
+                            <tr
+                              key={rIdx}
+                              className={`border-t font-medium ${
+                                isDark
+                                  ? rIdx % 2 === 0 ? 'bg-[#16264A] text-slate-100 border-slate-800' : 'bg-[#0F1B35] text-slate-100 border-slate-800'
+                                  : rIdx % 2 === 0 ? 'bg-white text-[#0B1426] border-[#DCE2EC]' : 'bg-[#DEE5F0] text-[#0B1426] border-[#DCE2EC]'
+                              }`}
+                            >
+                              <td className="p-2.5 font-bold">{row[0]}</td>
+                              <td className="p-2.5 font-mono text-xs text-cyan-600 dark:text-cyan-400">{row[1]}</td>
+                              <td className={`p-2.5 ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>{row[2]}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+                      {currentSlide.keyPoints.map((pt, idx) => (
+                        <div
+                          key={idx}
+                          className={`p-3 rounded-xl border shadow-xs ${
+                            isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                          }`}
+                        >
+                          <div className={`flex items-start gap-2 text-xs sm:text-sm ${isDark ? 'text-slate-100' : 'text-[#0B1426]'}`}>
+                            <span className="w-2 h-2 rounded-full bg-orange-500 mt-1.5 shrink-0" />
+                            <span className="leading-snug">{pt}</span>
+                          </div>
                         </div>
                       ))}
                     </div>
                   </div>
+                )}
 
-                  <div className="lg:col-span-5 space-y-5">
-                    <div>
-                      <h3
-                        className="text-lg sm:text-xl font-bold text-[#0B1426] dark:text-white mb-2.5"
-                        style={{ fontFamily: 'Cambria, Georgia, serif' }}
-                      >
-                        Model Assumptions & Details
-                      </h3>
-                      <ul className="space-y-3 text-sm sm:text-base text-[#0B1426] dark:text-slate-100 leading-relaxed">
+                {/* SLIDE 13: Two-Column Verified vs Requires Further Verification */}
+                {currentSlide.number === 13 && currentSlide.twoColumnLists && (
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      {/* Left Column: Verified */}
+                      <div className={`p-5 rounded-2xl space-y-3 border ${
+                        isDark ? 'bg-[#16264A] border-cyan-800/80' : 'bg-white border-cyan-300'
+                      }`}>
+                        <div className={`flex items-center gap-2 text-base font-bold pb-2 border-b font-serif ${
+                          isDark ? 'text-cyan-400 border-cyan-800/60' : 'text-cyan-800 border-cyan-200'
+                        }`}>
+                          <CheckCircle2 className="w-5 h-5 text-cyan-500" />
+                          <span>{currentSlide.twoColumnLists.col1Title}</span>
+                        </div>
+                        <ul className={`space-y-2.5 text-sm ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                          {currentSlide.twoColumnLists.col1Items.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-2 shrink-0" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Right Column: Requires Further Verification */}
+                      <div className={`p-5 rounded-2xl space-y-3 border ${
+                        isDark ? 'bg-[#16264A] border-amber-800/80' : 'bg-white border-amber-300'
+                      }`}>
+                        <div className={`flex items-center gap-2 text-base font-bold pb-2 border-b font-serif ${
+                          isDark ? 'text-[#FFC24B] border-amber-800/60' : 'text-amber-800 border-amber-200'
+                        }`}>
+                          <AlertTriangle className="w-5 h-5 text-amber-500" />
+                          <span>{currentSlide.twoColumnLists.col2Title}</span>
+                        </div>
+                        <ul className={`space-y-2.5 text-sm ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                          {currentSlide.twoColumnLists.col2Items.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 shrink-0" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className={`p-3.5 rounded-xl text-xs sm:text-sm border ${
+                      isDark ? 'bg-black/30 border-slate-800 text-slate-300' : 'bg-amber-50 border-amber-200 text-amber-950'
+                    }`}>
+                      <span className="font-bold text-[#FF7A1A]">Engineering Audit Note: </span>
+                      Unresolved numerical values are marked as provisional. Iterative convergence does not equal grid independence or physical validation.
+                    </div>
+                  </div>
+                )}
+
+                {/* SLIDE 14: Conclusions & Six Priority Actions */}
+                {currentSlide.number === 14 && (
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {currentSlide.priorities?.map((p) => (
+                        <div key={p.num} className="p-3.5 bg-[#16264A] border border-slate-700/80 rounded-xl space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-full bg-orange-500 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                              {p.num}
+                            </span>
+                            <span className="font-bold text-sm text-white leading-tight font-serif">
+                              {p.title}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-300 pl-8 leading-snug">
+                            {p.desc}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="p-4 bg-[#16264A] border border-slate-700/80 rounded-xl flex flex-wrap items-center justify-between gap-4 text-xs sm:text-sm text-slate-200">
+                      <div>
+                        <span className="font-bold text-[#FF7A1A] block">{currentSlide.student?.name}</span>
+                        <span>Register No: {currentSlide.student?.registerNo} • {currentSlide.student?.degree}</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-[#FFC24B] font-semibold block">{currentSlide.student?.institution}</span>
+                        <span className="text-slate-400">{currentSlide.student?.subject} • Technical Review</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* STANDARD SLIDES WITH FIGURE + TABLE OR BULLETS (Slides 2, 8, 9, 10, 11, 12) */}
+                {![1, 3, 4, 5, 6, 7, 13, 14].includes(currentSlide.number) && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+                    {/* Left Column: Contained Figure with Caption */}
+                    <div className="lg:col-span-6">
+                      {currentSlide.figures && currentSlide.figures[0] && (
+                        <div
+                          className={`rounded-2xl overflow-hidden p-2.5 cursor-pointer group shadow-md transition-all ${
+                            isDark
+                              ? 'bg-[#16264A] border border-slate-700'
+                              : 'bg-white border border-[#DCE2EC]'
+                          }`}
+                          onClick={() => setZoomedImage(currentSlide.figures![0].src)}
+                        >
+                          <img
+                            src={currentSlide.figures[0].src}
+                            alt={currentSlide.figures[0].alt}
+                            className="w-full h-auto max-h-[360px] object-contain group-hover:scale-[1.01] transition-transform mx-auto"
+                          />
+                          <p className={`text-xs text-center mt-2 font-sans ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                            {currentSlide.figures[0].caption}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right Column: Table or Bullets & Metrics */}
+                    <div className="lg:col-span-6 space-y-4">
+                      {/* Render Table if Present (Slides 8, 9, 10) */}
+                      {currentSlide.table && (
+                        <div className={`rounded-xl overflow-hidden border shadow-xs ${
+                          isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                        }`}>
+                          <table className="w-full text-xs text-left border-collapse">
+                            <thead>
+                              <tr className="bg-[#0B1426] text-white">
+                                {currentSlide.table.headers.map((h, hIdx) => (
+                                  <th key={hIdx} className="p-2 font-bold">{h}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {currentSlide.table.rows.map((row, rIdx) => (
+                                <tr
+                                  key={rIdx}
+                                  className={`border-t font-medium ${
+                                    isDark
+                                      ? rIdx % 2 === 0 ? 'bg-[#16264A] text-slate-100 border-slate-800' : 'bg-[#0F1B35] text-slate-100 border-slate-800'
+                                      : rIdx % 2 === 0 ? 'bg-white text-[#0B1426] border-[#DCE2EC]' : 'bg-[#DEE5F0] text-[#0B1426] border-[#DCE2EC]'
+                                  }`}
+                                >
+                                  {row.map((cell, cIdx) => (
+                                    <td
+                                      key={cIdx}
+                                      className={`p-2 ${
+                                        cIdx === 0 ? 'font-bold' : ''
+                                      } ${
+                                        cIdx >= 1 && row.length > 3 ? 'text-center' : ''
+                                      }`}
+                                    >
+                                      {cell}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+
+                      {/* Hero Metric if present (Slide 11) */}
+                      {currentSlide.heroMetric && (
+                        <div className={`p-4 rounded-xl border shadow-xs space-y-1 ${
+                          isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                        }`}>
+                          <div
+                            className="text-3xl sm:text-4xl font-bold text-[#23B5D3]"
+                            style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                          >
+                            {currentSlide.heroMetric.value}
+                          </div>
+                          <div className={`text-sm font-bold ${isDark ? 'text-white' : 'text-[#0B1426]'}`}>
+                            {currentSlide.heroMetric.label}
+                          </div>
+                          {currentSlide.heroMetric.subtext && (
+                            <div className={`text-xs italic ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                              {currentSlide.heroMetric.subtext}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* KPIs if present (Slide 12) */}
+                      {currentSlide.kpis && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                          {currentSlide.kpis.map((kpi, idx) => (
+                            <div
+                              key={idx}
+                              className={`p-3 rounded-xl border shadow-xs space-y-1 ${
+                                isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                              }`}
+                            >
+                              <div
+                                className={`text-xl font-bold ${idx === 0 ? 'text-[#FF7A1A]' : 'text-[#23B5D3]'}`}
+                                style={{ fontFamily: 'Cambria, Georgia, serif' }}
+                              >
+                                {kpi.value}
+                              </div>
+                              <div className={`text-xs font-bold ${isDark ? 'text-white' : 'text-[#0B1426]'}`}>
+                                {kpi.label}
+                              </div>
+                              <div className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                                {kpi.sub}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Story Bullet Points */}
+                      <ul className={`space-y-2 text-xs sm:text-sm leading-relaxed ${isDark ? 'text-slate-100' : 'text-[#0B1426]'}`}>
                         {currentSlide.keyPoints.map((pt, idx) => (
-                          <li key={idx} className="flex items-start gap-2.5">
-                            <span className="w-2 h-2 rounded-full bg-orange-500 mt-2 shrink-0" />
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-1.5 shrink-0" />
                             <span>{pt}</span>
                           </li>
                         ))}
                       </ul>
-                    </div>
 
-                    {currentSlide.callout && (
-                      <div className="p-4 bg-white dark:bg-[#16264A] border border-[#DCE2EC] dark:border-slate-700 rounded-xl shadow-xs space-y-1">
-                        <div className="text-sm font-bold text-[#FF7A1A]" style={{ fontFamily: 'Cambria, Georgia, serif' }}>
-                          {currentSlide.callout.title}
-                        </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-300">
-                          {currentSlide.callout.desc}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* SLIDE 7: Full-Width Solver & Numerical Setup Table */}
-              {currentSlide.number === 7 && (
-                <div className="space-y-4">
-                  <div className="rounded-2xl overflow-hidden border border-[#DCE2EC] dark:border-slate-700 shadow-sm bg-white dark:bg-[#16264A]">
-                    <table className="w-full text-xs sm:text-sm text-left border-collapse">
-                      <thead>
-                        <tr className="bg-[#0B1426] text-white">
-                          <th className="p-3 font-bold">Setting / Parameter</th>
-                          <th className="p-3 font-bold">Implementation</th>
-                          <th className="p-3 font-bold">Details / Numerical Values</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {currentSlide.table?.rows.map((row, rIdx) => (
-                          <tr
-                            key={rIdx}
-                            className={`border-t border-[#DCE2EC] dark:border-slate-800 ${
-                              rIdx % 2 === 0
-                                ? 'bg-white dark:bg-[#16264A]'
-                                : 'bg-[#DEE5F0] dark:bg-slate-900/60'
-                            } text-[#0B1426] dark:text-slate-100 font-medium`}
-                          >
-                            <td className="p-2.5 font-bold">{row[0]}</td>
-                            <td className="p-2.5 font-mono text-xs text-cyan-700 dark:text-cyan-300">{row[1]}</td>
-                            <td className="p-2.5 text-slate-700 dark:text-slate-200">{row[2]}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
-                    {currentSlide.keyPoints.map((pt, idx) => (
-                      <div key={idx} className="p-3 rounded-xl bg-white dark:bg-[#16264A] border border-[#DCE2EC] dark:border-slate-700 shadow-xs">
-                        <div className="flex items-start gap-2 text-xs sm:text-sm text-[#0B1426] dark:text-slate-100">
-                          <span className="w-2 h-2 rounded-full bg-orange-500 mt-1.5 shrink-0" />
-                          <span className="leading-snug">{pt}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* SLIDE 13: Two-Column Verified vs Requires Further Verification */}
-              {currentSlide.number === 13 && currentSlide.twoColumnLists && (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Left Column: Verified */}
-                    <div className="p-5 bg-[#16264A] border border-cyan-800/80 rounded-2xl space-y-3">
-                      <div className="flex items-center gap-2 text-base font-bold text-cyan-400 pb-2 border-b border-cyan-800/60 font-serif">
-                        <CheckCircle2 className="w-5 h-5" />
-                        <span>{currentSlide.twoColumnLists.col1Title}</span>
-                      </div>
-                      <ul className="space-y-2.5 text-sm text-slate-200">
-                        {currentSlide.twoColumnLists.col1Items.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 shrink-0" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Right Column: Requires Further Verification */}
-                    <div className="p-5 bg-[#16264A] border border-amber-800/80 rounded-2xl space-y-3">
-                      <div className="flex items-center gap-2 text-base font-bold text-[#FFC24B] pb-2 border-b border-amber-800/60 font-serif">
-                        <AlertTriangle className="w-5 h-5 text-amber-500" />
-                        <span>{currentSlide.twoColumnLists.col2Title}</span>
-                      </div>
-                      <ul className="space-y-2.5 text-sm text-slate-200">
-                        {currentSlide.twoColumnLists.col2Items.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 shrink-0" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="p-3.5 bg-black/30 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-300">
-                    <span className="font-bold text-[#FF7A1A]">Engineering Audit Note: </span>
-                    Unresolved numerical values are marked as provisional. Iterative convergence does not equal grid independence or physical validation.
-                  </div>
-                </div>
-              )}
-
-              {/* SLIDE 14: Conclusions & Six Priority Actions */}
-              {currentSlide.number === 14 && (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {currentSlide.priorities?.map((p) => (
-                      <div key={p.num} className="p-3.5 bg-[#16264A] border border-slate-700/80 rounded-xl space-y-1.5">
-                        <div className="flex items-center gap-2">
-                          <span className="w-6 h-6 rounded-full bg-orange-500 text-white font-bold text-xs flex items-center justify-center shrink-0">
-                            {p.num}
-                          </span>
-                          <span className="font-bold text-sm text-white leading-tight font-serif">
-                            {p.title}
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-300 pl-8 leading-snug">
-                          {p.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="p-4 bg-[#16264A] border border-slate-700/80 rounded-xl flex flex-wrap items-center justify-between gap-4 text-xs sm:text-sm text-slate-200">
-                    <div>
-                      <span className="font-bold text-[#FF7A1A] block">{currentSlide.student?.name}</span>
-                      <span>Register No: {currentSlide.student?.registerNo} • {currentSlide.student?.degree}</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[#FFC24B] font-semibold block">{currentSlide.student?.institution}</span>
-                      <span className="text-slate-400">{currentSlide.student?.subject} • Technical Review</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* STANDARD SLIDES WITH FIGURE + TABLE OR BULLETS (Slides 2, 3, 5, 8, 9, 10, 11, 12) */}
-              {![1, 4, 6, 7, 13, 14].includes(currentSlide.number) && (
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-                  {/* Left Column: Contained Figure with Caption */}
-                  <div className="lg:col-span-6">
-                    {currentSlide.figures && currentSlide.figures[0] && (
-                      <div
-                        className={`rounded-2xl overflow-hidden p-2.5 cursor-pointer group shadow-md transition-all ${
-                          isDark
-                            ? 'bg-[#16264A] border border-slate-700'
-                            : 'bg-white border border-[#DCE2EC]'
-                        }`}
-                        onClick={() => setZoomedImage(currentSlide.figures![0].src)}
-                      >
-                        <img
-                          src={currentSlide.figures[0].src}
-                          alt={currentSlide.figures[0].alt}
-                          className="w-full h-auto max-h-[360px] object-contain group-hover:scale-[1.01] transition-transform"
-                        />
-                        <p className={`text-xs text-center mt-2 font-sans ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                          {currentSlide.figures[0].caption}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right Column: Table or Bullets & Metrics */}
-                  <div className="lg:col-span-6 space-y-4">
-                    {/* Render Table if Present (Slides 3, 8, 9, 10) */}
-                    {currentSlide.table && (
-                      <div className="rounded-xl overflow-hidden border border-[#DCE2EC] dark:border-slate-700 shadow-xs bg-white dark:bg-[#16264A]">
-                        <table className="w-full text-xs text-left border-collapse">
-                          <thead>
-                            <tr className="bg-[#0B1426] text-white">
-                              {currentSlide.table.headers.map((h, hIdx) => (
-                                <th key={hIdx} className="p-2 font-bold">{h}</th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {currentSlide.table.rows.map((row, rIdx) => (
-                              <tr
-                                key={rIdx}
-                                className={`border-t border-[#DCE2EC] dark:border-slate-800 ${
-                                  rIdx % 2 === 0
-                                    ? 'bg-white dark:bg-[#16264A]'
-                                    : 'bg-[#DEE5F0] dark:bg-slate-900/60'
-                                } text-[#0B1426] dark:text-slate-100 font-medium`}
-                              >
-                                {row.map((cell, cIdx) => (
-                                  <td
-                                    key={cIdx}
-                                    className={`p-2 ${
-                                      cIdx === 0 ? 'font-bold' : ''
-                                    } ${
-                                      cIdx >= 1 && row.length > 3 ? 'text-center' : ''
-                                    }`}
-                                  >
-                                    {cell}
-                                  </td>
-                                ))}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    )}
-
-                    {/* Hero Metric if present (Slide 11) */}
-                    {currentSlide.heroMetric && (
-                      <div className="p-4 bg-white dark:bg-[#16264A] border border-[#DCE2EC] dark:border-slate-700 rounded-xl shadow-xs space-y-1">
-                        <div
-                          className="text-3xl sm:text-4xl font-bold text-[#23B5D3]"
-                          style={{ fontFamily: 'Cambria, Georgia, serif' }}
-                        >
-                          {currentSlide.heroMetric.value}
-                        </div>
-                        <div className="text-sm font-bold text-[#0B1426] dark:text-white">
-                          {currentSlide.heroMetric.label}
-                        </div>
-                        {currentSlide.heroMetric.subtext && (
-                          <div className="text-xs text-slate-500 dark:text-slate-400 italic">
-                            {currentSlide.heroMetric.subtext}
+                      {/* Callout Card if present */}
+                      {currentSlide.callout && (
+                        <div className={`p-3 rounded-xl border shadow-xs space-y-1 ${
+                          isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
+                        }`}>
+                          <div className="text-xs font-bold text-[#FF7A1A]" style={{ fontFamily: 'Cambria, Georgia, serif' }}>
+                            {currentSlide.callout.title}
                           </div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* KPIs if present (Slide 12) */}
-                    {currentSlide.kpis && (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        {currentSlide.kpis.map((kpi, idx) => (
-                          <div key={idx} className="p-3 bg-white dark:bg-[#16264A] border border-[#DCE2EC] dark:border-slate-700 rounded-xl shadow-xs space-y-1">
-                            <div
-                              className={`text-xl font-bold ${idx === 0 ? 'text-[#FF7A1A]' : 'text-[#23B5D3]'}`}
-                              style={{ fontFamily: 'Cambria, Georgia, serif' }}
-                            >
-                              {kpi.value}
-                            </div>
-                            <div className="text-xs font-bold text-[#0B1426] dark:text-white">
-                              {kpi.label}
-                            </div>
-                            <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                              {kpi.sub}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Story Bullet Points */}
-                    <ul className={`space-y-2 text-xs sm:text-sm leading-relaxed ${isDark ? 'text-slate-100' : 'text-[#0B1426]'}`}>
-                      {currentSlide.keyPoints.map((pt, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-1.5 shrink-0" />
-                          <span>{pt}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Callout Card if present */}
-                    {currentSlide.callout && (
-                      <div className={`p-3 rounded-xl border shadow-xs space-y-1 ${
-                        isDark ? 'bg-[#16264A] border-slate-700' : 'bg-white border-[#DCE2EC]'
-                      }`}>
-                        <div className="text-xs font-bold text-[#FF7A1A]" style={{ fontFamily: 'Cambria, Georgia, serif' }}>
-                          {currentSlide.callout.title}
+                          <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                            {currentSlide.callout.desc}
+                          </p>
                         </div>
-                        <p className={`text-[11px] ${isDark ? 'text-slate-200' : 'text-[#0B1426]'}`}>
-                          {currentSlide.callout.desc}
-                        </p>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-
-            {/* Slide Footer */}
-            <div
-              className={`pt-2.5 border-t flex flex-wrap items-center justify-between text-xs font-sans shrink-0 ${
-                isDark ? 'border-white/10 text-slate-400' : 'border-black/10 text-slate-600'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <span>Boundary Layer on a Flat Plate with Radiation</span>
-                <span>•</span>
-                <span>Jersam Lithin L (URK24AE1026)</span>
-                <span>•</span>
-                <span>Karunya</span>
+                )}
               </div>
 
-              <div className="flex items-center gap-2 font-mono">
-                <span>Slide {currentSlide.number} of {totalSlides}</span>
+              {/* Slide Footer */}
+              <div
+                className={`pt-2.5 border-t flex flex-wrap items-center justify-between text-xs font-sans shrink-0 ${
+                  isDark ? 'border-white/10 text-slate-400' : 'border-black/10 text-slate-600'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span>Boundary Layer on a Flat Plate with Radiation</span>
+                  <span>•</span>
+                  <span>Jersam Lithin L (URK24AE1026)</span>
+                  <span>•</span>
+                  <span>Karunya</span>
+                </div>
+
+                <div className="flex items-center gap-2 font-mono">
+                  <span>Slide {currentSlide.number} of {totalSlides}</span>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Presenter Notes Drawer (Toggleable) */}
