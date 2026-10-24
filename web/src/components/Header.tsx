@@ -152,7 +152,7 @@ export default function Header({ currentMode, setMode, onExportPdf }: HeaderProp
                   <Presentation className="w-4 h-4 text-orange-500" />
                   <div>
                     <div className="font-semibold">Download Pitch Deck (PDF)</div>
-                    <div className="text-[10px] text-technical-muted">16:9 Landscape (8 Minimal Slides)</div>
+                    <div className="text-[10px] text-technical-muted">16:9 Landscape (14 Academic Story Slides)</div>
                   </div>
                 </a>
 

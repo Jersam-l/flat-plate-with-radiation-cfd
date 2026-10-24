@@ -67,7 +67,7 @@ export default function HomePage() {
                 className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-technical-slate dark:text-white border border-technical-border dark:border-technical-darkBorder hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-xs flex items-center gap-1.5"
               >
                 <Presentation className="w-3.5 h-3.5 text-orange-500" />
-                Download Pitch PDF (8 Slides)
+                Download Pitch PDF (14 Slides)
               </a>
 
               <a

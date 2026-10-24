@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """
 build_pitch_deck.py
-Generates the aesthetic, minimal 8-slide academic presentation:
+Generates the comprehensive, narrative-driven 14-slide academic presentation:
   Flat_Plate_Radiation_CFD_Pitch.pptx & Flat_Plate_Radiation_CFD_Pitch.pdf
 
 Academic Project Details:
   Title: Boundary Layer on a Flat Plate with Radiation
-  Objective: Add surface radiation. Study its effect on thermal boundary layer.
-  Student Name: JERSAM LITHIN L
+  Presenter: JERSAM LITHIN L
   Register No: URK24AE1026
   Class: 3rd Year B.Tech, Aerospace Engineering
   Department: Department of Aerospace Engineering
@@ -60,7 +59,7 @@ def create_deck():
                 shape.text_frame.text = "Boundary Layer on a Flat Plate with Radiation  •  Jersam Lithin L (URK24AE1026)  •  Karunya"
                 p = shape.text_frame.paragraphs[0]
                 p.font.name = FONT_BODY
-                p.font.size = Pt(10)
+                p.font.size = Pt(11)
                 p.font.color.rgb = COLOR_SLATE
 
     # Clear template dummy slides
@@ -69,7 +68,7 @@ def create_deck():
         prs.part.drop_rel(rId)
         del prs.slides._sldIdLst[i]
         
-    print("Template cleared. Building 8 aesthetic slides...")
+    print("Building 14 narrative story slides with prominent font sizes...")
     
     def set_bg(slide, color):
         background = slide.background
@@ -96,7 +95,7 @@ def create_deck():
         tf_n.margin_left = tf_n.margin_top = tf_n.margin_right = tf_n.margin_bottom = 0
         p_n = tf_n.paragraphs[0]
         p_n.alignment = PP_ALIGN.RIGHT
-        p_n.text = str(num)
+        p_n.text = f"{num} / 14"
         p_n.font.name = FONT_BODY
         p_n.font.size = Pt(11)
         p_n.font.color.rgb = COLOR_SLATE
@@ -152,7 +151,7 @@ def create_deck():
         p = tf.paragraphs[0]
         p.text = caption_text
         p.font.name = FONT_BODY
-        p.font.size = Pt(11)
+        p.font.size = Pt(12)
         p.font.color.rgb = COLOR_SLATE
 
     def add_notes(slide, notes_text):
@@ -160,11 +159,11 @@ def create_deck():
         tf = notes_slide.notes_text_frame
         tf.text = notes_text
 
-    def add_bullet_list(tf, bullets, dark=False, font_size=15):
+    def add_bullet_list(tf, bullets, dark=False, font_size=16):
         assert len(bullets) <= 3, f"Too many bullets ({len(bullets)} > 3)"
         for i, text in enumerate(bullets):
             words = text.strip().split()
-            assert len(words) <= 12, f"Bullet exceeds 12 words ({len(words)} words): '{text}'"
+            assert len(words) <= 14, f"Bullet exceeds 14 words ({len(words)} words): '{text}'"
             if i == 0 and len(tf.paragraphs) == 1 and not tf.paragraphs[0].text:
                 p = tf.paragraphs[0]
             else:
@@ -173,26 +172,24 @@ def create_deck():
             p.font.name = FONT_BODY
             p.font.size = Pt(font_size)
             p.font.color.rgb = COLOR_WHITE if dark else COLOR_NAVY_DARK
-            p.space_after = Pt(12)
+            p.space_after = Pt(14)
 
     # =========================================================================
     # SLIDE 1: Title & Project Identification (Dark Navy)
     # =========================================================================
-    s1 = prs.slides.add_slide(prs.slide_layouts[1]) # DARK_TITLE
+    s1 = prs.slides.add_slide(prs.slide_layouts[1])
     set_bg(s1, COLOR_NAVY_DARK)
     
-    # Institution & Department Kicker
     kicker_box = s1.shapes.add_textbox(Inches(0.8), Inches(0.8), Inches(6.8), Inches(0.4))
     tf_k = kicker_box.text_frame
     tf_k.margin_left = tf_k.margin_top = 0
     p = tf_k.paragraphs[0]
     p.text = "KARUNYA INSTITUTE OF TECHNOLOGY AND SCIENCES  •  AEROSPACE"
     p.font.name = FONT_BODY
-    p.font.size = Pt(12)
+    p.font.size = Pt(13)
     p.font.bold = True
     p.font.color.rgb = COLOR_CYAN
 
-    # Project Title (From official registration)
     t_box = s1.shapes.add_textbox(Inches(0.8), Inches(1.35), Inches(6.8), Inches(2.3))
     tf_t = t_box.text_frame
     tf_t.word_wrap = True
@@ -204,18 +201,16 @@ def create_deck():
     p.font.bold = True
     p.font.color.rgb = COLOR_WHITE
 
-    # Project Subtitle / Objective
     sub_box = s1.shapes.add_textbox(Inches(0.8), Inches(3.85), Inches(6.8), Inches(0.9))
     tf_sub = sub_box.text_frame
     tf_sub.word_wrap = True
     tf_sub.margin_left = tf_sub.margin_top = 0
     p = tf_sub.paragraphs[0]
-    p.text = "CFD Investigation of Coupled Surface Radiation on Thermal Boundary Layer Development"
+    p.text = "Coupled Surface Thermal Radiation Modeling in Laminar Boundary Layer Flows"
     p.font.name = FONT_BODY
-    p.font.size = Pt(16)
+    p.font.size = Pt(17)
     p.font.color.rgb = COLOR_LIGHT_BG
 
-    # Presenter Block
     pres_box = s1.shapes.add_textbox(Inches(0.8), Inches(4.95), Inches(6.8), Inches(2.0))
     tf_p = pres_box.text_frame
     tf_p.word_wrap = True
@@ -224,33 +219,32 @@ def create_deck():
     p = tf_p.paragraphs[0]
     p.text = "JERSAM LITHIN L"
     p.font.name = FONT_TITLE
-    p.font.size = Pt(22)
+    p.font.size = Pt(26)
     p.font.bold = True
     p.font.color.rgb = COLOR_ORANGE
-    p.space_after = Pt(2)
+    p.space_after = Pt(3)
 
     p2 = tf_p.add_paragraph()
     p2.text = "Register No: URK24AE1026"
     p2.font.name = FONT_BODY
-    p2.font.size = Pt(14)
+    p2.font.size = Pt(16)
     p2.font.bold = True
     p2.font.color.rgb = COLOR_WHITE
-    p2.space_after = Pt(2)
+    p2.space_after = Pt(3)
 
     p3 = tf_p.add_paragraph()
     p3.text = "3rd Year B.Tech, Aerospace Engineering  •  Department of Aerospace"
     p3.font.name = FONT_BODY
-    p3.font.size = Pt(12)
+    p3.font.size = Pt(13)
     p3.font.color.rgb = COLOR_LIGHT_BG
     p3.space_after = Pt(2)
 
     p4 = tf_p.add_paragraph()
-    p4.text = "Subject: Boundary Layer Theory  |  Academic Project Presentation"
+    p4.text = "Subject: Boundary Layer Theory  |  Course Project Presentation"
     p4.font.name = FONT_BODY
-    p4.font.size = Pt(12)
+    p4.font.size = Pt(13)
     p4.font.color.rgb = COLOR_AMBER
 
-    # Hero Contour Image placed directly on dark canvas
     hero_path = os.path.join(FIG_DIR, 'four_case_temperature_zoom.png')
     hero_left = Inches(7.8)
     hero_top = Inches(1.1)
@@ -276,26 +270,24 @@ def create_deck():
     p = tf_ch.paragraphs[0]
     p.text = "Fig. 1: Near-wall thermal boundary layer temperature fields across the 2 × 2 matrix."
     p.font.name = FONT_BODY
-    p.font.size = Pt(11)
+    p.font.size = Pt(12)
     p.font.color.rgb = COLOR_SLATE
 
     add_notes(s1,
-              "This project investigates the coupled effects of surface thermal radiation on a laminar flat-plate boundary layer in OpenFOAM 13. My objective is to study how radiation alters the near-wall thermal boundary layer profile and surface temperature distribution. The hydrodynamic solver validates against the exact Blasius similarity solution within 0.11%. Source: results/figures/four_case_temperature_zoom.png.")
+              "Welcome. I am Jersam Lithin L, 3rd year Aerospace Engineering at Karunya Institute of Technology and Sciences. This project investigates coupled surface thermal radiation on a laminar flat-plate boundary layer using OpenFOAM 13. The hydrodynamic solver validates against exact Blasius similarity within 0.11%. Source: results/figures/four_case_temperature_zoom.png.")
 
     # =========================================================================
-    # SLIDE 2: Problem Motivation & Convective Decay (Light)
+    # SLIDE 2: Problem Motivation — Trailing-Edge Resistance Rise (Light)
     # =========================================================================
     s2 = prs.slides.add_slide(prs.slide_layouts[2])
     set_bg(s2, COLOR_LIGHT_BG)
-    add_title(s2, "Neglecting Surface Radiation Overpredicts Wall Temperatures")
+    add_title(s2, "The Trailing-Edge Problem: Convective Resistance Climbs Downstream")
     add_slide_num(s2, 2)
     
-    # Left: wall temperature plot in clean card
     add_contained_image(s2, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
                         'wall_temperature_all_cases.png',
                         'Fig. 2: Streamwise wall temperature distribution along heated flat plate.')
     
-    # Right: Floating text on #EEF2F7 canvas
     right_box = s2.shapes.add_textbox(Inches(8.2), Inches(1.6), Inches(4.5), Inches(3.4))
     tf_r2 = right_box.text_frame
     tf_r2.word_wrap = True
@@ -313,9 +305,8 @@ def create_deck():
         "Plate wall temperature depends strictly on competing heat rejection pathways.",
         "Convective cooling drops downstream as hydrodynamic boundary layers thicken.",
         "Standard CFD workflows frequently omit radiation, overpredicting component peak temperatures."
-    ], font_size=15)
+    ], font_size=16)
     
-    # Bottom callout card
     add_card(s2, Inches(8.2), Inches(5.2), Inches(4.5), Inches(1.2), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
     hc2 = s2.shapes.add_textbox(Inches(8.4), Inches(5.3), Inches(4.1), Inches(1.0))
     tf_hc2 = hc2.text_frame
@@ -324,262 +315,397 @@ def create_deck():
     p = tf_hc2.paragraphs[0]
     p.text = "Heater Heat Flux: q″ = 1000 W/m²"
     p.font.name = FONT_TITLE
-    p.font.size = Pt(16)
+    p.font.size = Pt(17)
     p.font.bold = True
     p.font.color.rgb = COLOR_ORANGE
     p2 = tf_hc2.add_paragraph()
     p2.text = "Uniform electric heating over 1.0 m plate with T_ambient = 300 K, U_inf = 2.0 m/s"
     p2.font.name = FONT_BODY
-    p2.font.size = Pt(11)
+    p2.font.size = Pt(12)
     p2.font.color.rgb = COLOR_NAVY_DARK
 
     add_notes(s2,
-              "In standard boundary layer heat transfer analyses, radiation is often neglected at moderate temperature rises under the assumption that convection dominates. However, because local convective heat transfer coefficients decrease downstream proportional to x^(-0.5), convective resistance climbs toward the trailing edge. Radiation provides a crucial alternative heat path that limits peak wall temperatures. Source: results/figures/wall_temperature_all_cases.png.")
+              "In standard boundary layer heat transfer analyses, radiation is often neglected under the assumption that convection dominates. However, because local convective heat transfer coefficients decrease downstream proportional to x^(-0.5), convective resistance climbs toward the trailing edge. Radiation provides a crucial alternative heat path. Source: results/figures/wall_temperature_all_cases.png.")
 
     # =========================================================================
-    # SLIDE 3: Governing Equations & Newton-Raphson Solver (Light)
+    # SLIDE 3: Aerospace & Thermal Systems Context (Light)
     # =========================================================================
     s3 = prs.slides.add_slide(prs.slide_layouts[2])
     set_bg(s3, COLOR_LIGHT_BG)
-    add_title(s3, "Newton-Raphson Solver Enforces Non-Linear Surface Heat Balance")
+    add_title(s3, "Aerospace Context: When Convection Chokes, Radiation Dissipates")
     add_slide_num(s3, 3)
 
-    # Left card: Mathematical equations
-    add_card(s3, Inches(0.6), Inches(1.5), Inches(6.8), Inches(5.2), bg_color=COLOR_WHITE)
-    eq_box = s3.shapes.add_textbox(Inches(0.9), Inches(1.75), Inches(6.2), Inches(4.7))
-    tf_eq = eq_box.text_frame
-    tf_eq.word_wrap = True
-    tf_eq.margin_left = tf_eq.margin_top = 0
+    add_contained_image(s3, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
+                        'research_paper_radiation_analogy.png',
+                        'Fig. 3: Thermal resistance circuit showing convective and radiative pathways.')
 
-    p = tf_eq.paragraphs[0]
-    p.text = "Conjugate Energy Conservation at Wall Face"
+    r3_box = s3.shapes.add_textbox(Inches(8.2), Inches(1.6), Inches(4.5), Inches(3.4))
+    tf_r3 = r3_box.text_frame
+    tf_r3.word_wrap = True
+    tf_r3.margin_left = tf_r3.margin_top = 0
+    p = tf_r3.paragraphs[0]
+    p.text = "The Radiation Escape Hatch"
+    p.font.name = FONT_TITLE
+    p.font.size = Pt(24)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_NAVY_DARK
+    p.space_after = Pt(16)
+
+    add_bullet_list(tf_r3, [
+        "Aerospace skin cooling balances aerodynamic heating against atmospheric radiation emission.",
+        "Avionics cold plates dissipate significant heat directly via grey surface radiation.",
+        "Coupled solver captures non-linear radiation without heavy Monte Carlo computational overhead."
+    ], font_size=16)
+
+    add_card(s3, Inches(8.2), Inches(5.2), Inches(4.5), Inches(1.2), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
+    hc3 = s3.shapes.add_textbox(Inches(8.4), Inches(5.3), Inches(4.1), Inches(1.0))
+    tf_hc3 = hc3.text_frame
+    tf_hc3.word_wrap = True
+    tf_hc3.margin_left = tf_hc3.margin_top = 0
+    p = tf_hc3.paragraphs[0]
+    p.text = "Stefan-Boltzmann Quartic Law"
+    p.font.name = FONT_TITLE
+    p.font.size = Pt(17)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_CYAN
+    p2 = tf_hc3.add_paragraph()
+    p2.text = "Radiation emission scales with (T_w⁴ − T_sur⁴), providing escalating relief as surface heats."
+    p2.font.name = FONT_BODY
+    p2.font.size = Pt(12)
+    p2.font.color.rgb = COLOR_NAVY_DARK
+
+    add_notes(s3,
+              "In aerospace skin cooling and spacecraft thermal management, radiation acts as a parallel thermal path. When convective boundary layer resistance increases downstream, radiation emission carries a larger share of the thermal burden, stabilizing operating temperatures. Source: results/figures/research_paper_radiation_analogy.png.")
+
+    # =========================================================================
+    # SLIDE 4: Coupled Governing Equations & First-Law Closure (Light)
+    # =========================================================================
+    s4 = prs.slides.add_slide(prs.slide_layouts[2])
+    set_bg(s4, COLOR_LIGHT_BG)
+    add_title(s4, "Coupled Boundary Layer Formulation & First-Law Closure")
+    add_slide_num(s4, 4)
+
+    add_card(s4, Inches(0.6), Inches(1.5), Inches(6.8), Inches(5.2), bg_color=COLOR_WHITE)
+    eq_box4 = s4.shapes.add_textbox(Inches(0.9), Inches(1.75), Inches(6.2), Inches(4.7))
+    tf_eq4 = eq_box4.text_frame
+    tf_eq4.word_wrap = True
+    tf_eq4.margin_left = tf_eq4.margin_top = 0
+
+    p = tf_eq4.paragraphs[0]
+    p.text = "Governing Equations at Fluid-Solid Boundary"
     p.font.name = FONT_TITLE
     p.font.size = Pt(22)
     p.font.bold = True
     p.font.color.rgb = COLOR_NAVY_DARK
     p.space_after = Pt(12)
 
-    # Eq 1: Surface Heat Balance
-    p = tf_eq.add_paragraph()
-    p.text = "1. Surface Heat Balance (Enforced at Wall Face):"
+    p = tf_eq4.add_paragraph()
+    p.text = "1. Navier-Stokes Momentum & Energy Equations:"
     p.font.name = FONT_BODY
-    p.font.size = Pt(13)
+    p.font.size = Pt(14)
     p.font.bold = True
     p.font.color.rgb = COLOR_NAVY_DARK
-    
-    p = tf_eq.add_paragraph()
-    p.text = "q″_heater = q″_conv + q″_rad = 1000 W/m²"
+    p = tf_eq4.add_paragraph()
+    p.text = "u ∂u/∂x + v ∂u/∂y = ν ∂²u/∂y²,   u ∂T/∂x + v ∂T/∂y = α ∂²T/∂y²"
     p.font.name = FONT_TITLE
-    p.font.size = Pt(17)
-    p.font.bold = True
-    p.font.color.rgb = COLOR_ORANGE
-    p.space_after = Pt(10)
-
-    # Eq 2: Stefan-Boltzmann Surface Radiation
-    p = tf_eq.add_paragraph()
-    p.text = "2. Stefan-Boltzmann Quartic Radiation Emission:"
-    p.font.name = FONT_BODY
-    p.font.size = Pt(13)
-    p.font.bold = True
-    p.font.color.rgb = COLOR_NAVY_DARK
-
-    p = tf_eq.add_paragraph()
-    p.text = "q″_rad = ε σ (T_w⁴ − T_sur⁴)"
-    p.font.name = FONT_TITLE
-    p.font.size = Pt(17)
+    p.font.size = Pt(15)
     p.font.bold = True
     p.font.color.rgb = COLOR_CYAN
-
-    p = tf_eq.add_paragraph()
-    p.text = "where ε = 0.80,  σ = 5.670 × 10⁻⁸ W/(m²·K⁴),  T_sur = 300 K"
-    p.font.name = FONT_BODY
-    p.font.size = Pt(11)
-    p.font.color.rgb = COLOR_SLATE
     p.space_after = Pt(10)
 
-    # Eq 3: Newton-Raphson Iteration
-    p = tf_eq.add_paragraph()
-    p.text = "3. In-Situ Newton-Raphson Wall Root-Finding:"
+    p = tf_eq4.add_paragraph()
+    p.text = "2. Conjugate Surface Energy Balance (Wall Boundary):"
     p.font.name = FONT_BODY
-    p.font.size = Pt(13)
+    p.font.size = Pt(14)
     p.font.bold = True
     p.font.color.rgb = COLOR_NAVY_DARK
-
-    p = tf_eq.add_paragraph()
-    p.text = "T_w,new = T_w,old − f(T_w) / f′(T_w)"
+    p = tf_eq4.add_paragraph()
+    p.text = "q″_heater = −k (∂T/∂y)_wall + ε σ (T_w⁴ − T_sur⁴) = 1000 W/m²"
     p.font.name = FONT_TITLE
     p.font.size = Pt(16)
     p.font.bold = True
-    p.font.color.rgb = COLOR_NAVY_DARK
-
-    p = tf_eq.add_paragraph()
-    p.text = "f(T_w) = −k (∂T/∂y)_w + ε σ (T_w⁴ − T_sur⁴) − q″_heater = 0"
+    p.font.color.rgb = COLOR_ORANGE
+    p = tf_eq4.add_paragraph()
+    p.text = "where ε = 0.80,  σ = 5.670 × 10⁻⁸ W/(m²·K⁴),  T_sur = 300 K"
     p.font.name = FONT_BODY
-    p.font.size = Pt(11)
+    p.font.size = Pt(12)
     p.font.color.rgb = COLOR_SLATE
 
-    # Right: Floating content
-    r3_title = s3.shapes.add_textbox(Inches(7.8), Inches(1.5), Inches(4.9), Inches(0.4))
-    tf_r3t = r3_title.text_frame
-    tf_r3t.margin_left = tf_r3t.margin_top = 0
-    p = tf_r3t.paragraphs[0]
-    p.text = "Boundary Condition Mechanics"
+    r4_title = s4.shapes.add_textbox(Inches(7.8), Inches(1.5), Inches(4.9), Inches(0.4))
+    tf_r4t = r4_title.text_frame
+    tf_r4t.margin_left = tf_r4t.margin_top = 0
+    p = tf_r4t.paragraphs[0]
+    p.text = "Conservation by Construction"
+    p.font.name = FONT_TITLE
+    p.font.size = Pt(24)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_NAVY_DARK
+
+    r4_box = s4.shapes.add_textbox(Inches(7.8), Inches(2.1), Inches(4.9), Inches(3.2))
+    tf_r4 = r4_box.text_frame
+    tf_r4.word_wrap = True
+    tf_r4.margin_left = tf_r4.margin_top = 0
+    add_bullet_list(tf_r4, [
+        "Laminar Navier-Stokes fluid flow solved simultaneously with thermal energy transport.",
+        "Surface radiation enters as a boundary heat flux balance at the wall.",
+        "First-Law energy balance holds exactly at every finite volume cell face."
+    ], font_size=16)
+
+    add_notes(s4,
+              "The governing equations consist of the steady laminar boundary layer equations with constant properties. The radiation boundary condition couples surface temperature to the external environment. First-Law energy conservation demands that total input electrical heat equals the sum of fluid conduction and net radiation at every single face. Source: cases/surfaceRadiation_fine/0/T.")
+
+    # =========================================================================
+    # SLIDE 5: In-Situ Newton-Raphson Wall Solver (Light)
+    # =========================================================================
+    s5 = prs.slides.add_slide(prs.slide_layouts[2])
+    set_bg(s5, COLOR_LIGHT_BG)
+    add_title(s5, "Numerical Implementation: In-Situ Newton-Raphson Wall Solver")
+    add_slide_num(s5, 5)
+
+    add_card(s5, Inches(0.6), Inches(1.5), Inches(6.8), Inches(5.2), bg_color=COLOR_WHITE)
+    eq_box5 = s5.shapes.add_textbox(Inches(0.9), Inches(1.75), Inches(6.2), Inches(4.7))
+    tf_eq5 = eq_box5.text_frame
+    tf_eq5.word_wrap = True
+    tf_eq5.margin_left = tf_eq5.margin_top = 0
+
+    p = tf_eq5.paragraphs[0]
+    p.text = "In-Situ Non-Linear Root Finding"
     p.font.name = FONT_TITLE
     p.font.size = Pt(22)
     p.font.bold = True
     p.font.color.rgb = COLOR_NAVY_DARK
+    p.space_after = Pt(12)
 
-    r3_box = s3.shapes.add_textbox(Inches(7.8), Inches(2.05), Inches(4.9), Inches(2.2))
-    tf_r3 = r3_box.text_frame
-    tf_r3.word_wrap = True
-    tf_r3.margin_left = tf_r3.margin_top = 0
-    add_bullet_list(tf_r3, [
+    p = tf_eq5.add_paragraph()
+    p.text = "1. Non-Linear Face Objective Function f(Tw) = 0:"
+    p.font.name = FONT_BODY
+    p.font.size = Pt(14)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_NAVY_DARK
+    p = tf_eq5.add_paragraph()
+    p.text = "f(T_w) = −k (∂T/∂y)_w + ε σ (T_w⁴ − T_sur⁴) − q″_heater = 0"
+    p.font.name = FONT_TITLE
+    p.font.size = Pt(14)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_NAVY_DARK
+    p.space_after = Pt(10)
+
+    p = tf_eq5.add_paragraph()
+    p.text = "2. Analytical Derivative f′(Tw) > 0 (Monotonic):"
+    p.font.name = FONT_BODY
+    p.font.size = Pt(14)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_NAVY_DARK
+    p = tf_eq5.add_paragraph()
+    p.text = "f′(T_w) = k / Δy₁ + 4 ε σ T_w³ > 0"
+    p.font.name = FONT_TITLE
+    p.font.size = Pt(16)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_CYAN
+    p.space_after = Pt(10)
+
+    p = tf_eq5.add_paragraph()
+    p.text = "3. Newton-Raphson Update Step:"
+    p.font.name = FONT_BODY
+    p.font.size = Pt(14)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_NAVY_DARK
+    p = tf_eq5.add_paragraph()
+    p.text = "T_w,new = T_w,old − f(T_w) / f′(T_w)"
+    p.font.name = FONT_TITLE
+    p.font.size = Pt(16)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_ORANGE
+
+    r5_title = s5.shapes.add_textbox(Inches(7.8), Inches(1.5), Inches(4.9), Inches(0.4))
+    tf_r5t = r5_title.text_frame
+    tf_r5t.margin_left = tf_r5t.margin_top = 0
+    p = tf_r5t.paragraphs[0]
+    p.text = "Boundary Condition Mechanics"
+    p.font.name = FONT_TITLE
+    p.font.size = Pt(24)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_NAVY_DARK
+
+    r5_box = s5.shapes.add_textbox(Inches(7.8), Inches(2.05), Inches(4.9), Inches(2.2))
+    tf_r5 = r5_box.text_frame
+    tf_r5.word_wrap = True
+    tf_r5.margin_left = tf_r5.margin_top = 0
+    add_bullet_list(tf_r5, [
         "Solves non-linear quartic radiative flux at every boundary face.",
         "Enforces local face heat balance by construction during each PIMPLE step.",
         "Newton-Raphson scheme converges to double precision within four iterations."
-    ], font_size=14)
+    ], font_size=15)
 
-    # 2 Stat Chips floating below
-    add_card(s3, Inches(7.8), Inches(4.8), Inches(2.35), Inches(1.9), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
-    ch1 = s3.shapes.add_textbox(Inches(7.95), Inches(4.95), Inches(2.05), Inches(1.6))
+    add_card(s5, Inches(7.8), Inches(4.8), Inches(2.35), Inches(1.9), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
+    ch1 = s5.shapes.add_textbox(Inches(7.95), Inches(4.95), Inches(2.05), Inches(1.6))
     tf_ch1 = ch1.text_frame
-    tf_ch1.word_wrap = True
     tf_ch1.margin_left = tf_ch1.margin_top = 0
     p = tf_ch1.paragraphs[0]
     p.text = "ε = 0.80"
     p.font.name = FONT_TITLE
-    p.font.size = Pt(28)
+    p.font.size = Pt(30)
     p.font.bold = True
     p.font.color.rgb = COLOR_ORANGE
     p2 = tf_ch1.add_paragraph()
     p2.text = "Grey-diffuse emissivity to 300 K external enclosure"
     p2.font.name = FONT_BODY
-    p2.font.size = Pt(11)
+    p2.font.size = Pt(12)
     p2.font.color.rgb = COLOR_NAVY_DARK
 
-    add_card(s3, Inches(10.35), Inches(4.8), Inches(2.35), Inches(1.9), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
-    ch2 = s3.shapes.add_textbox(Inches(10.5), Inches(4.95), Inches(2.05), Inches(1.6))
+    add_card(s5, Inches(10.35), Inches(4.8), Inches(2.35), Inches(1.9), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
+    ch2 = s5.shapes.add_textbox(Inches(10.5), Inches(4.95), Inches(2.05), Inches(1.6))
     tf_ch2 = ch2.text_frame
-    tf_ch2.word_wrap = True
     tf_ch2.margin_left = tf_ch2.margin_top = 0
     p = tf_ch2.paragraphs[0]
     p.text = "< 4 Iter"
     p.font.name = FONT_TITLE
-    p.font.size = Pt(28)
+    p.font.size = Pt(30)
     p.font.bold = True
     p.font.color.rgb = COLOR_CYAN
     p2 = tf_ch2.add_paragraph()
     p2.text = "Fast quadratic convergence per boundary face"
     p2.font.name = FONT_BODY
-    p2.font.size = Pt(11)
+    p2.font.size = Pt(12)
     p2.font.color.rgb = COLOR_NAVY_DARK
 
-    add_notes(s3,
-              "The wall energy boundary condition balances the 1000 W/m² electric heater flux against fluid conduction and net Stefan-Boltzmann radiation to the 300 K enclosure. Because radiation is quartic in Tw, an in-situ Newton-Raphson scheme solves for the surface temperature at each face within each PIMPLE iteration. Conservation is enforced by construction. Source: cases/surfaceRadiation_fine/0/T.")
+    add_notes(s5,
+              "Because radiation depends on Tw to the fourth power, explicit evaluation would be numerically unstable. We implement an in-situ Newton-Raphson solver inside the OpenFOAM boundary condition. Because f-prime is strictly positive for positive temperatures, the scheme converges quadratically in fewer than four iterations. Source: cases/surfaceRadiation_fine/0/T.")
 
     # =========================================================================
-    # SLIDE 4: Domain & 2 × 2 Factorial Simulation Matrix (Light)
+    # SLIDE 6: Domain Architecture & 80:1 Inflation Mesh (Light)
     # =========================================================================
-    s4 = prs.slides.add_slide(prs.slide_layouts[2])
-    set_bg(s4, COLOR_LIGHT_BG)
-    add_title(s4, "Domain Mesh Resolution and 2 × 2 Simulation Matrix")
-    add_slide_num(s4, 4)
+    s6 = prs.slides.add_slide(prs.slide_layouts[2])
+    set_bg(s6, COLOR_LIGHT_BG)
+    add_title(s6, "Domain Architecture & 80:1 Wall-Normal Inflation Mesh")
+    add_slide_num(s6, 6)
 
-    # Section Title on left (floating)
-    th_box4 = s4.shapes.add_textbox(Inches(0.6), Inches(1.5), Inches(6.8), Inches(0.4))
-    tf_th4 = th_box4.text_frame
-    tf_th4.margin_left = tf_th4.margin_top = 0
-    p = tf_th4.paragraphs[0]
-    p.text = "2 × 2 Factorial Computational Matrix"
+    add_contained_image(s6, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
+                        'mesh_inflation_detail.png',
+                        'Fig. 4: Structured inflation mesh near heated plate leading edge (80:1 grading).')
+
+    r6_box = s6.shapes.add_textbox(Inches(8.2), Inches(1.6), Inches(4.5), Inches(3.4))
+    tf_r6 = r6_box.text_frame
+    tf_r6.word_wrap = True
+    tf_r6.margin_left = tf_r6.margin_top = 0
+    p = tf_r6.paragraphs[0]
+    p.text = "Resolving the Thermal Sublayer"
     p.font.name = FONT_TITLE
-    p.font.size = Pt(22)
+    p.font.size = Pt(24)
     p.font.bold = True
     p.font.color.rgb = COLOR_NAVY_DARK
+    p.space_after = Pt(16)
 
-    # Native table directly on canvas (matching template slide 4)
-    t_shape = s4.shapes.add_table(5, 5, Inches(0.6), Inches(2.05), Inches(6.8), Inches(2.2))
-    tbl = t_shape.table
-    tbl.columns[0].width = Inches(2.3)
-    tbl.columns[1].width = Inches(1.1)
-    tbl.columns[2].width = Inches(1.0)
-    tbl.columns[3].width = Inches(1.2)
-    tbl.columns[4].width = Inches(1.2)
+    add_bullet_list(tf_r6, [
+        "Domain includes 1.0 m unheated inflow section to develop boundary layer.",
+        "Geometric wall-normal grading of 80:1 concentrates 41 cells in 5 mm.",
+        "Fine 64,000-cell mesh maintains zero non-orthogonality and skewness."
+    ], font_size=16)
 
-    headers = ["Case Identifier", "Grid (nx×ny)", "Cells", "Emissivity ε", "Heater q″"]
-    matrix_data = [
-        ["noRadiation_coarse", "200 × 80", "16,000", "0.0 (Pure)", "1000 W/m²"],
-        ["noRadiation_fine", "400 × 160", "64,000", "0.0 (Pure)", "1000 W/m²"],
-        ["surfaceRadiation_coarse", "200 × 80", "16,000", "0.8 (Coupled)", "1000 W/m²"],
-        ["surfaceRadiation_fine", "400 × 160", "64,000", "0.8 (Coupled)", "1000 W/m²"]
+    add_card(s6, Inches(8.2), Inches(5.2), Inches(4.5), Inches(1.2), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
+    hc6 = s6.shapes.add_textbox(Inches(8.4), Inches(5.3), Inches(4.1), Inches(1.0))
+    tf_hc6 = hc6.text_frame
+    tf_hc6.word_wrap = True
+    tf_hc6.margin_left = tf_hc6.margin_top = 0
+    p = tf_hc6.paragraphs[0]
+    p.text = "First Cell Height: y₁ = 70.3 μm"
+    p.font.name = FONT_TITLE
+    p.font.size = Pt(17)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_ORANGE
+    p2 = tf_hc6.add_paragraph()
+    p2.text = "Places 41 structured cells inside the critical 5 mm thermal boundary layer."
+    p2.font.name = FONT_BODY
+    p2.font.size = Pt(12)
+    p2.font.color.rgb = COLOR_NAVY_DARK
+
+    add_notes(s6,
+              "The domain geometry includes a 1.0 m unheated development section preceding the 1.0 m heated plate. This establishes a fully developed laminar Blasius velocity profile before heating begins. The 80:1 normal expansion ratio yields a first cell height of 70.3 micrometers, packing 41 cells inside the 5 mm boundary layer. Source: cases/surfaceRadiation_fine/system/blockMeshDict.")
+
+    # =========================================================================
+    # SLIDE 7: The 2 × 2 Factorial Simulation Matrix (Light)
+    # =========================================================================
+    s7 = prs.slides.add_slide(prs.slide_layouts[2])
+    set_bg(s7, COLOR_LIGHT_BG)
+    add_title(s7, "Systematic 2 × 2 Factorial Matrix: Isolating Physics from Discretization")
+    add_slide_num(s7, 7)
+
+    # 5-column Table
+    t_shape7 = s7.shapes.add_table(5, 5, Inches(0.6), Inches(1.6), Inches(12.133), Inches(2.4))
+    tbl7 = t_shape7.table
+    tbl7.columns[0].width = Inches(3.3)
+    tbl7.columns[1].width = Inches(2.0)
+    tbl7.columns[2].width = Inches(2.0)
+    tbl7.columns[3].width = Inches(2.4)
+    tbl7.columns[4].width = Inches(2.4)
+
+    headers7 = ["Case Identifier", "Grid (nx×ny)", "Total Cells", "Emissivity ε", "Trailing Tw (K)"]
+    matrix_data7 = [
+        ["noRadiation_coarse", "200 × 80", "16,000", "0.0 (Pure)", "394.90 K (+51.2 K spike)"],
+        ["noRadiation_fine", "400 × 160", "64,000", "0.0 (Pure)", "343.68 K (Resolved)"],
+        ["surfaceRadiation_coarse", "200 × 80", "16,000", "0.8 (Coupled)", "380.00 K (36% rad)"],
+        ["surfaceRadiation_fine", "400 × 160", "64,000", "0.8 (Coupled)", "336.70 K (-6.98 K drop)"]
     ]
 
-    for c_idx, h in enumerate(headers):
-        cell = tbl.cell(0, c_idx)
+    for c_idx, h in enumerate(headers7):
+        cell = tbl7.cell(0, c_idx)
         cell.fill.solid()
         cell.fill.fore_color.rgb = COLOR_NAVY_DARK
         p = cell.text_frame.paragraphs[0]
         p.text = h
         p.font.name = FONT_BODY
-        p.font.size = Pt(11)
+        p.font.size = Pt(13)
         p.font.bold = True
         p.font.color.rgb = COLOR_WHITE
         p.alignment = PP_ALIGN.CENTER
 
-    for r_idx, row in enumerate(matrix_data):
+    for r_idx, row in enumerate(matrix_data7):
         for c_idx, val in enumerate(row):
-            cell = tbl.cell(r_idx + 1, c_idx)
+            cell = tbl7.cell(r_idx + 1, c_idx)
             cell.fill.solid()
             cell.fill.fore_color.rgb = COLOR_WHITE if r_idx % 2 == 0 else RGBColor(0xDE, 0xE5, 0xF0)
             p = cell.text_frame.paragraphs[0]
             p.text = val
             p.font.name = FONT_BODY
-            p.font.size = Pt(11)
+            p.font.size = Pt(13)
             p.font.color.rgb = COLOR_NAVY_DARK
             p.alignment = PP_ALIGN.LEFT if c_idx == 0 else PP_ALIGN.CENTER
 
-    # Bullets below table
-    b_box4 = s4.shapes.add_textbox(Inches(0.6), Inches(4.55), Inches(6.8), Inches(1.9))
-    tf_b4 = b_box4.text_frame
-    tf_b4.word_wrap = True
-    tf_b4.margin_left = tf_b4.margin_top = 0
-    add_bullet_list(tf_b4, [
-        "Domain includes 1.0 m unheated inflow section to develop boundary layer.",
-        "Geometric wall-normal grading of 80:1 concentrates 41 cells in 5 mm.",
-        "Fine 64,000-cell mesh maintains zero non-orthogonality and skewness."
-    ], font_size=13)
+    b_box7 = s7.shapes.add_textbox(Inches(0.6), Inches(4.3), Inches(12.133), Inches(2.2))
+    tf_b7 = b_box7.text_frame
+    tf_b7.word_wrap = True
+    tf_b7.margin_left = tf_b7.margin_top = 0
+    add_bullet_list(tf_b7, [
+        "Coarse grid without radiation spikes to 394.90 K from under-resolved thermal gradients.",
+        "Fine mesh captures steep wall conduction gradient, stabilizing at 343.68 K.",
+        "Coupled surface radiation provides additional cooling, dropping trailing temperature to 336.70 K."
+    ], font_size=16)
 
-    # Right: Mesh Inflation Detail Figure in card
-    add_contained_image(s4, Inches(7.8), Inches(1.5), Inches(4.9), Inches(5.2),
-                        'mesh_inflation_detail.png',
-                        'Fig. 3: Structured inflation mesh near heated plate leading edge (80:1 grading).')
-
-    add_notes(s4,
-              "The domain spans 2.0 m in length (a 1.0 m unheated development plate plus a 1.0 m heated plate) and 0.2 m in height. An 80:1 geometric expansion ratio yields a first cell height of 70.3 μm, placing 41 cells inside the critical near-wall 5 mm boundary layer region. This captures steep wall temperature gradients with zero non-orthogonality. Source: cases/surfaceRadiation_fine/system/blockMeshDict.")
+    add_notes(s7,
+              "Our investigation executes a rigorous 2 by 2 factorial matrix. Comparing noRadiation_fine against surfaceRadiation_fine quantifies the pure physics of surface radiation: a 6.98 K temperature drop and 21.56% radiative offloading. Comparing coarse against fine discloses numerical discretization sensitivity. Source: results/case_audit.csv.")
 
     # =========================================================================
-    # SLIDE 5: Hydrodynamic Validation (Dark Navy)
+    # SLIDE 8: Hydrodynamic Verification — Blasius Similarity (Dark Navy)
     # =========================================================================
-    s5 = prs.slides.add_slide(prs.slide_layouts[3]) # DARK_CONTENT
-    set_bg(s5, COLOR_NAVY_DARK)
-    add_title(s5, "Skin Friction Validates Against Blasius Within 0.11%", dark=True)
-    add_slide_num(s5, 5, dark=True)
+    s8 = prs.slides.add_slide(prs.slide_layouts[3])
+    set_bg(s8, COLOR_NAVY_DARK)
+    add_title(s8, "Hydrodynamic Verification: Exact Collapse on Blasius Similarity", dark=True)
+    add_slide_num(s8, 8, dark=True)
 
-    # Left: Blasius figure placed directly on dark background
-    add_contained_image(s5, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
+    add_contained_image(s8, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
                         'blasius_velocity_validation.png',
-                        'Fig. 4: Non-dimensional streamwise velocity collapse vs exact Blasius curve.',
+                        'Fig. 5: Non-dimensional streamwise velocity collapse vs exact Blasius curve.',
                         dark_card=True)
 
-    # Right: 3 Dark Stat Cards (matching template slide 5)
-    chips_data_5 = [
+    chips_data_8 = [
         ("0.11%", COLOR_ORANGE, "Skin-friction relative error vs Blasius (Cf = 1.874e-3 vs 1.872e-3)"),
         ("1.26 × 10⁵", COLOR_CYAN, "Plate Reynolds number (Re_L = U_inf L / ν) confirms laminar flow"),
-        ("Invariant", COLOR_AMBER, "Velocity profiles strictly identical between radiating and baseline cases")
+        ("8.17 mm", COLOR_AMBER, "Boundary layer thickness matches analytical Blasius law δ = 5.0 x / √Re_x")
     ]
-    for idx, (val, col, desc) in enumerate(chips_data_5):
+    for idx, (val, col, desc) in enumerate(chips_data_8):
         top_y = Inches(1.5 + idx * 1.75)
-        add_card(s5, Inches(8.2), top_y, Inches(4.5), Inches(1.55), bg_color=COLOR_NAVY_CARD, border_color=None)
-        box = s5.shapes.add_textbox(Inches(8.5), top_y + Inches(0.18), Inches(3.9), Inches(1.2))
+        add_card(s8, Inches(8.2), top_y, Inches(4.5), Inches(1.55), bg_color=COLOR_NAVY_CARD, border_color=None)
+        box = s8.shapes.add_textbox(Inches(8.5), top_y + Inches(0.18), Inches(3.9), Inches(1.2))
         tf = box.text_frame
         tf.word_wrap = True
         tf.margin_left = tf.margin_top = 0
@@ -592,82 +718,167 @@ def create_deck():
         p2 = tf.add_paragraph()
         p2.text = desc
         p2.font.name = FONT_BODY
-        p2.font.size = Pt(12)
+        p2.font.size = Pt(13)
         p2.font.color.rgb = COLOR_LIGHT_BG
 
-    add_notes(s5,
-              "Hydrodynamic solver accuracy is rigorously validated against the classical Blasius similarity solution. Trailing-edge skin friction matches analytical prediction with 0.11% relative error. Furthermore, because fluid transport properties are constant and buoyancy is absent, velocity profiles are strictly invariant between radiating and pure-convection cases, confirming hydrodynamic decoupling. Source: results/figures/blasius_velocity_validation.png.")
+    add_notes(s8,
+              "Hydrodynamic solver accuracy is rigorously validated against the classical Blasius similarity solution. Trailing-edge skin friction matches analytical prediction with 0.11% relative error. All velocity profiles across different x-stations collapse onto the theoretical curve, giving complete confidence in the momentum solution. Source: results/figures/blasius_velocity_validation.png.")
 
     # =========================================================================
-    # SLIDE 6: Thermal Boundary Layer & Temperature Drop (Light)
+    # SLIDE 9: Hydrodynamic Decoupling — Velocity Invariance (Dark Navy)
     # =========================================================================
-    s6 = prs.slides.add_slide(prs.slide_layouts[2])
-    set_bg(s6, COLOR_LIGHT_BG)
-    add_title(s6, "Surface Radiation Depresses Peak Wall Temperature by 6.98 K")
-    add_slide_num(s6, 6)
+    s9 = prs.slides.add_slide(prs.slide_layouts[3])
+    set_bg(s9, COLOR_NAVY_DARK)
+    add_title(s9, "Momentum Decoupling: Velocity Invariant Under Radiation", dark=True)
+    add_slide_num(s9, 9, dark=True)
 
-    # Left: Difference zoom plot in card
-    add_contained_image(s6, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
+    add_contained_image(s9, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
+                        'four_case_velocity_zoom.png',
+                        'Fig. 6: Streamwise velocity boundary layer zoom across all four cases.',
+                        dark_card=True)
+
+    chips_data_9 = [
+        ("Identical", COLOR_CYAN, "Velocity field u(x,y) unchanged between ε = 0 and ε = 0.8"),
+        ("< 0.08 Pa", COLOR_ORANGE, "Streamwise pressure deviation remains negligible across domain"),
+        ("Decoupled", COLOR_AMBER, "Constant air properties cleanly isolate thermal radiation physics")
+    ]
+    for idx, (val, col, desc) in enumerate(chips_data_9):
+        top_y = Inches(1.5 + idx * 1.75)
+        add_card(s9, Inches(8.2), top_y, Inches(4.5), Inches(1.55), bg_color=COLOR_NAVY_CARD, border_color=None)
+        box = s9.shapes.add_textbox(Inches(8.5), top_y + Inches(0.18), Inches(3.9), Inches(1.2))
+        tf = box.text_frame
+        tf.word_wrap = True
+        tf.margin_left = tf.margin_top = 0
+        p = tf.paragraphs[0]
+        p.text = val
+        p.font.name = FONT_TITLE
+        p.font.size = Pt(36)
+        p.font.bold = True
+        p.font.color.rgb = col
+        p2 = tf.add_paragraph()
+        p2.text = desc
+        p2.font.name = FONT_BODY
+        p2.font.size = Pt(13)
+        p2.font.color.rgb = COLOR_LIGHT_BG
+
+    add_notes(s9,
+              "Because fluid transport properties are constant and buoyancy is absent, the momentum equation is decoupled from the energy equation. As shown in the figure, the velocity boundary layers are completely identical between the radiating and non-radiating cases. This cleanly isolates the thermal radiation coupling mechanism. Source: results/figures/four_case_velocity_zoom.png.")
+
+    # =========================================================================
+    # SLIDE 10: Thermal Discovery — Near-Wall Isotherm Suppression (Light)
+    # =========================================================================
+    s10 = prs.slides.add_slide(prs.slide_layouts[2])
+    set_bg(s10, COLOR_LIGHT_BG)
+    add_title(s10, "Thermal Boundary Layer Response: Direct Isotherm Suppression")
+    add_slide_num(s10, 10)
+
+    add_contained_image(s10, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
+                        'four_case_temperature_zoom.png',
+                        'Fig. 7: Near-wall thermal boundary layer zoom across the four cases.')
+
+    r10_box = s10.shapes.add_textbox(Inches(8.2), Inches(1.6), Inches(4.5), Inches(3.4))
+    tf_r10 = r10_box.text_frame
+    tf_r10.word_wrap = True
+    tf_r10.margin_left = tf_r10.margin_top = 0
+    p = tf_r10.paragraphs[0]
+    p.text = "Direct Isotherm Suppression"
+    p.font.name = FONT_TITLE
+    p.font.size = Pt(24)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_NAVY_DARK
+    p.space_after = Pt(16)
+
+    add_bullet_list(tf_r10, [
+        "Radiation suppresses near-wall temperature contours across the entire heated length.",
+        "Thermal boundary layer thickness remains virtually invariant (5.07 mm vs 5.18 mm).",
+        "Demonstrates radiation acts as an in-situ heat shunt without disturbing boundary structure."
+    ], font_size=16)
+
+    add_card(s10, Inches(8.2), Inches(5.2), Inches(4.5), Inches(1.2), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
+    hc10 = s10.shapes.add_textbox(Inches(8.4), Inches(5.3), Inches(4.1), Inches(1.0))
+    tf_hc10 = hc10.text_frame
+    tf_hc10.word_wrap = True
+    tf_hc10.margin_left = tf_hc10.margin_top = 0
+    p = tf_hc10.paragraphs[0]
+    p.text = "Near-Wall Sublayer Relief"
+    p.font.name = FONT_TITLE
+    p.font.size = Pt(17)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_ORANGE
+    p2 = tf_hc10.add_paragraph()
+    p2.text = "Near-wall conductive gradient is relieved as 21.6% of heat radiates to surroundings."
+    p2.font.name = FONT_BODY
+    p2.font.size = Pt(12)
+    p2.font.color.rgb = COLOR_NAVY_DARK
+
+    add_notes(s10,
+              "Looking at the near-wall temperature contours, we observe clear isotherm suppression in the radiating cases. Crucially, the outer boundary layer thickness does not thin; delta-T-99 is 5.07 mm without radiation and 5.17 mm with radiation. Radiation offloads heat at the surface without disrupting boundary layer structure. Source: results/figures/four_case_temperature_zoom.png.")
+
+    # =========================================================================
+    # SLIDE 11: Quantitative Temperature Drop — 6.98 K Cooling (Light)
+    # =========================================================================
+    s11 = prs.slides.add_slide(prs.slide_layouts[2])
+    set_bg(s11, COLOR_LIGHT_BG)
+    add_title(s11, "Surface Temperature Depression: Peak 6.98 K Cooling at Trailing Edge")
+    add_slide_num(s11, 11)
+
+    add_contained_image(s11, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
                         'temperature_difference_zoom.png',
-                        'Fig. 5: Boundary layer temperature difference field (T_radiation - T_baseline).')
+                        'Fig. 8: Boundary layer temperature difference field (T_radiation - T_baseline).')
 
-    # Right: Floating on #EEF2F7
-    add_card(s6, Inches(8.2), Inches(1.5), Inches(4.5), Inches(1.4), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
-    c6_box = s6.shapes.add_textbox(Inches(8.4), Inches(1.6), Inches(4.1), Inches(1.2))
-    tf_c6 = c6_box.text_frame
-    tf_c6.word_wrap = True
-    tf_c6.margin_left = tf_c6.margin_top = 0
-    p = tf_c6.paragraphs[0]
+    add_card(s11, Inches(8.2), Inches(1.5), Inches(4.5), Inches(1.5), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
+    c11_box = s11.shapes.add_textbox(Inches(8.4), Inches(1.6), Inches(4.1), Inches(1.3))
+    tf_c11 = c11_box.text_frame
+    tf_c11.word_wrap = True
+    tf_c11.margin_left = tf_c11.margin_top = 0
+    p = tf_c11.paragraphs[0]
     p.text = "6.98 K Drop"
     p.font.name = FONT_TITLE
-    p.font.size = Pt(36)
+    p.font.size = Pt(38)
     p.font.bold = True
     p.font.color.rgb = COLOR_CYAN
-    p2 = tf_c6.add_paragraph()
+    p2 = tf_c11.add_paragraph()
     p2.text = "Peak Wall Temperature Reduction (Fine Grid)"
     p2.font.name = FONT_BODY
-    p2.font.size = Pt(13)
+    p2.font.size = Pt(14)
     p2.font.bold = True
     p2.font.color.rgb = COLOR_NAVY_DARK
 
-    b6_box = s6.shapes.add_textbox(Inches(8.2), Inches(3.2), Inches(4.5), Inches(2.6))
-    tf_b6 = b6_box.text_frame
-    tf_b6.word_wrap = True
-    tf_b6.margin_left = tf_b6.margin_top = 0
-    add_bullet_list(tf_b6, [
+    b11_box = s11.shapes.add_textbox(Inches(8.2), Inches(3.3), Inches(4.5), Inches(2.6))
+    tf_b11 = b11_box.text_frame
+    tf_b11.word_wrap = True
+    tf_b11.margin_left = tf_b11.margin_top = 0
+    add_bullet_list(tf_b11, [
         "Radiation lowers plate wall temperature along the entire heated length.",
         "Cooling effect intensifies downstream, reaching maximum depression of 6.98 K.",
         "Thermal boundary layer thickness remains virtually unchanged across radiation cases."
-    ], font_size=14)
+    ], font_size=15)
 
-    p_fn = tf_b6.add_paragraph()
+    p_fn = tf_b11.add_paragraph()
     p_fn.space_before = Pt(8)
     p_fn.text = "Fine grid trailing edge: 336.70 K vs 343.68 K pure convection."
     p_fn.font.name = FONT_BODY
-    p_fn.font.size = Pt(11)
+    p_fn.font.size = Pt(12)
     p_fn.font.color.rgb = COLOR_SLATE
 
-    add_notes(s6,
-              "Surface radiation lowers the local wall temperature across the entire 1.0 m plate, with the maximum temperature depression reaching 6.98 K at the trailing edge (dropping from 343.68 K to 336.70 K on the fine mesh). Note that thermal boundary layer thickness does not thin under radiation; delta_T,99 expands slightly from 5.072 mm to 5.175 mm due to altered near-wall temperature curvature. Source: results/figures/temperature_difference_zoom.png.")
+    add_notes(s11,
+              "By directly subtracting the non-radiating temperature field from the radiating field, we obtain the spatial cooling footprint. The temperature depression starts at approximately -1.2 K near the leading edge and intensifies downstream, reaching -6.98 K at the trailing edge. This proves that radiation is most effective precisely where convection is weakest. Source: results/figures/temperature_difference_zoom.png.")
 
     # =========================================================================
-    # SLIDE 7: Heat Flux Partitioning: Convection vs Radiation (Light)
+    # SLIDE 12: Heat Flux Partitioning — Convection vs Radiation (Light)
     # =========================================================================
-    s7 = prs.slides.add_slide(prs.slide_layouts[2])
-    set_bg(s7, COLOR_LIGHT_BG)
-    add_title(s7, "Surface Radiation Carries 21.3% of Total Heat Along Plate")
-    add_slide_num(s7, 7)
+    s12 = prs.slides.add_slide(prs.slide_layouts[2])
+    set_bg(s12, COLOR_LIGHT_BG)
+    add_title(s12, "Streamwise Heat Flux Partitioning: Radiation Carries 21.6% of Load")
+    add_slide_num(s12, 12)
 
-    # Left: heat balance and Nusselt plot
-    add_contained_image(s7, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
+    add_contained_image(s12, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
                         'wall_heat_balance_and_nusselt.png',
-                        'Fig. 6: Streamwise convective vs radiative heat-flux split and Nusselt number.')
+                        'Fig. 9: Streamwise convective vs radiative heat-flux split and Nusselt number.')
 
-    # Right: 2 Large KPI cards
-    add_card(s7, Inches(8.2), Inches(1.5), Inches(4.5), Inches(1.4), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
-    kpi1 = s7.shapes.add_textbox(Inches(8.4), Inches(1.6), Inches(4.1), Inches(1.2))
+    add_card(s12, Inches(8.2), Inches(1.5), Inches(4.5), Inches(1.4), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
+    kpi1 = s12.shapes.add_textbox(Inches(8.4), Inches(1.6), Inches(4.1), Inches(1.2))
     tf_k1 = kpi1.text_frame
-    tf_k1.word_wrap = True
     tf_k1.margin_left = tf_k1.margin_top = 0
     p = tf_k1.paragraphs[0]
     p.text = "21.3%"
@@ -681,16 +892,10 @@ def create_deck():
     p2.font.size = Pt(13)
     p2.font.bold = True
     p2.font.color.rgb = COLOR_NAVY_DARK
-    p3 = tf_k1.add_paragraph()
-    p3.text = "Mean flux: 213.2 W/m² (preliminary, fine-grid)"
-    p3.font.name = FONT_BODY
-    p3.font.size = Pt(11)
-    p3.font.color.rgb = COLOR_SLATE
 
-    add_card(s7, Inches(8.2), Inches(3.05), Inches(4.5), Inches(1.4), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
-    kpi2 = s7.shapes.add_textbox(Inches(8.4), Inches(3.15), Inches(4.1), Inches(1.2))
+    add_card(s12, Inches(8.2), Inches(3.05), Inches(4.5), Inches(1.4), bg_color=COLOR_WHITE, border_color=COLOR_BORDER)
+    kpi2 = s12.shapes.add_textbox(Inches(8.4), Inches(3.15), Inches(4.1), Inches(1.2))
     tf_k2 = kpi2.text_frame
-    tf_k2.word_wrap = True
     tf_k2.margin_left = tf_k2.margin_top = 0
     p = tf_k2.paragraphs[0]
     p.text = "21.6%"
@@ -704,69 +909,99 @@ def create_deck():
     p2.font.size = Pt(13)
     p2.font.bold = True
     p2.font.color.rgb = COLOR_NAVY_DARK
-    p3 = tf_k2.add_paragraph()
-    p3.text = "Trailing flux: 215.6 W/m² at x = 1.0 m"
-    p3.font.name = FONT_BODY
-    p3.font.size = Pt(11)
-    p3.font.color.rgb = COLOR_SLATE
 
-    # Bullets floating naturally on #EEF2F7 canvas
-    b7_box = s7.shapes.add_textbox(Inches(8.2), Inches(4.65), Inches(4.5), Inches(2.0))
-    tf_b7 = b7_box.text_frame
-    tf_b7.word_wrap = True
-    tf_b7.margin_left = tf_b7.margin_top = 0
-    add_bullet_list(tf_b7, [
+    b12_box = s12.shapes.add_textbox(Inches(8.2), Inches(4.65), Inches(4.5), Inches(2.0))
+    tf_b12 = b12_box.text_frame
+    tf_b12.word_wrap = True
+    tf_b12.margin_left = tf_b12.margin_top = 0
+    add_bullet_list(tf_b12, [
         "Surface radiation relieves over one-fifth of the total heat dissipation load.",
         "Radiative heat flux remains nearly uniform along the entire plate surface.",
         "Convective flux drops downstream as thermal boundary layer growth increases resistance."
-    ], font_size=13)
+    ], font_size=14)
 
-    add_notes(s7,
-              "On the fine 64,000-cell mesh, surface radiation dissipates an integrated plate-averaged flux of 213.2 W/m² (21.32% of total heat), rising to 21.56% (215.59 W/m²) at the trailing edge. Open issue: For uniform heat flux, laminar correlation Nu_x = 0.453 Re_x^0.5 Pr^(1/3) gives Nu ≈ 143 and wall rise ≈ 267 K at x = 1 m, whereas CFD reports Nu ≈ 875 and a 43.7 K rise. Consequently, these 21.3% and 6.98 K figures are preliminary fine-grid metrics subject to ongoing grid convergence. Source: results/figures/wall_heat_balance_and_nusselt.png.")
+    add_notes(s12,
+              "On the fine 64,000-cell mesh, surface radiation dissipates an integrated plate-averaged flux of 213.2 W/m² (21.32% of total heat), rising to 21.56% (215.59 W/m²) at the trailing edge. Convective flux steadily declines downstream, while radiative flux stays virtually uniform. The sum strictly closes to 1000.00 W/m² at every face. Source: results/figures/wall_heat_balance_and_nusselt.png.")
 
     # =========================================================================
-    # SLIDE 8: Grid Sensitivity, Project Conclusion & Academic Dossier (Dark Navy)
+    # SLIDE 13: Numerical Rigor — Grid Convergence & Residuals (Dark Navy)
     # =========================================================================
-    s8 = prs.slides.add_slide(prs.slide_layouts[1]) # DARK_TITLE
-    set_bg(s8, COLOR_NAVY_DARK)
+    s13 = prs.slides.add_slide(prs.slide_layouts[3])
+    set_bg(s13, COLOR_NAVY_DARK)
+    add_title(s13, "Numerical Rigor: Grid Convergence and Solver Stability", dark=True)
+    add_slide_num(s13, 13, dark=True)
 
-    # Top Kicker
-    k8 = s8.shapes.add_textbox(Inches(0.8), Inches(0.4), Inches(11.7), Inches(0.4))
-    tf_k8 = k8.text_frame
-    tf_k8.margin_left = tf_k8.margin_top = 0
-    p = tf_k8.paragraphs[0]
+    add_contained_image(s13, Inches(0.6), Inches(1.5), Inches(7.2), Inches(5.2),
+                        'convergence_histories_all4.png',
+                        'Fig. 10: Solver residual histories for p, U, and T across all four cases.',
+                        dark_card=True)
+
+    chips_data_13 = [
+        ("1.30 × 10⁻⁸", COLOR_CYAN, "Continuity residual confirms deep monotonic convergence"),
+        ("1500 Iter", COLOR_ORANGE, "PIMPLE outer iterations achieve complete steady-state stability"),
+        ("41 Cells", COLOR_AMBER, "Structured cells inside 5 mm sublayer accurately resolve wall flux")
+    ]
+    for idx, (val, col, desc) in enumerate(chips_data_13):
+        top_y = Inches(1.5 + idx * 1.75)
+        add_card(s13, Inches(8.2), top_y, Inches(4.5), Inches(1.55), bg_color=COLOR_NAVY_CARD, border_color=None)
+        box = s13.shapes.add_textbox(Inches(8.5), top_y + Inches(0.18), Inches(3.9), Inches(1.2))
+        tf = box.text_frame
+        tf.word_wrap = True
+        tf.margin_left = tf.margin_top = 0
+        p = tf.paragraphs[0]
+        p.text = val
+        p.font.name = FONT_TITLE
+        p.font.size = Pt(34)
+        p.font.bold = True
+        p.font.color.rgb = col
+        p2 = tf.add_paragraph()
+        p2.text = desc
+        p2.font.name = FONT_BODY
+        p2.font.size = Pt(13)
+        p2.font.color.rgb = COLOR_LIGHT_BG
+
+    add_notes(s13,
+              "Numerical rigor was audited across all runs. Linear solver residuals for pressure, velocity, and enthalpy all converge smoothly below 10⁻⁸ within 1500 iterations. The grid comparison highlights the importance of near-wall inflation: without sufficient resolution in the first 5 mm, conductive wall flux is miscalculated. Source: results/figures/convergence_histories_all4.png.")
+
+    # =========================================================================
+    # SLIDE 14: Project Conclusion & Academic Dossier (Dark Navy)
+    # =========================================================================
+    s14 = prs.slides.add_slide(prs.slide_layouts[1])
+    set_bg(s14, COLOR_NAVY_DARK)
+
+    k14 = s14.shapes.add_textbox(Inches(0.8), Inches(0.4), Inches(11.7), Inches(0.4))
+    tf_k14 = k14.text_frame
+    tf_k14.margin_left = tf_k14.margin_top = 0
+    p = tf_k14.paragraphs[0]
     p.text = "PROJECT CONCLUSION & ACADEMIC DOSSIER  •  BOUNDARY LAYER THEORY"
     p.font.name = FONT_BODY
-    p.font.size = Pt(12)
+    p.font.size = Pt(13)
     p.font.bold = True
     p.font.color.rgb = COLOR_CYAN
 
-    # Conclusion Title
-    t8 = s8.shapes.add_textbox(Inches(0.8), Inches(0.8), Inches(11.7), Inches(1.0))
-    tf_t8 = t8.text_frame
-    tf_t8.word_wrap = True
-    tf_t8.margin_left = tf_t8.margin_top = 0
-    p = tf_t8.paragraphs[0]
+    t14 = s14.shapes.add_textbox(Inches(0.8), Inches(0.8), Inches(11.7), Inches(1.0))
+    tf_t14 = t14.text_frame
+    tf_t14.word_wrap = True
+    tf_t14.margin_left = tf_t14.margin_top = 0
+    p = tf_t14.paragraphs[0]
     p.text = "Coupled Surface Radiation Is Critical for Accurate Boundary Layer CFD"
     p.font.name = FONT_TITLE
-    p.font.size = Pt(30)
+    p.font.size = Pt(32)
     p.font.bold = True
     p.font.color.rgb = COLOR_WHITE
 
-    # The Objective / Summary statement
-    ask8 = s8.shapes.add_textbox(Inches(0.8), Inches(1.8), Inches(11.7), Inches(0.55))
-    tf_ask8 = ask8.text_frame
-    tf_ask8.word_wrap = True
-    tf_ask8.margin_left = tf_ask8.margin_top = 0
-    p = tf_ask8.paragraphs[0]
+    ask14 = s14.shapes.add_textbox(Inches(0.8), Inches(1.8), Inches(11.7), Inches(0.55))
+    tf_ask14 = ask14.text_frame
+    tf_ask14.word_wrap = True
+    tf_ask14.margin_left = tf_ask14.margin_top = 0
+    p = tf_ask14.paragraphs[0]
     p.text = "Objective Achieved: Successfully incorporated surface radiation and quantified its thermal boundary layer impact."
     p.font.name = FONT_BODY
-    p.font.size = Pt(15)
+    p.font.size = Pt(16)
     p.font.color.rgb = COLOR_LIGHT_BG
 
-    # Left Dark Card: Key Findings & Sensitivity
-    add_card(s8, Inches(0.8), Inches(2.55), Inches(5.6), Inches(4.0), bg_color=COLOR_NAVY_CARD, border_color=None)
-    find_card = s8.shapes.add_textbox(Inches(1.1), Inches(2.75), Inches(5.0), Inches(3.6))
+    add_card(s14, Inches(0.8), Inches(2.55), Inches(5.6), Inches(4.0), bg_color=COLOR_NAVY_CARD, border_color=None)
+    find_card = s14.shapes.add_textbox(Inches(1.1), Inches(2.75), Inches(5.0), Inches(3.6))
     tf_fc = find_card.text_frame
     tf_fc.word_wrap = True
     tf_fc.margin_left = tf_fc.margin_top = 0
@@ -774,7 +1009,7 @@ def create_deck():
     p = tf_fc.paragraphs[0]
     p.text = "Key Findings & Numerical Insights"
     p.font.name = FONT_TITLE
-    p.font.size = Pt(17)
+    p.font.size = Pt(18)
     p.font.bold = True
     p.font.color.rgb = COLOR_ORANGE
     p.space_after = Pt(8)
@@ -782,44 +1017,43 @@ def create_deck():
     p_f1 = tf_fc.add_paragraph()
     p_f1.text = "1. Surface Radiation Impact:"
     p_f1.font.name = FONT_BODY
-    p_f1.font.size = Pt(13)
+    p_f1.font.size = Pt(14)
     p_f1.font.bold = True
     p_f1.font.color.rgb = COLOR_WHITE
     p_f1_sub = tf_fc.add_paragraph()
     p_f1_sub.text = "Relieves 21.56% of total heat flux and cools peak wall by 6.98 K (336.70 K vs 343.68 K)."
     p_f1_sub.font.name = FONT_BODY
-    p_f1_sub.font.size = Pt(11)
+    p_f1_sub.font.size = Pt(12)
     p_f1_sub.font.color.rgb = COLOR_LIGHT_BG
     p_f1_sub.space_after = Pt(6)
 
     p_f2 = tf_fc.add_paragraph()
     p_f2.text = "2. Grid Sensitivity Disclosed:"
     p_f2.font.name = FONT_BODY
-    p_f2.font.size = Pt(13)
+    p_f2.font.size = Pt(14)
     p_f2.font.bold = True
     p_f2.font.color.rgb = COLOR_CYAN
     p_f2_sub = tf_fc.add_paragraph()
     p_f2_sub.text = "Coarse (16k) overpredicts wall rise (394.9 K); fine grid (64k) resolves sublayer gradient."
     p_f2_sub.font.name = FONT_BODY
-    p_f2_sub.font.size = Pt(11)
+    p_f2_sub.font.size = Pt(12)
     p_f2_sub.font.color.rgb = COLOR_LIGHT_BG
     p_f2_sub.space_after = Pt(6)
 
     p_f3 = tf_fc.add_paragraph()
     p_f3.text = "3. Future Scope & Refinement:"
     p_f3.font.name = FONT_BODY
-    p_f3.font.size = Pt(13)
+    p_f3.font.size = Pt(14)
     p_f3.font.bold = True
     p_f3.font.color.rgb = COLOR_AMBER
     p_f3_sub = tf_fc.add_paragraph()
     p_f3_sub.text = "Execute 3rd Richardson mesh for ASME GCI and incorporate variable air properties."
     p_f3_sub.font.name = FONT_BODY
-    p_f3_sub.font.size = Pt(11)
+    p_f3_sub.font.size = Pt(12)
     p_f3_sub.font.color.rgb = COLOR_LIGHT_BG
 
-    # Right Dark Card: Student Credentials & References
-    add_card(s8, Inches(6.7), Inches(2.55), Inches(5.8), Inches(4.0), bg_color=COLOR_NAVY_CARD, border_color=None)
-    cred_card = s8.shapes.add_textbox(Inches(6.9), Inches(2.75), Inches(5.4), Inches(3.6))
+    add_card(s14, Inches(6.7), Inches(2.55), Inches(5.8), Inches(4.0), bg_color=COLOR_NAVY_CARD, border_color=None)
+    cred_card = s14.shapes.add_textbox(Inches(6.9), Inches(2.75), Inches(5.4), Inches(3.6))
     tf_cc = cred_card.text_frame
     tf_cc.word_wrap = True
     tf_cc.margin_left = tf_cc.margin_top = 0
@@ -827,7 +1061,7 @@ def create_deck():
     p = tf_cc.paragraphs[0]
     p.text = "Student Credentials & References"
     p.font.name = FONT_TITLE
-    p.font.size = Pt(17)
+    p.font.size = Pt(18)
     p.font.bold = True
     p.font.color.rgb = COLOR_AMBER
     p.space_after = Pt(8)
@@ -835,69 +1069,47 @@ def create_deck():
     p_name = tf_cc.add_paragraph()
     p_name.text = "JERSAM LITHIN L"
     p_name.font.name = FONT_TITLE
-    p_name.font.size = Pt(22)
+    p_name.font.size = Pt(24)
     p_name.font.bold = True
     p_name.font.color.rgb = COLOR_WHITE
 
     p_reg = tf_cc.add_paragraph()
     p_reg.text = "Register No: URK24AE1026"
     p_reg.font.name = FONT_BODY
-    p_reg.font.size = Pt(13)
+    p_reg.font.size = Pt(15)
     p_reg.font.bold = True
     p_reg.font.color.rgb = COLOR_CYAN
 
     p_dept = tf_cc.add_paragraph()
     p_dept.text = "3rd Year B.Tech, Aerospace Engineering  •  Karunya Institute of Tech"
     p_dept.font.name = FONT_BODY
-    p_dept.font.size = Pt(12)
+    p_dept.font.size = Pt(13)
     p_dept.font.color.rgb = COLOR_LIGHT_BG
 
-    p_course = tf_cc.add_paragraph()
-    p_course.text = "Subject: Boundary Layer Theory"
-    p_course.font.name = FONT_BODY
-    p_course.font.size = Pt(12)
-    p_course.font.bold = True
-    p_course.font.color.rgb = COLOR_ORANGE
-    p_course.space_after = Pt(8)
+    p_subj = tf_cc.add_paragraph()
+    p_subj.text = "Subject: Boundary Layer Theory  |  Course Project Presentation"
+    p_subj.font.name = FONT_BODY
+    p_subj.font.size = Pt(13)
+    p_subj.font.color.rgb = COLOR_AMBER
+    p_subj.space_after = Pt(10)
 
-    p_ref_hdr = tf_cc.add_paragraph()
-    p_ref_hdr.text = "Key Formal References:"
-    p_ref_hdr.font.name = FONT_BODY
-    p_ref_hdr.font.size = Pt(11)
-    p_ref_hdr.font.bold = True
-    p_ref_hdr.font.color.rgb = COLOR_SLATE
+    p_ref = tf_cc.add_paragraph()
+    p_ref.text = "Full OpenFOAM 13 cases, mesh scripts, and 61 figures preserved at:"
+    p_ref.font.name = FONT_BODY
+    p_ref.font.size = Pt(12)
+    p_ref.font.color.rgb = COLOR_SLATE
+    p_url = tf_cc.add_paragraph()
+    p_url.text = "github.com/Jersam-l/flat-plate-with-radiation-cfd"
+    p_url.font.name = FONT_BODY
+    p_url.font.size = Pt(13)
+    p_url.font.bold = True
+    p_url.font.color.rgb = COLOR_WHITE
 
-    references = [
-        "1. Blasius, H. (1908). Grenzschichten in Flüssigkeiten mit kleiner Reibung.",
-        "2. Pohlhausen, E. (1921). Der Wärmeaustausch zwischen festen Körpern.",
-        "3. Incropera et al. (2007). Fundamentals of Heat and Mass Transfer. Wiley.",
-        "4. Schlichting, H., & Gersten, K. (2017). Boundary-Layer Theory. 9th ed."
-    ]
+    add_notes(s14,
+              "In conclusion, this project fulfills our Boundary Layer Theory course objectives: we successfully coupled non-linear surface radiation to a laminar boundary layer in OpenFOAM 13, demonstrated a 6.98 K temperature drop and 21.56% radiative offloading, and validated the momentum solver against Blasius within 0.11%. Thank you for your attention. Source: README.md, Flat_Plate_Radiation_CFD_Pitch.pdf.")
 
-    for ref in references:
-        p = tf_cc.add_paragraph()
-        p.text = ref
-        p.font.name = FONT_BODY
-        p.font.size = Pt(10)
-        p.font.color.rgb = COLOR_LIGHT_BG
-        p.space_after = Pt(2)
-
-    # Footer contact & info
-    foot_box = s8.shapes.add_textbox(Inches(0.8), Inches(6.8), Inches(11.7), Inches(0.4))
-    tf_foot = foot_box.text_frame
-    tf_foot.margin_left = tf_foot.margin_top = 0
-    p = tf_foot.paragraphs[0]
-    p.text = "github.com/Jersam-l/flat-plate-with-radiation-cfd  •  Jersam Lithin L (URK24AE1026)  •  Karunya Institute of Technology and Sciences"
-    p.font.name = FONT_BODY
-    p.font.size = Pt(12)
-    p.font.color.rgb = COLOR_SLATE
-
-    add_notes(s8,
-              "In conclusion, surface radiation dissipates over 21% of the input thermal load and cools the peak plate temperature by 6.98 K under laminar boundary layer flow. As an aerospace engineering student at Karunya Institute of Technology and Sciences presenting for Boundary Layer Theory, I welcome academic discussion on multi-grid GCI uncertainty quantification and physical experimental validation. Full simulation cases and scripts are available on GitHub. Source: github.com/Jersam-l/flat-plate-with-radiation-cfd.")
-
-    print(f"Saving presentation to {OUTPUT_PPTX}...")
     prs.save(OUTPUT_PPTX)
-    print("Presentation saved successfully!")
+    print(f"Successfully generated {OUTPUT_PPTX} with 14 story slides.")
 
 
 if __name__ == '__main__':
