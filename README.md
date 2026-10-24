@@ -43,7 +43,7 @@ By implementing a rigorous, non-linear **grey diffuse surface-to-large-enclosure
 
 ---
 
-## Thermal Radiation & CFD Fundamentals (Demystifying Technical Jargon)
+## Thermal Radiation & CFD Fundamentals
 
 ### 1. What Does "Grey" Mean? (Hint: It is NOT the Visual Color Grey!)
 - In everyday language, "grey" refers to a visual shade between black and white.
