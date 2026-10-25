@@ -31,7 +31,7 @@ export const PAPER_METADATA = {
       name: 'Jersam Lithin L',
       registerNo: 'URK24AE1026',
       affiliation: 'Department of Aerospace Engineering, Karunya Institute of Technology and Sciences, Coimbatore, Tamil Nadu, 641114, India',
-      email: 'jersam@karunya.edu.in',
+      email: 'jersamlithin@karunya.edu.in',
     },
   ],
   institution: 'Department of Aerospace Engineering, Karunya Institute of Technology and Sciences',
